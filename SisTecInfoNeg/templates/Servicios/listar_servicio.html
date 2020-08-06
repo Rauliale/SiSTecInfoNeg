@@ -1,0 +1,54 @@
+{% extends 'index.html' %}
+
+{% block titulo%}
+    Listar Servicios
+{% endblock titulo%}
+
+{% block body%}
+    {% if servicios%}
+        <table>
+            <thead>
+                <tr>
+                    <th>codServicio</th>
+                    <th>fechaIngreso</th>
+                    <th>estado</th>
+                    <th>tipoEquipo</th>
+                    <th>marca</th>
+                    <th>modelo</th>
+                    <th>problema</th>
+                    <th>contraseña</th>
+                    <th>cargador</th>
+                    <th>fechaEntrega</th>
+                    <th>presupuesto</th>
+                    <th>trabajosRealizados</th>
+                    <th>ubicacion</th>
+                    <th>cliente</th>
+                </tr>
+            </thead>
+            <tbody>
+                {%for servicio in servicios%}
+                <tr>
+                    <td>{{servicio.codServicio}}</td>
+                    <td>{{servicio.fechaIngreso}}</td>
+                    <td>{{servicio.estado}}</td>
+                    <td>{{servicio.tipoEquipo}}</td>
+                    <td>{{servicio.marca}}</td>
+                    <td>{{servicio.modelo}}</td>
+                    <td>{{servicio.problema}}</td>
+                    <td>{{servicio.contraseña}}</td>
+                    <td>{{servicio.cargador}}</td>
+                    <td>{{servicio.fechaEntrega}}</td>
+                    <td>{{servicio.presupuesto}}</td>
+                    <td>{{servicio.trabajosRealizados}}</td>
+                    <td>{{servicio.ubicacion}}</td>
+                    <td>{{servicio.cliente}}</td>
+
+                </tr>
+                {%endfor%}
+            </tbody>
+        </table>
+    {%else%}
+        <h1>No existen servicios registrados</h1>
+    {%endif%}
+{% endblock body%}
+     

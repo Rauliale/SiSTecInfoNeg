@@ -1,0 +1,13 @@
+{% extends 'index.html' %}
+{%block titulo%}
+    Crear un Servicio
+{%endblock titulo%}
+    
+{%block body%}
+    <form method="POST">
+        {% csrf_token %}
+        {{ servicio_form.as_p }}        
+        <button type="submit">crear</button>
+    </form>
+
+{%endblock body%}

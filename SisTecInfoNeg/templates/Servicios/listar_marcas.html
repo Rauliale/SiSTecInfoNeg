@@ -1,0 +1,30 @@
+{% extends 'index.html' %}
+
+{% block titulo%}
+    Listar Marcas
+{% endblock titulo%}
+
+{% block body%}
+    {% if marcas%}
+        <table>
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Marca</th>
+                   
+                </tr>
+            </thead>
+            <tbody>
+                {%for marca in marcas%}
+                <tr>
+                    <td>{{marca.id}}</td>
+                    <td>{{marca.nombre}}</td>
+
+                </tr>
+                {%endfor%}
+            </tbody>
+        </table>
+    {%else%}
+        <h1>No existen marcas registrados</h1>
+    {%endif%}
+{% endblock body%}

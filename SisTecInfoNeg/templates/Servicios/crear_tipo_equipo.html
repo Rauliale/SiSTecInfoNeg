@@ -1,0 +1,13 @@
+{% extends 'index.html' %}
+{%block titulo%}
+    Crear un Tipo de Equipo
+{%endblock titulo%}
+    
+{%block body%}
+    <form method="POST">
+        {% csrf_token %}
+        {{ tipoEquipo.as_p }}        
+        <button type="submit">crear</button>
+    </form>
+
+{%endblock body%}

@@ -1,0 +1,30 @@
+{% extends 'index.html' %}
+
+{% block titulo%}
+    Listar Marcas
+{% endblock titulo%}
+
+{% block body%}
+    {% if tipoEquipo%}
+        <table>
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Tipo Equipo</th>
+                   
+                </tr>
+            </thead>
+            <tbody>
+                {%for tipo in tipoEquipo%}
+                <tr>
+                    <td>{{tipo.id}}</td>
+                    <td>{{tipo.nombre}}</td>
+
+                </tr>
+                {%endfor%}
+            </tbody>
+        </table>
+    {%else%}
+        <h1>No existen tipo de equipos registrados</h1>
+    {%endif%}
+{% endblock body%}
