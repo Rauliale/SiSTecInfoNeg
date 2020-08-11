@@ -1,13 +1,76 @@
 {% extends 'index.html' %}
-{%block titulo%}
-    Crear un Tipo de Equipo
-{%endblock titulo%}
-    
-{%block body%}
-    <form method="POST">
-        {% csrf_token %}
-        {{ tipoEquipo.as_p }}        
-        <button type="submit">crear</button>
-    </form>
 
-{%endblock body%}
+<!DOCTYPE html>
+
+{%block titulo%}Crear un Tipo de Equipo{%endblock titulo%}
+{% block section %}Crear Tipo Equipo{% endblock section %}
+
+{% block content%}
+
+<div class="card col-6 mb-4 py-3 border-left-success">
+    <div class="col-24">
+      <!-- Form -->
+      <form method="POST">
+        {% csrf_token %}
+        {{ tipoEquipo.as_p }}
+  
+        <hr>
+        <button type="submit" class="btn btn-success" style="float: right; margin: 1%;">
+          <i class="fa fa-plus"></i> Crear
+        </button>
+  
+        <button type="button" class="btn btn-secondary" onclick="window.history.back()" style="float: right;margin: 1%;">
+          <i class="fa fa-reply"></i> Volver
+        </button>
+  
+      </form>
+      <!--end Form -->
+    </div>
+  </div>
+
+<!-- List -->
+{% if tipoEquipo%}
+<div class="card shadow">
+        <div class="card-header py-3">
+          <h6 class="m-0 font-weight-bold text-secondary">Listado de Tipos de Equipos</h6>
+        </div>
+        <div class="card-body">
+          <!-- <div class="table-responsive"> -->
+            <table class="table table-bordered dataTable" id="dataTable">
+                <thead>
+                  <tr>
+                    <th>Id</th>
+                    <th>Tipo Equipo</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {%for tipo in tipoEquipo%}
+                  <tr>
+                    <td style="text-align: left;">{{tipo.id}}</td>
+                    <td style="text-align: left;">{{tipo.nombre}}</td>
+                    <td width="10%" align="center">
+                          <div class="table-data-feature">
+                            <!--<button type="button" class="btn btn-warning btn-sm" onclick="location.href='{% url 'Servicios:editar_servicio' servicio.codServicio %}'">
+                              <i class="fas fa-paint-brush"></i>
+                            </button>-->
+                            
+                            <!-- Modal Eliminar-->
+                            <button type="button" class="btn btn-danger btn-sm">
+                            <i class="fas fa-trash"></i>
+                            </button>
+
+                          </div>
+                      </td>
+                  </tr>
+
+                  {% endfor %}
+                </tbody>
+              </table>
+          </div>
+</div>
+{% endif %}
+<!-- end List -->
+
+
+{% endblock content%}
+

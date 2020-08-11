@@ -1,5 +1,5 @@
 from django import forms
-from .models import TipoEquipo,Estado,Marca,Servicio_Tecnico,Estado_Repuesto,Repuesto
+from .models import *
 
 
 class TipoEquipoForm(forms.ModelForm):
