@@ -1,0 +1,54 @@
+{% extends 'index.html' %}
+
+<!DOCTYPE html>
+
+{%block titulo%}Crear un Equipo{%endblock titulo%}
+{% block section %}Crear un Equipo{% endblock section %}
+
+{% block content%}
+
+<div class="card mb-4 py-3 border-left-success">
+    <div class="col-12">
+      <!-- Form -->
+      <form method="POST">
+        {%csrf_token%}
+        <div class="row">
+            <div class="col-3">
+              <p style="margin-bottom: 0px;">Cliente</p>
+              {{equipo_form.cliente}}
+            </div>
+
+            <div class="col-3">
+                <p style="margin-bottom: 0px;">Tipo de Equipo:</p>
+                {{equipo_form.tipoEquipo}}
+              </div>
+        </div>
+        
+      
+      <div class="row">
+        <div class="col-3">
+          <p style="margin-bottom: 0px;">Marca:</p>
+          {{equipo_form.marca}}
+        </div>
+        
+        <div class="col-3">
+          <p style="margin-bottom: 0px;">Modelo:</p>
+          {{equipo_form.modelo}}
+        </div>
+    </div>
+
+  
+    <hr>
+    <button type="submit" class="btn btn-success" style="float: right; margin: 1%;">
+      <i class="fa fa-plus"></i> Crear
+    </button>
+  
+        <button type="button" class="btn btn-secondary" onclick="window.history.back()" style="float: right;margin: 1%;">
+          <i class="fa fa-reply"></i> Volver
+        </button>
+  
+      </form>
+      <!--end Form -->
+    </div>
+  </div>
+{% endblock content%}

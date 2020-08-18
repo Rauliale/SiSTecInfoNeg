@@ -1,0 +1,100 @@
+{% extends 'wiki.html'%}
+{% load static %}
+{% block titulo %}
+    Agregar Blog
+{% endblock titulo %}
+
+{% block content%}
+<div class="card mb-4 py-3 border-left-success">
+    <div class="col-12"> 
+    <!-- Form -->
+      <form method="POST">
+        {%csrf_token%}
+        <div class="row">
+            <div class="col-6">
+                <p style="margin-bottom: 0px;">Titulo:</p>    
+                {{blog_form.titulo}}
+            </div>
+
+            <div class="col-6">
+                <p style="margin-bottom: 0px;">Nombre corto:</p>
+                {{blog_form.slug}}            <!-- Ver como hacer para cargar solo los equipos de ese cliente-->
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-6">
+                <p style="margin-bottom: 0px;">Autor:</p>
+                {{blog_form.autor}}
+              </div>
+
+              <div class="col-6">
+                <p style="margin-bottom: 0px;">Categoria:</p>
+                {{blog_form.categoria}}
+              </div>
+
+        </div>
+        
+        <div class="row">
+            <div class="col-6">
+                <p style="margin-bottom: 0px;">Descripcion:</p>
+                {{blog_form.descripcion}}
+              </div>
+              <div class="col-6">
+                <p style="margin-bottom: 0px;">Imagen:</p>
+                {{blog_form.imagen}}
+              </div>
+        </div>
+
+        <div class="row">
+              <div class="col-6">
+                <p style="margin-bottom: 0px;">URL 1:</p>
+                {{blog_form.url1}}
+              </div>
+
+              <div class="col-6">
+                <p style="margin-bottom: 0px;">URL 2:</p>
+                {{blog_form.url2}}
+            </div>
+        </div>
+        <div class="row"> 
+            
+        </div>
+        <div class="row"> 
+          <div class="col-12" style="margin-left: 0px;">
+            <p style="margin-bottom: 0px;">URL 3:</p>
+            {{blog_form.url3}}
+          </div>
+        </div>
+      
+        <div class="row">
+            <div class="col-3">
+            <p style="margin-bottom: 0px;">Estado Publicado/No Publicado:</p>
+            {{blog_form.estado}}
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-12">
+                <p style="margin-bottom: 0px;">Contenido del Blog:</p>
+                {{blog_form.contenido}}
+            </div>
+        </div>
+        
+  
+        <hr>
+        <button type="submit" class="btn btn-success" style="float: right; margin: 1%;">
+        <i class="fa fa-plus"></i> Crear
+        </button>
+    
+            <button type="button" class="btn btn-secondary" onclick="window.history.back()" style="float: right;margin: 1%;">
+            <i class="fa fa-reply"></i> Volver
+            </button>
+    
+        </form>
+        <!--end Form -->
+    </div>
+</div>
+ 
+{% endblock content%}

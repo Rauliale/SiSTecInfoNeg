@@ -20,7 +20,8 @@ from aplicaciones.Servicios.views import Home
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',Home, name = 'index'),
-    path('Servicios/',include(('aplicaciones.Servicios.urls','Servicios'))),
-    #path('',include(('aplicaciones.Servicios.urls','servicios')))
-    #path('Personas/',include(('aplicaciones.Personas.urls','Personas'))),
+    path('Servicios/',include(('aplicaciones.Servicios.urls','Servicios'))),    #aqui decimos que todas las urls de la aplicacion servicios van an a estar en el tag "Servicios" para poder usar el {% url 'Servicios:elnombredeurldelaAplicacion' %}
+    path('Personas/',include(('aplicaciones.Personas.urls','Personas'))),
+    #path('Personas',include(('aplicaciones.Servicios.urls','servicios')))
+    
 ]

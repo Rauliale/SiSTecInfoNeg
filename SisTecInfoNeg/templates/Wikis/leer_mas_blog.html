@@ -1,0 +1,30 @@
+{% extends 'wiki.html' %}
+{% load static %}
+
+<!DOCTYPE html>
+
+{% block titulo%}Gestionar Blogs{% endblock titulo%}
+
+{% block section %}Ver mas sobre el Blog{% endblock section %}
+
+{%block post%}
+    <h2 class="card-title">{{ blog.titulo }}</h2>      
+    <img class="card-img-top" src="{%block imagen %}{{ blog.imagen }}{%endblock imagen %}" alt="Card image cap">
+    <h3>Categoria: {{blog.categoria}}</h3>
+    <h4 class="card-title">{{ blog.titulo }}:</h4>
+    <div class="card-body">
+    <p class="card-text">{{ blog.descripcion }}</p>
+    <a href="{{blog.url1}}"></a>
+    <a href="{{blog.url2}}"></a>
+    <a href="{{blog.url3}}"></a>
+    <h3><strong>Detalles del post:</strong></h3>
+    <p>{{blog.contenido | safe}}</p>
+    </div>
+    <div class="card-footer text-muted">
+    
+    Posteado el {{blog.fecha_creacion}} por <strong>{{blog.autor}}</strong> 
+    <a href="/Servicios/editar_blog/{{blog.pk}}">{{blog.titulo}}</a>
+    
+    </div>
+    <hr>
+{%endblock post%}

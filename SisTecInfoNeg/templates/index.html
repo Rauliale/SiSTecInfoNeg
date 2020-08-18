@@ -14,6 +14,7 @@
   <title>{% block titulo %}SiSTecInfoNeg{% endblock titulo %}</title>
 
   <!-- Custom fonts for this template-->
+
   <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
@@ -22,6 +23,9 @@
 
   <!-- Datatable -->
   <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+  <!-- Select2 -->
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
 
 </head>
 {%endblock head%}
@@ -53,14 +57,17 @@
           <span>Dashboard</span></a>
       </li> -->
 
+      <!-- Linea Para dividir -->
       <!-- Divider -->
       <hr class="sidebar-divider">
 
+      <!-- Titulo -->
       <!-- Heading -->
       <div class="sidebar-heading">
         Servicios Tecnicos
       </div>
 
+      <!-- Lista desplegable Menu-->
       <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
@@ -70,8 +77,17 @@
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Gestionar</h6>
-            <a class="collapse-item" href="/Servicios/crear_servicio/">Servicios</a>
-            <a class="collapse-item" href="/Servicios/crear_tipo_equipo/">Tipo de Equipo</a>
+            <a class="collapse-item" href="/Servicios/crear_servicio/">Crear Servicio</a>
+            <a class="collapse-item" href="/Servicios/listar_servicio/">Ver Servicio</a>
+            <hr>
+            <a class="collapse-item" href="">Pila de Trabajos</a>
+            <hr>
+            <a class="collapse-item" href="/Servicios/crear_equipo/">Crear Equipos</a>
+            <a class="collapse-item" href="/Servicios/listar_equipo/">Ver Equipos</a>
+            <hr>
+            <a class="collapse-item" href="">Stock</a>
+            <hr>
+            <a class="collapse-item" href="/Servicios/wiki">Wikis</a>
           </div>
         </div>
       </li>
@@ -84,16 +100,139 @@
         Usuarios
       </div>
 
-    <!-- Nav Item - Charts -->
+    <!-- Lista desplegable Menu Usuario-->
+      <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item">
-        <a class="nav-link" href="charts.html">
-          <i class="fas fa-user"></i>
-          <span>Usuarios</span></a>
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUsuario" aria-expanded="true" aria-controls="collapseUsuario">
+          <i class="fas fa-fw fa-cog"></i>
+          <span>Usuarios</span>
+        </a>
+        <div id="collapseUsuario" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Gestionar Usuario</h6>
+            <a class="collapse-item" href="/Personas/crear_cliente">Cliente</a>
+            <a class="collapse-item" href="/Personas/crear_tecnico">Tecnico</a>
+            <a class="collapse-item" href="/Personas/crear_empleado">Empleado</a>
+          </div>
+        </div>
       </li>
 
 
       <!-- Divider -->
-      <hr class="sidebar-divider d-none d-md-block">
+      <hr class="sidebar-divider">
+
+      <!-- Heading -->
+      <div class="sidebar-heading">
+        Parametros
+      </div>
+
+    <!-- Nav Item - Charts -->
+      <li class="nav-item">
+          <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseGestionarParametros" aria-expanded="true" aria-controls="collapseGestionarParametros">
+            <i class="fas fa-fw fa-cog"></i>
+            <span>Parametros</span>
+          </a>
+          <div id="collapseGestionarParametros" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+              <h6 class="collapse-header">Gestionar Parametros</h6>
+              <a class="collapse-item" href="{% url 'Servicios:crear_tipo_equipo' %}">Crear Tipo de Equipo</a>
+              <a class="collapse-item" href="{% url 'Servicios:listar_tipo_equipo' %}">Ver Tipos de Equipo</a>
+              <hr>
+              <a class="collapse-item" href="/Servicios/crear_marca">Crear Nueva Marca</a>
+              <a class="collapse-item" href="/Servicios/listar_marcas">Ver Marcas</a>  
+              <hr>
+              <a class="collapse-item" href="/Servicios/crear_estado_equipo">Crear Estado de Equipo</a>
+              <a class="collapse-item" href="/Servicios/listar_estado_equipo">Ver Estado de Equipo</a>
+              <hr>
+              <a class="collapse-item" href="/Servicios/crear_estado_repuesto">Estado de Repuesto</a>
+              <a class="collapse-item" href="/Servicios/listar_estado_repuesto">Ver Estado de Repuesto</a>
+              <hr>
+              <a class="collapse-item" href="/Personas/crear_provincia">Crear Provincia</a>
+              <a class="collapse-item" href="/Personas/listar_provincia">Ver Provincia</a>
+              <hr>
+              <a class="collapse-item" href="/Personas/crear_localidad">Crear Localidad</a>
+              <a class="collapse-item" href="/Personas/listar_localidad">Ver Localidad</a>
+
+            </div>
+          </div>
+        
+      </li>
+
+       <!-- Divider -->
+       <hr class="sidebar-divider">
+
+       <!-- Heading -->
+       <div class="sidebar-heading">
+         Promociones
+       </div>
+
+      <!-- Lista desplegable Menu Promociones-->
+      <!-- Nav Item - Pages Collapse Menu -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePromociones" aria-expanded="true" aria-controls="collapsePromociones">
+          <i class="fas fa-fw fa-cog"></i>
+          <span>Promociones</span>
+        </a>
+        <div id="collapsePromociones" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Gestionar Promociones</h6>
+            <a class="collapse-item" href="">Promociones por Equipos</a>
+            <a class="collapse-item" href="">Promociones por Articulo</a>
+            
+          </div>
+        </div>
+      </li>
+
+       <!-- Divider -->
+       <hr class="sidebar-divider">
+
+       <!-- Heading -->
+       <div class="sidebar-heading">
+         Estadisticas
+       </div>
+
+      <!-- Lista desplegable Menu Estadisticas-->
+      <!-- Nav Item - Pages Collapse Menu -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseEstadisticas" aria-expanded="true" aria-controls="collapseEstadisticas">
+          <i class="fas fa-fw fa-cog"></i>
+          <span>Estadisticas</span>
+        </a>
+        <div id="collapseEstadisticas" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Gestionar Estadisticas</h6>
+            <a class="collapse-item" href="">Tecnicos</a>
+            <a class="collapse-item" href="">Servicios</a>
+          </div>
+        </div>
+      </li>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider">
+
+      <!-- Heading -->
+      <div class="sidebar-heading">
+        Auditoria
+      </div>
+
+     <!-- Lista desplegable Menu Estadisticas-->
+     <!-- Nav Item - Pages Collapse Menu -->
+     <li class="nav-item">
+       <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAuditoria" aria-expanded="true" aria-controls="collapseAuditoria">
+         <i class="fas fa-fw fa-cog"></i>
+         <span>Auditoria</span>
+       </a>
+       <div id="collapseAuditoria" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+         <div class="bg-white py-2 collapse-inner rounded">
+           <h6 class="collapse-header">Gestionar Auditoria</h6>
+           <a class="collapse-item" href="">Tecnicos</a>
+           <a class="collapse-item" href="">Servicios</a>
+         </div>
+       </div>
+     </li>
+      
+      
+
 
       <!-- Sidebar Toggler (Sidebar) -->
       <div class="text-center d-none d-md-inline">
@@ -300,7 +439,7 @@
 
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-300">{% block section %}Dashboard{% endblock section %}</h1>
+            <h1 class="h3 mb-0 text-gray-300">{% block section %}Datos Importantes{% endblock section %}</h1>
           </div>
 
           <!-- Content Row -->
@@ -320,7 +459,7 @@
               <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">Earnings Overview</h6>
+                  <h6 class="m-0 font-weight-bold text-primary">Resumen de ganancias</h6>
                   <div class="dropdown no-arrow">
                     <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
@@ -348,7 +487,7 @@
               <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">Revenue Sources</h6>
+                  <h6 class="m-0 font-weight-bold text-primary">Fuentes de ingresos</h6>
                   <div class="dropdown no-arrow">
                     <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
@@ -369,13 +508,13 @@
                   </div>
                   <div class="mt-4 text-center small">
                     <span class="mr-2">
-                      <i class="fas fa-circle text-primary"></i> Direct
+                      <i class="fas fa-circle text-primary"></i> Servicios Tecnicos
                     </span>
                     <span class="mr-2">
-                      <i class="fas fa-circle text-success"></i> Social
+                      <i class="fas fa-circle text-success"></i> Venta De Insumos de Equipos
                     </span>
                     <span class="mr-2">
-                      <i class="fas fa-circle text-info"></i> Referral
+                      <i class="fas fa-circle text-info"></i> Venta de Repuestos
                     </span>
                   </div>
                 </div>
@@ -383,41 +522,20 @@
             </div>
           </div>
 
+          <!-- select 2 -->
+          <select class="js-example-basic-single" name="state">
+            <option value="AL">Alabama</option>
+              ...
+            <option value="WY">Wyoming</option>
+          </select>
+
           <!-- Content Row -->
           <div class="row">
 
             <!-- Content Column -->
             <div class="col-lg-6 mb-4">
 
-              <!-- Project Card Example -->
-              <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                  <h6 class="m-0 font-weight-bold text-primary">Projects</h6>
-                </div>
-                <div class="card-body">
-                  <h4 class="small font-weight-bold">Server Migration <span class="float-right">20%</span></h4>
-                  <div class="progress mb-4">
-                    <div class="progress-bar bg-danger" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                  <h4 class="small font-weight-bold">Sales Tracking <span class="float-right">40%</span></h4>
-                  <div class="progress mb-4">
-                    <div class="progress-bar bg-warning" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                  <h4 class="small font-weight-bold">Customer Database <span class="float-right">60%</span></h4>
-                  <div class="progress mb-4">
-                    <div class="progress-bar" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                  <h4 class="small font-weight-bold">Payout Details <span class="float-right">80%</span></h4>
-                  <div class="progress mb-4">
-                    <div class="progress-bar bg-info" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                  <h4 class="small font-weight-bold">Account Setup <span class="float-right">Complete!</span></h4>
-                  <div class="progress">
-                    <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                </div>
-              </div>
-
+              
               <!-- Color System -->
               <div class="row">
                 <div class="col-lg-6 mb-4">
@@ -490,35 +608,8 @@
 
             <div class="col-lg-6 mb-4">
 
-              <!-- Illustrations -->
-              <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                  <h6 class="m-0 font-weight-bold text-primary">Illustrations</h6>
-                </div>
-                <div class="card-body">
-                  <div class="text-center">
-                    <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;" src="img/undraw_posting_photo.svg" alt="">
-                  </div>
-                  <p>Add some quality, svg illustrations to your project courtesy of <a target="_blank" rel="nofollow" href="https://undraw.co/">unDraw</a>, a constantly updated collection of beautiful svg images that you can use completely free and without attribution!</p>
-                  <a target="_blank" rel="nofollow" href="https://undraw.co/">Browse Illustrations on unDraw &rarr;</a>
-                </div>
-              </div>
 
-              <!-- Approach -->
-              <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                  <h6 class="m-0 font-weight-bold text-primary">Development Approach</h6>
-                </div>
-                <div class="card-body">
-                  <p>SB Admin 2 makes extensive use of Bootstrap 4 utility classes in order to reduce CSS bloat and poor page performance. Custom CSS classes are used to create custom components and custom utility classes.</p>
-                  <p class="mb-0">Before working with this theme, you should become familiar with the Bootstrap framework, especially the utility classes.</p>
-                </div>
-              </div>
-
-            </div>
-          </div>
-
-        </div>
+              
         <!-- /.container-fluid -->
 
       </div>
@@ -585,6 +676,15 @@
   <script src="{% static 'js/demo/datatables-demo.js' %}"></script>
   <script src="{% static 'vendor/datatables/jquery.dataTables.min.js' %}"></script>
   <script src="{% static 'vendor/datatables/dataTables.bootstrap4.min.js' %}"></script>
+
+<!-- Select2 script -->  
+<script>
+$(document).ready(function() {
+  $('.js-example-basic-single').select2();
+});
+</script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+
 
 </body>
 {% endblock body %}

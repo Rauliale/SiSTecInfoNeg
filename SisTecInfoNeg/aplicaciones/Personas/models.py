@@ -32,7 +32,7 @@ class Domicilio(models.Model):
     borrado = models.BooleanField('borrado',default=False)
     
     def __str__(self):
-        return 'calle '+self.calle+'  nro '
+        return 'calle '+ self.calle + ' - ' + str(self.nro)
 
 class Tipo_Telefono(models.Model):
     TIPO={
@@ -65,7 +65,9 @@ class Telefono(models.Model):
     # miembro no def :C contacto= models.ForeignKey(Miembro, on_delete=models.PROTECT,null=True) #tel de contacto en caso de necesitar
     
     def __str__(self):
-        return str(self.prefijo+self.numero)
+        return str(self.prefijo) + ' - ' + str(self.numero) 
+
+
 
 class Rol(models.Model):
     id = models.AutoField(primary_key = True)
@@ -101,7 +103,8 @@ class Usuario(models.Model):
         abstract = True
 
     def __str__(self):
-        return self.apellido
+        return str(self.dni) + ' - ' + self.apellido + ' ' + self.nombre
+        #return self.apellido
 
     def save(self, *args, **kwargs):
         self.nombre = (self.nombre).upper()
@@ -153,3 +156,12 @@ class Meta:
     verbose_name = 'Tecnico'
     verbose_name_plural = 'Tecnicos'
     permissions = (("es_Tecnico", "es Tecnico"),("es_pre_Tecnico", "es pre Tecnico"))
+
+class Empleado(Usuario):
+    turno = models.CharField('Turno de trabajo del Empleado', max_length = 100, null = False, blank = False)
+    puesto = models.CharField('Puesto de trabajo del Empleado', max_length = 100, null = False, blank = False)
+
+class Meta:
+    verbose_name = 'Empleado'
+    verbose_name_plural = 'Empleados'
+    permissions = (("es_Empleado", "es Empleado"),("es_pre_Empleado", "es pre Empleado"))

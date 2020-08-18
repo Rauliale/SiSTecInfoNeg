@@ -1,0 +1,106 @@
+{% extends 'index.html' %}
+{% load static %}
+
+<!DOCTYPE html>
+
+{% block titulo%}Gestionar Servicios{% endblock titulo%}
+
+{% block section %}Editar Servicio{% endblock section %}
+
+{% block content%}
+
+<div class="card col-6 mb-4 py-3 border-left-warning">
+  <div class="col-12">
+    <!-- Form -->
+    <form method="POST">
+      {%csrf_token%}
+      <div class="row">
+        <div class="col-3">
+          <p style="margin-bottom: 0px;">Cliente</p>
+          {{equipo_form.cliente}}
+        </div>
+
+        <div class="col-3">
+            <p style="margin-bottom: 0px;">Tipo de Equipo:</p>
+            {{equipo_form.tipoEquipo}}
+          </div>
+    </div>
+    
+  
+  <div class="row">
+    <div class="col-3">
+      <p style="margin-bottom: 0px;">Marca:</p>
+      {{equipo_form.marca}}
+    </div>
+    
+    <div class="col-3">
+      <p style="margin-bottom: 0px;">Modelo:</p>
+      {{equipo_form.modelo}}
+    </div>
+</div>
+
+      <hr>
+      <button type="submit" class="btn btn-success" style="float: right; margin: 1%;">
+        <i class="fa fa-check"></i> Editar
+      </button>
+
+      <button type="button" class="btn btn-secondary" onclick="window.history.back()" style="float: right;margin: 1%;">
+        <i class="fa fa-reply"></i> Volver
+      </button>
+
+    </form>
+    <!--end Form -->
+  </div>
+</div>
+
+<!-- Messages -->
+<script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+
+{% if messages %}
+    {% for message in messages %}
+      {% if message.tags == 'success'%}
+      <script type="text/javascript">
+        $(document).ready(function(){
+          swal({
+          title: "Se editó correctamente",
+          type: "success",
+          confirmButtonColor: "#4e73df",
+          confirmButtonText: "Aceptar",
+          closeOnConfirm: false
+        })});
+      </script>
+      {% endif %}
+      {% if message.tags == 'warning' %}
+      <script type="text/javascript">
+        $(document).ready(function(){
+          swal({
+          title: "Ocurrió algo inesperado",
+          type: "warning",
+          confirmButtonColor: "#4e73df",
+          confirmButtonText: "Aceptar",
+          closeOnConfirm: false
+        })});
+      </script>
+      {% endif %}
+      {% if message.tags == 'error' %}
+      <script type="text/javascript">
+        $(document).ready(function(){
+          swal({
+          title: "Ocurrió un error",
+          type: "error",
+          confirmButtonColor: "#4e73df",
+          confirmButtonText: "Aceptar",
+          closeOnConfirm: false
+        })});
+      </script>
+      {% endif %}
+    {% endfor %}
+{% endif %}
+
+<!-- end Messages -->
+
+
+{% endblock content%}

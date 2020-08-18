@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'aplicaciones.Personas',
     'aplicaciones.Servicios',
+    'import_export',    #sirve para hacer importaciones y exportaciones del sitio de administracion de django crack el tipo
+    'ckeditor',         #sirve para darle formatos a un campo de texto tipo word
 ]
 
 MIDDLEWARE = [
@@ -105,6 +107,12 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+#Configuracion de CKeditor para textos del blog
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full',
+    },
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
