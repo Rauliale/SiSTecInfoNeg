@@ -1,0 +1,79 @@
+{% extends 'index.html' %}
+
+<!DOCTYPE html>
+
+{%block titulo%}Crear una Categoria{%endblock titulo%}
+{% block section %}Crear una Categoria{% endblock section %}
+
+{% block content%}
+
+<div class="card col-6 mb-4 py-3 border-left-success">
+    
+      <!-- Form -->
+    <form method="POST">
+      {%csrf_token%}
+      <div class="row">
+        <div class="col-4">
+          <p style="margin-bottom: 0px;">Nombre de la Categoria</p>
+          {{categoria_form.nombre}}
+        </div>
+    </div>
+
+
+      <hr>
+      <div>
+      <button type="submit" class="btn btn-success" style="float: right; margin: 1%;">
+        <i class="fa fa-plus"></i> Crear
+      </button>
+
+      <button type="button" class="btn btn-secondary" onclick="window.history.back()" style="float: right;margin: 1%;">
+        <i class="fa fa-reply"></i> Volver
+      </button>
+    </div>
+    </form>
+    <!--end Form -->
+
+    <!-- List -->
+{% if categorias%}
+<div class="card shadow">
+        <div class="card-header py-3">
+          <h6 class="m-0 font-weight-bold text-secondary">Listado de Categorias</h6>
+        </div>
+        <div class="card-body">
+           <div class="table-responsive">
+            <table class="table table-bordered dataTable" id="dataTable">
+                <thead>
+                  <tr>
+                    <th>Id</th>
+                    <th>Nombre</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {%for categoria in categorias%}
+                  <tr>
+                    <td style="text-align: left;">{{categoria.pk}}</td>
+                    <td style="text-align: left;">{{categoria.nombre}}</td>
+                    <td width="10%" align="center">
+                          <div class="table-data-feature">
+                            <button type="button" class="btn btn-info" onclick="location.href= '/Stock/editar_categoria/{{categoria.pk}}'">Ver mas</button>
+                          </div>
+                      </td>
+                  </tr>
+                  {% endfor %}
+                  
+                </tbody>
+              </table>
+        </div>
+  </div>
+
+</div>
+{% else %}
+    <p>Aún no hay datos cargados</p>
+{% endif %}
+<!-- end List -->
+
+
+</div>
+
+
+{% endblock content%}

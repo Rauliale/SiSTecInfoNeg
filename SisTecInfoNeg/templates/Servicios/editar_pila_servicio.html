@@ -1,0 +1,188 @@
+{% extends 'index.html' %}
+{% load static %}
+
+<!DOCTYPE html>
+
+{% block titulo%}Gestionar Servicios{% endblock titulo%}
+
+{% block section %}Diagnostico de Servicio{% endblock section %}
+
+{% block content%}
+<div class="card col-6 mb-4 py-3 border-left-warning">
+  <div class="col-12">
+    
+    <!-- Form -->
+    <form method="POST">
+      {%csrf_token%}
+      
+      <div class="card my-4" aria-readonly="false">
+        <h2 class="my-4 bg-dark text-center text-white">Datos Generales:</h2>
+        <div class="row">
+          <div class="col-3">    
+            <p style="margin-bottom: 0px;">Cliente: </p>
+            {{equipo_form.cliente}}
+          </div>
+  
+          <div class="col-3">
+            <p style="margin-bottom: 0px;">Equipo:</p>
+            {{servicio_form.equipo}}            <!-- Ver como hacer para cargar solo los equipos de ese cliente-->
+          </div>
+          
+          <div class="col-3">
+            <p style="margin-bottom: 0px;">Fecha de Ingreso</p>
+            {{servicio_form.fechaIngreso}}
+          </div>
+
+          <div class="col-3">
+            <p style="margin-bottom: 0px;">Contraseña:</p>
+            {{servicio_form.contraseña}}
+          </div>
+      </div>
+      <div class="row">
+        
+        <div class="col">
+          <p style="margin-bottom: 0px;">Tipo de Equipo:</p>
+          {{equipo_form.tipoEquipo}}
+        </div>
+
+        <div class="col">
+          <p style="margin-bottom: 0px;">Marca:</p>
+          {{equipo_form.marca}}
+        </div>
+        
+        <div class="col">
+          <p style="margin-bottom: 0px;">Modelo:</p>
+          {{equipo_form.modelo}}
+        </div>
+    
+        <div class="col">
+          <p style="margin-bottom: 0px;">Cargador:</p>
+          {{servicio_form.cargador}}
+        </div>
+      </div>
+    
+  
+  
+    <div class="row">
+      <div class="col-12">
+        <p style="margin-bottom: 0px;">Descripcion del Problema:</p>
+        {{servicio_form.problema}}
+      </div>
+    </div>
+  </div>
+  <div class="card mb-4">  
+      <h2 class="my-4 bg-dark text-center text-white">Datos especificos:</h2>
+      <div class="row">
+        <div class="col-3">
+          <p style="margin-bottom: 0px;">Fecha de Entrega</p>
+          {{servicio_form.fechaEntrega}}
+        </div>
+        <div class="col-3">
+          <p style="margin-bottom: 0px;">Estado:</p>
+          {{servicio_form.estado}}
+        </div>
+        <div class="col-3" style="margin-left: 0px;">
+          <p style="margin-bottom: 0px;">Ubicacion:</p>
+          {{servicio_form.ubicacion}}
+        </div>
+        <div class="col-3" style="margin-left: 0px;">
+          <p style="margin-bottom: 0px;">Presupuesto:</p>
+          {{servicio_form.presupuesto}}
+        </div>
+    </div>
+    
+
+    <div class="row">
+      <div class="col-3" style="margin-left: 0px;">
+        <p style="margin-bottom: 0px;">Tipo de memoria:</p>
+        {{equipo_form.memoria}}
+      </div>
+      <div class="col-3" style="margin-left: 0px;">
+        <p style="margin-bottom: 0px;">Capacidad mem:</p>
+        {{equipo_form.capacidadMemoria}}
+      </div>
+      <div class="col-3" style="margin-left: 0px;">
+        <p style="margin-bottom: 0px;">Tipo de disco:</p>
+        {{equipo_form.disco}}
+      </div>
+      <div class="col-3" style="margin-left: 0px;">
+        <p style="margin-bottom: 0px;">Capacidad de disco:</p>
+        {{equipo_form.capacidadDisco}}
+      </div>  
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <p style="margin-bottom: 0px;">Trabajos Realizados:</p>
+        {{servicio_form.trabajosRealizados}}
+      </div>
+    </div>
+    
+  </div>
+
+
+      <hr>
+      <button type="submit" class="btn btn-success" style="float: right; margin: 1%;">
+        <i class="fa fa-check"></i> Editar
+      </button>
+
+      <button type="button" class="btn btn-secondary" onclick="window.history.back()" style="float: right;margin: 1%;">
+        <i class="fa fa-reply"></i> Volver
+      </button>
+
+    </form>
+    <!--end Form -->
+  </div>
+</div>
+
+<!-- Messages -->
+<script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+
+{% if messages %}
+    {% for message in messages %}
+      {% if message.tags == 'success'%}
+      <script type="text/javascript">
+        $(document).ready(function(){
+          swal({
+          title: "Se editó correctamente",
+          type: "success",
+          confirmButtonColor: "#4e73df",
+          confirmButtonText: "Aceptar",
+          closeOnConfirm: false
+        })});
+      </script>
+      {% endif %}
+      {% if message.tags == 'warning' %}
+      <script type="text/javascript">
+        $(document).ready(function(){
+          swal({
+          title: "Ocurrió algo inesperado",
+          type: "warning",
+          confirmButtonColor: "#4e73df",
+          confirmButtonText: "Aceptar",
+          closeOnConfirm: false
+        })});
+      </script>
+      {% endif %}
+      {% if message.tags == 'error' %}
+      <script type="text/javascript">
+        $(document).ready(function(){
+          swal({
+          title: "Ocurrió un error cito",
+          type: "error",
+          confirmButtonColor: "#4e73df",
+          confirmButtonText: "Aceptar",
+          closeOnConfirm: false
+        })});
+      </script>
+      {% endif %}
+    {% endfor %}
+{% endif %}
+
+<!-- end Messages -->
+
+
+{% endblock content%}

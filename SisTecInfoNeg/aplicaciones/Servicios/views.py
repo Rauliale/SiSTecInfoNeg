@@ -12,9 +12,13 @@ def Home(request):
 
 def Wiki(request):
     blogs = Blog.objects.filter(estado = True)
-    return render(request,'wiki.html',{'blogs':blogs})
+    categorias = Categoria.objects.all()
+    return render(request,'wiki.html',{'blogs':blogs,'categorias':categorias})
 
-############################################################## Servicio Tecnico ###################################################
+
+
+
+############################################################## Blog ###################################################
 def crearBlog(request):
     blogs = Blog.objects.all()
     if request.method == 'POST':
@@ -53,6 +57,10 @@ def editarBlog(request,id):
             return redirect('/Servicios/wiki',{'blog_form':blog_form,'blogs':blogs,'blog':blog})    #redireccionar al index
     return render(request,'Wikis/editar_blog.html',{'blog_form':blog_form,'blogs':blogs,'blog':blog})
 
+def listarBlogCategoria(request,id):
+    blogcategoria = Blog.objects.all().filter(categoria=id)
+    print(blogcategoria)
+    return render(request,'Wikis/listar_blog_categoria.html',{'blogcategoria':blogcategoria})
 
 
 
@@ -61,7 +69,7 @@ def editarBlog(request,id):
 #Crear Servicio Tecnico
 def crearServicio(request):
     servicios = Servicio_Tecnico.objects.all()
-    equipo = Equipo.objects.all()
+    equipo = Equipo.objects.all() #aca ver deobtener equipos de una persona particular
     if request.method == 'POST':
         servicio_form = Servicio_TecnicoForm(request.POST) #recibe todos los datos del formulario
         equipo_form = EquipoForm(request.POST) #recibe todos los datos del formulario
@@ -81,7 +89,7 @@ def editarServicio(request,codServicio):
     servicio_form = None
     equipo_form = None
     servicio = Servicio_Tecnico.objects.get(codServicio = codServicio) #aca tengo que cambiar mi variable tipo_Equipo con otro nombre
-    equi = Servicio_Tecnico.Equipo.objects.get(codEquipo = codEquipo)
+    equi = servicio.equipo
     if request.method == 'GET':
         servicio_form = Servicio_TecnicoForm(instance = servicio)       #ver de que es este instance = ??????????????????????????
         equipo_form = EquipoForm(instance = equi)
@@ -114,6 +122,68 @@ def listarServicio(request):
     servicios = Servicio_Tecnico.objects.all()
     return render(request,'Servicios/listar_servicio.html',{'servicios':servicios})
 #################################################################################################################
+
+############################################################## Pila de Servicio Tecnico ###################################################
+#Crear Servicio Tecnico
+def crearPilaServicio(request):
+    servicios = Servicio_Tecnico.objects.all()
+    equipo = Equipo.objects.all()
+    if request.method == 'POST':
+        servicio_form = Servicio_TecnicoForm(request.POST) #recibe todos los datos del formulario
+        equipo_form = EquipoForm(request.POST) #recibe todos los datos del formulario
+        print(servicio_form.errors)
+        if servicio_form.is_valid():    #is_valid es una funcion de django que valida todos los campos
+            servicio_form.save()        #guardar o registrar en la base de datos lo que esta en el formullario
+            return redirect('/Servicios/crear_pila_servicio')    #redireccionar para volver a cargar otro servicio
+    else:
+        servicio_form = Servicio_TecnicoForm()
+        equipo_form = EquipoForm()
+    return render(request,'Servicios/crear_pila_servicio.html',{'servicio_form':servicio_form,'equipo_form':equipo_form,'servicios':servicios,'equipo':equipo})
+
+#Editar un Servicio
+def editarPilaServicio(request,codServicio):
+    servicios = Servicio_Tecnico.objects.all()
+    equipo = Equipo.objects.all()
+    servicio_form = None
+    equipo_form = None
+    servicio = Servicio_Tecnico.objects.get(codServicio = codServicio) #aca tengo que cambiar mi variable tipo_Equipo con otro nombre
+    equi = servicio.equipo
+    if request.method == 'GET':
+        servicio_form = Servicio_TecnicoForm(instance = servicio)       #ver de que es este instance = ??????????????????????????
+        equipo_form = EquipoForm(instance = equi)
+    else:
+        servicio_form = Servicio_TecnicoForm(request.POST, instance = servicio)
+        equipo_form = EquipoForm(request.POST, instance = equi)
+        if servicio_form.is_valid():    #is_valid es una funcion de django que valida todos los campos
+            servicio_form.save()        #guardar o registrar en la base de datos lo que esta en el formullario
+            messages.success(request, 'Se editó correctamente')
+            return redirect('/Servicios/listar_pila_servicio',{'servicio_form':servicio_form,'equipo_form':equipo_form,'servicios':servicios,'equipo':equipo,'equi':equi,'servicio':servicio})    #redireccionar al index
+        else:
+            print(servicio_form)
+            print("aca entro")       
+            messages.error(request, 'Ocurrió un errorcito')    
+    return render(request,'Servicios/editar_pila_servicio.html',{'servicio_form':servicio_form,'equipo_form':equipo_form,'servicios':servicios,'equipo':equipo,'equi':equi,'servicio':servicio})
+
+#Eliminar un Servicio
+def eliminarPilaServicio (request,id):
+    servicios = Servicio_Tecnico.objects.all()
+    servicio_form=None
+    try:
+        equip = get_object_or_404(Servicio_Tecnico,id=id)
+        equip.delete()
+        messages.warning(request, 'Se eliminó el Servicio Tecnico')
+        return redirect('/Servicios/crear_pila_equipo',{'servicio_form' : servicio_form, 'servicios':servicios})
+    except Exception as e:
+        messages.error(request, 'Ocurrió un error al tratar de eliminar el servicio tecnico')
+    return render(request, 'Servicios/crear_pila_servicio.html',{'servicio_form' : servicio_form, 'servicios':servicios})
+
+#listar Servicio
+def listarPilaServicio(request):
+    servicios = Servicio_Tecnico.objects.all()
+    return render(request,'Servicios/listar_pila_servicio.html',{'servicios':servicios})
+#################################################################################################################
+
+
 
 ##################################################### Tipo Equipo ###########################################################
 #Crear Tipo Equipo
@@ -268,6 +338,57 @@ def listarMarcas(request):
     return render(request,'Servicios/listar_marcas.html',{'marcas':marcas})
 ################################################################################################################
 
+######################################################## Accesorios ########################################################
+#Crear Accesorio
+def crearAccesorio(request):
+    accesorios = Accesorio.objects.all()
+    if request.method == 'POST':
+        accesorio_form = AccesorioForm(request.POST) #recibe todos los datos del formulario
+        if accesorio_form.is_valid():    #is_valid es una funcion de django que valida todos los campos
+            accesorio_form.save()        #guardar o registrar en la base de datos lo que esta en el formullario
+            print('Ocurrió un error al tratar de crear accesorio')
+            return redirect('/Servicios/crear_accesorio')    #redireccionar al index
+    else:
+        accesorio_form = AccesorioForm()
+    return render(request,'Servicios/crear_accesorio.html',{'accesorio_form':accesorio_form,'accesorios':accesorios})
+    
+#Editar Accesorio
+def editarAccesorio(request,id):
+    accesorios = Accesorio.objects.all()
+    accesorio_form = None 
+    accesorio = Accesorio.objects.get(id = id) #aca tengo que cambiar mi variable tipo_Equipo con otro nombre
+    if request.method == 'GET':
+        accesorio_form = AccesorioForm(instance = accesorio)       #ver de que es este instance = ??????????????????????????
+    else:
+        accesorio_form = AccesorioForm(request.POST, instance = accesorio)
+        if accesorio_form.is_valid():    #is_valid es una funcion de django que valida todos los campos
+            accesorio_form.save()        #guardar o registrar en la base de datos lo que esta en el formullario
+            return redirect('/Servicios/listar_accesorios',{'accesorio_form':accesorio_form,'accesorios':accesorios,'accesorio':accesorio})    #redireccionar al index 
+
+    return render(request,'Servicios/editar_accesorios.html',{'accesorio_form':accesorio_form,'accesorios':accesorios,'accesorio':accesorio})
+
+#Eliminar una Accesorio
+def eliminarAccesorio (request,id):
+    accesorios = Accesorio.objects.all()
+    print(id)
+    accesorio_form=None
+    try:
+        #marca = get_object_or_404(Marca,id=id)
+        accesorio = Accesorio.objects.get(id = id) 
+        accesorio.delete()
+        print('entro acá')
+        messages.warning(request, 'Se eliminó la accesorio')
+        return redirect('/Servicios/crear_accesorio',{'accesorio_form' : accesorio_form, 'accesorio':accesorio})
+    except Exception as e:
+        messages.error(request, 'Ocurrió un error al tratar de eliminar la marca ya que tiene equipos asociados')
+        print('entro acá 2')#no está mandando el error al front end
+    return render(request, 'Servicios/listar_accesorios.html',{'accesorio_form' : accesorio_form, 'acesorios':acesorios})
+
+def listarAccesorio(request):
+    accesorios = Accesorio.objects.all()
+    return render(request,'Servicios/listar_accesorios.html',{'accesorios':accesorios})
+################################################################################################################
+
 
 
 
@@ -368,4 +489,102 @@ def listarEstadoRepuesto(request):
     estadoRepuesto = Estado_Repuesto.objects.all()
     return render(request,'Servicios/listar_estado_repuesto.html',{'estadoRepuesto':estadoRepuesto})
 
+################################################################################################################
+
+############################################### Tipo de Memoria ###################################################
+#Crear Tipo Memoria
+def crearTipoMemoria(request):
+    tipo_Memoria = TipoMemoria.objects.all()
+    if request.method == 'POST':
+        tipoMemoria_form = TipoMemoriaForm(request.POST) #recibe todos los datos del formulario
+        if tipoMemoria_form.is_valid():    #is_valid es una funcion de django que valida todos los campos
+            tipoMemoria_form.save()        #guardar o registrar en la base de datos lo que esta en el formullario
+            return redirect('/Servicios/crear_tipo_memoria')    #redireccionar al index
+    else:
+        tipoMemoria_form = TipoMemoriaForm()
+    return render(request,'Servicios/crear_tipo_memoria.html',{'tipoMemoria_form':tipoMemoria_form,'tipo_Memoria':tipo_Memoria})
+
+
+#Editar Tipo Memoria
+def editarTipoMemoria(request,id):
+    tipo_Memoria = TipoMemoria.objects.all()
+    tipoMemoria_form = None 
+    tipo = TipoMemoria.objects.get(id = id) #aca tengo que cambiar mi variable tipo_Equipo con otro nombre
+    if request.method == 'GET':
+        tipoMemoria_form = TipoMemoriaForm(instance = tipo)       #ver de que es este instance = ??????????????????????????
+    else:
+        tipoMemoria_form = TipoMemoriaForm(request.POST, instance = tipo)
+        if tipoMemoria_form.is_valid():    #is_valid es una funcion de django que valida todos los campos
+            tipoMemoria_form.save()        #guardar o registrar en la base de datos lo que esta en el formullario
+            return redirect('/Servicios/crear_tipo_memoria',{'tipoMemoria_form':tipoMemoria_form,'tipo_Memoria':tipo_Memoria,'tipo':tipo})    #redireccionar al index
+    return render(request,'Servicios/editar_tipo_memoria.html',{'tipoMemoria_form':tipoMemoria_form,'tipo_Memoria':tipo_Memoria,'tipo':tipo})
+
+
+#eliminar Tipo Memoria
+def eliminarTipoMemoria (request,id):
+    tipo_Memoria = TipoMemoria.objects.all()
+    tipoMemoria_form=None
+    try:
+        #marca = get_object_or_404(Marca,id=id)
+        tipoM = TipoMemoria.objects.get(id = id) 
+        tipoM.delete()
+        return redirect('/Servicios/crear_tipo_memoria',{'tipoMemoria_form' : tipoMemoria_form, 'tipo_Memoria':tipo_Memoria})
+    except Exception as e:
+        messages.error(request, 'Ocurrió un error al tratar de eliminar el tipo de equipo ya que tiene equipos asociados')
+    return render(request, 'Servicios/listar_tipo_memoria.html',{'tipoMemoria_form' : tipoMemoria_form, 'tipo_Memoria':tipo_Memoria})
+
+
+#listar Tipo Memoria
+def listarTipoMemoria(request):
+    tipo_Memoria = TipoMemoria.objects.all()
+    return render(request,'Servicios/listar_tipo_memoria.html',{'tipo_Memoria':tipo_Memoria})
+################################################################################################################
+
+############################################### Tipo de Discco ###################################################
+#Crear Tipo Disco
+def crearTipoDisco(request):
+    tipo_Disco = TipoDisco.objects.all()
+    if request.method == 'POST':
+        tipoDisco_form = TipoDiscoForm(request.POST) #recibe todos los datos del formulario
+        if tipoDisco_form.is_valid():    #is_valid es una funcion de django que valida todos los campos
+            tipoDisco_form.save()        #guardar o registrar en la base de datos lo que esta en el formullario
+            return redirect('/Servicios/crear_tipo_disco')    #redireccionar al index
+    else:
+        tipoDisco_form = TipoDiscoForm()
+    return render(request,'Servicios/crear_tipo_disco.html',{'tipoDisco_form':tipoDisco_form,'tipo_Disco':tipo_Disco})
+
+
+#Editar Tipo Disco
+def editarTipoDisco(request,id):
+    tipo_Disco = TipoDisco.objects.all()
+    tipoDisco_form = None 
+    tipo = TipoDisco.objects.get(id = id) #aca tengo que cambiar mi variable tipo_Equipo con otro nombre
+    if request.method == 'GET':
+        tipoDisco_form = TipoDiscoForm(instance = tipo)       #ver de que es este instance = ??????????????????????????
+    else:
+        tipoDisco_form = TipoDiscoForm(request.POST, instance = tipo)
+        if tipoDisco_form.is_valid():    #is_valid es una funcion de django que valida todos los campos
+            tipoDisco_form.save()        #guardar o registrar en la base de datos lo que esta en el formullario
+            return redirect('/Servicios/crear_tipo_disco',{'tipoDisco_form':tipoDisco_form,'tipo_Disco':tipo_Disco,'tipo':tipo})    #redireccionar al index
+    return render(request,'Servicios/editar_tipo_disco.html',{'tipoDisco_form':tipoDisco_form,'tipo_Disco':tipo_Disco,'tipo':tipo})
+
+
+#eliminar Tipo Disco
+def eliminarTipoDisco (request,id):
+    tipo_Disco = TipoDisco.objects.all()
+    tipoDisco_form=None
+    try:
+        #marca = get_object_or_404(Marca,id=id)
+        tipoD = TipoDisco.objects.get(id = id) 
+        tipoD.delete()
+        return redirect('/Servicios/crear_tipo_disco',{'tipoDisco_form' : tipoDisco_form, 'tipo_Disco':tipo_Disco})
+    except Exception as e:
+        messages.error(request, 'Ocurrió un error al tratar de eliminar el tipo de disco ya que tiene equipos asociados')
+    return render(request, 'Servicios/listar_tipo_disco.html',{'tipoDisco_form' : tipoDisco_form, 'tipo_Disco':tipo_Disco})
+
+
+#listar Tipo Disco
+def listarTipoDisco(request):
+    tipo_Disco = TipoDisco.objects.all()
+    return render(request,'Servicios/listar_tipo_disco.html',{'tipo_Disco':tipo_Disco})
 ################################################################################################################

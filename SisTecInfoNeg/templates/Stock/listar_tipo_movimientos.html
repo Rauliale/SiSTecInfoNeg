@@ -1,0 +1,52 @@
+{% extends 'index.html' %}
+
+<!DOCTYPE html>
+
+{% block titulo%}Listar Tipos de Movimientos{% endblock titulo%}
+
+{% block section %}Listar Tipos de Movimientos{% endblock section %}
+
+{% block content%}
+
+<!-- List -->
+{% if tipo_movimientos%}
+<div class="card shadow">
+        <div class="card-header py-3">
+          <h6 class="m-0 font-weight-bold text-secondary">Listado de Tipos de Movimientos</h6>
+        </div>
+        <div class="card-body">
+           <div class="table-responsive">
+            <table class="table table-bordered dataTable" id="dataTable">
+                <thead>
+                  <tr>
+                    <th>Id</th>
+                    <th>Nombre</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {%for movi in tipo_movimientos%}
+                  <tr>
+                    <td style="text-align: left;">{{movi.pk}}</td>
+                    <td style="text-align: left;">{{movi.nombre}}</td>
+                    <td width="10%" align="center">
+                          <div class="table-data-feature">
+                            <button type="button" class="btn btn-info" onclick="location.href= '/Stock/editar_tipo_movimiento/{{movi.pk}}'">Ver mas</button>
+                          </div>
+                      </td>
+                  </tr>
+                  {% endfor %}
+                  
+                </tbody>
+              </table>
+        </div>
+  </div>
+
+</div>
+{% else %}
+    <p>Aún no hay datos cargados</p>
+{% endif %}
+<!-- end List -->
+
+
+
+{% endblock content%}

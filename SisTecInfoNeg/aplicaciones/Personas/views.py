@@ -115,21 +115,15 @@ def listarLocalidad(request):
 #Crear Clientes
 def crearCliente(request):
     cliente = Cliente.objects.all()
-    #usuario = Usuario.objects.all()
     if request.method == 'POST':
         cliente_form = ClienteForm(request.POST) #recibe todos los datos del formulario
-        usuario_form = UsuarioForm(request.POST) #recibe todos los datos del formulario
         print(cliente_form.errors)
         if cliente_form.is_valid():    #is_valid es una funcion de django que valida todos los campos
             cliente_form.save()        #guardar o registrar en la base de datos lo que esta en el formullario
-        else:
-            print('Ocurrió un error al tratar de crear la cliente')
-            return redirect('index')    #redireccionar para volver a cargar otro servicio
-    
+            return redirect('/Personas/crear_cliente')    #redireccionar para volver a cargar otro servicio  
     else:
         cliente_form = ClienteForm()
-        usuario_form = UsuarioForm()
-    return render(request,'Personas/crear_cliente.html',{'cliente_form':cliente_form,'usuario_form':usuario_form,'cliente':cliente}) #,'usuario':usuario
+    return render(request,'Personas/crear_cliente.html',{'cliente_form':cliente_form,'cliente':cliente})
 
 
 #listar Clientes
@@ -143,21 +137,16 @@ def listarCliente(request):
 #Crear Tecnico
 def crearTecnico(request):
     tecnico = Tecnico.objects.all()
-    #usuario = Usuario.objects.all()
     if request.method == 'POST':
         tecnico_form = TecnicoForm(request.POST) #recibe todos los datos del formulario
-        usuario_form = UsuarioForm(request.POST) #recibe todos los datos del formulario
         print(tecnico_form.errors)
         if tecnico_form.is_valid():    #is_valid es una funcion de django que valida todos los campos
             tecnico_form.save()        #guardar o registrar en la base de datos lo que esta en el formullario
-        else:
-            print('Ocurrió un error al tratar de crear la tecnico')
-            return redirect('index')    #redireccionar para volver a cargar otro servicio
+            return redirect('/Personas/crear_tecnico')    #redireccionar para volver a cargar otro servicio
     
     else:
         tecnico_form = TecnicoForm()
-        usuario_form = UsuarioForm()
-    return render(request,'Personas/crear_tecnico.html',{'tecnico_form':tecnico_form,'usuario_form':usuario_form,'tecnico':tecnico}) #,'usuario':usuario
+    return render(request,'Personas/crear_tecnico.html',{'tecnico_form':tecnico_form,'tecnico':tecnico})
 
 
 #listar tecnico
@@ -171,21 +160,15 @@ def listarTecnico(request):
 #Crear Empleado
 def crearEmpleado(request):
     empleado = Empleado.objects.all()
-    #usuario = Usuario.objects.all()
     if request.method == 'POST':
         empleado_form = EmpleadoForm(request.POST) #recibe todos los datos del formulario
-        usuario_form = UsuarioForm(request.POST) #recibe todos los datos del formulario
         print(empleado_form.errors)
         if empleado_form.is_valid():    #is_valid es una funcion de django que valida todos los campos
             empleado_form.save()        #guardar o registrar en la base de datos lo que esta en el formullario
-        else:
-            print('Ocurrió un error al tratar de crear la empleado')
-            return redirect('index')    #redireccionar para volver a cargar otro servicio
-    
+            return redirect('/Personas/crear_empleado')    #redireccionar para volver a cargar otro servicio
     else:
         empleado_form = EmpleadoForm()
-        usuario_form = UsuarioForm()
-    return render(request,'Personas/crear_empleado.html',{'empleado_form':empleado_form,'usuario_form':usuario_form,'empleado':empleado}) #,'usuario':usuario
+    return render(request,'Personas/crear_empleado.html',{'empleado_form':empleado_form,'empleado':empleado}) 
 
 
 #listar Empleado
@@ -193,3 +176,5 @@ def listarEmpleado(request):
     empleado = Empleado.objects.all()
     return render(request,'Personas/listar_empleado.html',{'empleado':empleado})
 ##################################################################################################################
+
+#################################################### Tipo de Memoria ####################################################

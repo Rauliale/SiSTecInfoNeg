@@ -1,0 +1,70 @@
+{% extends 'index.html' %}
+
+<!DOCTYPE html>
+
+{% block titulo%}Listar Servicios Tecnicos{% endblock titulo%}
+
+{% block section %}Listado Servicio Tecnico{% endblock section %}
+
+{% block content%}
+
+<!-- List -->
+{% if servicios%}
+<div class="card shadow">
+        <div class="card-header py-3">
+          <h6 class="m-0 font-weight-bold text-secondary">Listado de Servicios Tecnicos</h6>
+        </div>
+        <div class="card-body">
+           <div class="table-responsive">
+            <table class="table table-bordered dataTable" id="dataTable">
+                <thead>
+                  <tr>
+                    <th>Cliente</th>
+                    <th>equipo</th>
+                    <th>Codigo de Servicio</th>
+                    <th>estado</th>
+                    <th>fechaIngreso</th>
+                    <th>fechaEntrega</th>
+                    <th>ubicacion</th>
+                    <th>tipo de equipo</th>
+                    <th>marca</th>
+                    <th>modelo</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {%for servicio in servicios%}
+                  <tr>
+                    <td style="text-align: left;">{{servicio.equipo.cliente}}</td>
+                    <td style="text-align: left;">{{servicio.equipo}}</td>
+                    <td style="text-align: left;">{{servicio.codServicio}}</td>
+                    <td style="text-align: left;">{{servicio.estado}}</td>
+                    <td style="text-align: left;">{{servicio.fechaIngreso}}</td>
+                    <td style="text-align: left;">{{servicio.fechaEntrega}}</td>
+                    <td style="text-align: left;">{{servicio.ubicacion}}</td>
+                    <td style="text-align: left;">{{servicio.equipo.tipoEquipo}}</td>
+                    <td style="text-align: left;">{{servicio.equipo.marca}}</td>
+                    <td style="text-align: left;">{{servicio.equipo.modelo}}</td>
+                    <td width="10%" align="center">
+                          <div class="table-data-feature">
+                            <button type="button" class="btn btn-info" onclick="location.href='/Servicios/editar_pila_servicio/{{servicio.pk}}'">Ver mas</button>
+                          </div>
+                      </td>
+                  </tr>
+                  {% endfor %}
+                  
+                </tbody>
+              </table>
+        </div>
+  </div>
+
+</div>
+{% else %}
+    <p>Aún no hay datos cargados</p>
+{% endif %}
+<!-- end List -->
+
+
+{% endblock content%}
+
+
+     

@@ -1,0 +1,154 @@
+{% extends 'index.html' %}
+
+<!DOCTYPE html>
+
+{%block titulo%}Crear un Movimiento{%endblock titulo%}
+{% block section %}Crear un Movimiento{% endblock section %}
+
+{% block content%}
+<div class="card-header py-4 bg-info">
+  <h4 class="m-0 font-weight-bold text-white ">Movimientos</h4>
+</div>
+<div class="card text-primary bg-ligth">
+    <div class="col-12">
+      <!-- Form -->
+      <form method="POST">
+        {%csrf_token%}
+        <div class="row text-dark">
+            
+            <div class="col-4">
+              <p style="margin-bottom: 0px; font-size: 3vh; font-size: 3vh;;">Tipo de Comprobante:</p>
+              {{movimiento_form.tipoComprobante}}            <!-- Ver como hacer para cargar solo los equipos de ese cliente-->
+            </div>
+            
+            <div class="col-4">
+              <p style="margin-bottom: 0px;font-size: 3vh; font-size: 3vh;">Número de Comprobante</p>
+              {{movimiento_form.numeroComprobante}}
+            </div>
+
+            <div class="col-3">
+              <p style="margin-bottom: 0px; font-size: 3vh; font-size: 3vh;">Fecha: </p>
+              {{movimiento_form.fechaMovimiento}}
+            </div>
+            
+        </div>
+        
+
+        <div class="row text-dark">
+          <div class="col-4">    
+            <p style="margin-bottom: 0px; font-size: 3vh; font-size: 3vh;">Tipo de Movimiento: </p>
+            {{movimiento_form.tipoMovimiento}}
+          </div>
+
+          <div class="col-4">
+            <p style="margin-bottom: 0px; font-size: 3vh; font-size: 3vh;">Lugar de Almacenamiento:</p>
+            {{movimiento_form.lugar}}
+          </div> 
+      </div>
+      
+      <div class="row text-dark">
+        
+        
+        <div class="col-4">
+          <p style="margin-bottom: 0px; font-size: 3vh; font-size: 3vh;">Articulo: <button type="button" class="fas fa-plus-circle fa-md" onclick="location.href='/Stock/crear_articulo'"></button></p>
+          {{movimiento_form.articulo}}
+        </div>
+        <div class="col-2" style="margin-left: 0px; font-size: 3vh; font-size: 3vh;">
+          <p style="margin-bottom: 0px; font-size: 3vh; font-size: 3vh;">Stock:</p>
+          {{articulo_form.cantidad}}
+        </div>
+        <div class="col-2">
+          <p style="margin-bottom: 0px; font-size: 3vh; font-size: 3vh;">Precio de Compra: </p>
+          {{articulo_form.precioCompra}}
+        </div>
+        <div class="col-2">
+          <p style="margin-bottom: 0px; font-size: 3vh; font-size: 3vh;">Precio de Venta:</p>
+          {{articulo_form.precioVenta}}
+        </div>
+        <div class="col-2">
+          <p style="margin-bottom: 0px; font-size: 3vh; font-size: 3vh;">Total:</p>
+          {{movimiento_form.total}}
+        </div>
+    </div>
+    
+  <div class="row text-dark">
+    
+    <div class="col-4">
+      <p style="margin-bottom: 0px; font-size: 3vh; font-size: 3vh;">Observaciones: </p>
+      {{movimiento_form.observaciones}}
+    </div>
+    
+    <div class="col-4">
+      <p style="margin-bottom: 0px; font-size: 3vh; font-size: 3vh;">Estado:</p>
+      {{movimiento_form.estado}}
+    </div>
+  </div>
+        
+  
+    <hr>
+    <button type="submit" class="btn btn-success" style="float: right; margin: 1%;">
+      <i class="fa fa-plus"></i> Crear
+    </button>
+  
+        <button type="button" class="btn btn-secondary" onclick="window.history.back()" style="float: right;margin: 1%;">
+          <i class="fa fa-reply"></i> Volver
+        </button>
+  
+      </form>
+      <!--end Form -->
+    </div>
+</div>
+
+<hr>
+
+<!-- List -->
+{% if movimientos%}
+<div class="card shadow text-primary">
+        <div class="card-header py-4 bg-info">
+          <h4 class="m-0 font-weight-bold text-white">Listado de Movimientos</h4>
+        </div>
+        <div class="card-body text-dark">
+           <div class="table-responsive">
+            <table class="table table-bordered dataTable text-dark" id="dataTable">
+                <thead>
+                  <tr>
+                    <th>Id</th>
+                    <th>Lugar de Almacenamiento</th>
+                    <th>Tipo de Movimiento</th>
+                    <th>Tipo de Comprobante</th>
+                    <th>Numero de Comprobante</th>
+                    <th>Fecha de Movimiento</th>
+                    <th>Total</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {%for movi in movimientos%}
+                  <tr>
+                    <td style="text-align: left;">{{movi.pk}}</td>
+                    <td style="text-align: left;">{{movi.lugar}}</td>
+                    <td style="text-align: left;">{{movi.tipoMovimiento}}</td>
+                    <td style="text-align: left;">{{movi.tipoComprobante}}</td>
+                    <td style="text-align: left;">{{movi.numeroComprobante}</td>
+                    <td style="text-align: left;">{{movi.fechaMovimiento}}</td>
+                    <td style="text-align: left;">{{movi.total}}</td>
+                    <td style="text-align: left;">{{movi.estado}}</td>
+                    <td width="2%" align="center">
+                          <div class="table-data-feature">
+                            <button type="button" class="btn btn-info" onclick="location.href='/Servicios/editar_servicio/{{servicio.pk}}'">Ver mas</button>
+                          </div>
+                      </td>
+                  </tr>
+                  {% endfor %}
+                  
+                </tbody>
+              </table>
+        </div>
+  </div>
+
+</div>
+{% endif %}
+<!-- end List -->
+
+{% endblock content%}

@@ -15,17 +15,45 @@
     <form method="POST">
       {%csrf_token%}
       <div class="row">
-        <div class="col-3">
-          <p style="margin-bottom: 0px;">Cliente</p>
+        <div class="col-3">    
+          <p style="margin-bottom: 0px;">Cliente:   <button type="button" class="btn btn-info" onclick="location.href='/Personas/crear_cliente'">+</button></p>
           {{equipo_form.cliente}}
         </div>
 
         <div class="col-3">
-            <p style="margin-bottom: 0px;">Tipo de Equipo:</p>
-            {{equipo_form.tipoEquipo}}
-          </div>
+          <p style="margin-bottom: 0px;">Equipo:   <button type="button" class="btn btn-info" onclick="location.href='/Servicios/crear_equipo'">+</button></p>
+          {{servicio_form.equipo}}            <!-- Ver como hacer para cargar solo los equipos de ese cliente-->
+        </div>
+        
+        <div class="col-3">
+          <p style="margin-bottom: 0px;">Fecha de Ingreso</p>
+          {{servicio_form.fechaIngreso}}
+        </div>
+
     </div>
     
+
+    <div class="row">
+      <div class="col-3">
+        <p style="margin-bottom: 0px;">Estado:</p>
+        {{servicio_form.estado}}
+      </div>
+      
+      <div class="col-3">
+        <p style="margin-bottom: 0px;">Tipo de Equipo:</p>
+        {{equipo_form.tipoEquipo}}
+      </div>
+
+      <div class="col-3">
+        <p style="margin-bottom: 0px;">Contraseña:</p>
+        {{servicio_form.contraseña}}
+      </div>
+      
+      <div class="col-3" style="margin-left: 0px;">
+        <p style="margin-bottom: 0px;">Ubicacion:</p>
+        {{servicio_form.ubicacion}}
+      </div>
+  </div>
   
   <div class="row">
     <div class="col-3">
@@ -37,6 +65,19 @@
       <p style="margin-bottom: 0px;">Modelo:</p>
       {{equipo_form.modelo}}
     </div>
+
+    <div class="col-2">
+      <p style="margin-bottom: 0px;">Cargador:</p>
+      {{servicio_form.cargador}}
+    </div>
+</div>
+
+
+<div class="row">
+<div class="col-12">
+  <p style="margin-bottom: 0px;">Descripcion del Problema:</p>
+  {{servicio_form.problema}}
+</div>
 </div>
 
       <hr>

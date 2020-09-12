@@ -2,14 +2,6 @@ from django import forms
 from .models import *
 
 
-class ProvinciaForm(forms.ModelForm):
-    class Meta:
-        model = Provincia
-        fields = ['provincia']
-        widgets = {
-        'provincia' : forms.TextInput(attrs={'type' : 'text', 'class' : 'form-control form-control-user', 'placeholder' : 'Provincia', 'style' : 'margin-bottom:2px;'}),
-        }
-
 class LocalidadForm(forms.ModelForm):
     class Meta:
         model = Localidad
@@ -37,39 +29,60 @@ class TelefonoForm(forms.ModelForm):
         model = Telefono
         fields = ['prefijo','numero','whatsapp','tipo_telefono']
 
-class UsuarioForm(forms.ModelForm):
-    class Meta:
-        model = Usuario
-        fields = ['dni','nombre','apellido','fechaNac','sexo','domicilio','telefono','correoElectronico']
-
-class ClienteForm(UsuarioForm.Meta):
+class ClienteForm(forms.ModelForm):
     class Meta:
         model = Cliente
-        fields = ['nombreEmpresa'] #'dni','nombre','apellido','fechaNac','sexo','domicilio','telefono','correoElectronico',
+        fields = ['nombreEmpresa','dni','nombre','apellido','fechaNac','sexo','domicilio','telefono','correoElectronico']
         widgets = {
-        #'dni' : forms.TextInput(attrs={'type' : 'text', 'class' : 'form-control form-control-user', 'placeholder' : 'Localidad', 'style' : 'margin-bottom:2px;'}),
-        #'nombre' : forms.TextInput(attrs={'type' : 'text', 'class' : 'form-control form-control-user', 'placeholder' : 'Localidad', 'style' : 'margin-bottom:2px;'}),
-        #'apellido' : forms.TextInput(attrs={'type' : 'text', 'class' : 'form-control form-control-user', 'placeholder' : 'Localidad', 'style' : 'margin-bottom:2px;'}),
-        #'fechaNac' : forms.TextInput(attrs={'type' : 'text', 'class' : 'form-control form-control-user', 'placeholder' : 'Localidad', 'style' : 'margin-bottom:2px;'}),
-        #'sexo' : forms.TextInput(attrs={'type' : 'text', 'class' : 'form-control form-control-user', 'placeholder' : 'Localidad', 'style' : 'margin-bottom:2px;'}),
-        #'domicilio' : forms.TextInput(attrs={'type' : 'text', 'class' : 'form-control form-control-user', 'placeholder' : 'Localidad', 'style' : 'margin-bottom:2px;'}),
-        #'telefono' : forms.TextInput(attrs={'type' : 'text', 'class' : 'form-control form-control-user', 'placeholder' : 'Localidad', 'style' : 'margin-bottom:2px;'}),
-        #'correoElectronico' : forms.TextInput(attrs={'type' : 'text', 'class' : 'form-control form-control-user', 'placeholder' : 'Localidad', 'style' : 'margin-bottom:2px;'}),
-        'nombreEmpresa' : forms.TextInput(attrs={'type' : 'text', 'class' : 'form-control form-control-user', 'placeholder' : 'Localidad', 'style' : 'margin-bottom:2px;'}),
+        'dni' : forms.TextInput(attrs={'type' : 'text', 'class' : 'form-control form-control-user', 'placeholder' : 'DNI', 'style' : 'margin-bottom:2px;'}),
+        'nombre' : forms.TextInput(attrs={'type' : 'text', 'class' : 'form-control form-control-user', 'placeholder' : 'Nombre', 'style' : 'margin-bottom:2px;'}),
+        'apellido' : forms.TextInput(attrs={'type' : 'text', 'class' : 'form-control form-control-user', 'placeholder' : 'Apellido', 'style' : 'margin-bottom:2px;'}),
+        'fechaNac' : forms.DateInput(attrs={'type':'date','class':'form-control'}),
+        'sexo' : forms.TextInput(attrs={'type' : 'text', 'class' : 'form-control form-control-user', 'placeholder' : 'Sexo', 'style' : 'margin-bottom:2px;'}),
+        'domicilio' : forms.Select(attrs={'class' : 'js-example-basic-single form-control form-control-user'}),
+        'telefono' : forms.Select(attrs={'class' : 'js-example-basic-single form-control form-control-user'}),
+        'correoElectronico' : forms.TextInput(attrs={'type' : 'text', 'class' : 'form-control form-control-user', 'placeholder' : 'Correo Electronico', 'style' : 'margin-bottom:2px;'}),
+        'nombreEmpresa' : forms.TextInput(attrs={'type' : 'text', 'class' : 'form-control form-control-user', 'placeholder' : 'Empresa del Cliente', 'style' : 'margin-bottom:2px;'}),
         }
+
+
 class EspecialidadForm(forms.ModelForm):
     class Meta:
         model = Especialidad
         fields = ['nombre','descripcion']
 
-class TecnicoForm(UsuarioForm.Meta):
+class TecnicoForm(forms.ModelForm):
     class Meta:
         model = Tecnico
-        fields = ['turno','especialidades']
+        fields = ['turno','especialidades','dni','nombre','apellido','fechaNac','sexo','domicilio','telefono','correoElectronico']
+        widgets = {
+        'dni' : forms.TextInput(attrs={'type' : 'text', 'class' : 'form-control form-control-user', 'placeholder' : 'DNI', 'style' : 'margin-bottom:2px;'}),
+        'nombre' : forms.TextInput(attrs={'type' : 'text', 'class' : 'form-control form-control-user', 'placeholder' : 'Nombre', 'style' : 'margin-bottom:2px;'}),
+        'apellido' : forms.TextInput(attrs={'type' : 'text', 'class' : 'form-control form-control-user', 'placeholder' : 'Apellido', 'style' : 'margin-bottom:2px;'}),
+        'fechaNac' : forms.DateInput(attrs={'type':'date','class':'form-control'}),
+        'sexo' : forms.TextInput(attrs={'type' : 'text', 'class' : 'form-control form-control-user', 'placeholder' : 'Sexo', 'style' : 'margin-bottom:2px;'}),
+        'domicilio' : forms.Select(attrs={'class' : 'js-example-basic-single form-control form-control-user'}),
+        'telefono' : forms.Select(attrs={'class' : 'js-example-basic-single form-control form-control-user'}),
+        'correoElectronico' : forms.TextInput(attrs={'type' : 'text', 'class' : 'form-control form-control-user', 'placeholder' : 'Correo Electronico', 'style' : 'margin-bottom:2px;'}),
+        'turno': forms.TextInput(attrs={'type' : 'text', 'class' : 'form-control form-control-user', 'placeholder' : 'Turno', 'style' : 'margin-bottom:2px;'}),
+        'especialidades': forms.SelectMultiple() #para ver una lista de cosas cargadas desde una clave foranea
+        }
 
-class EmpleadoForm(UsuarioForm.Meta):
+class EmpleadoForm(forms.ModelForm):
     class Meta:
         model = Empleado
-        fields = ['turno','puesto']
+        fields = ['turno','puesto','dni','nombre','apellido','fechaNac','sexo','domicilio','telefono','correoElectronico']
+        widgets = {
+        'dni' : forms.TextInput(attrs={'type' : 'text', 'class' : 'form-control form-control-user', 'placeholder' : 'DNI', 'style' : 'margin-bottom:2px;'}),
+        'nombre' : forms.TextInput(attrs={'type' : 'text', 'class' : 'form-control form-control-user', 'placeholder' : 'Nombre', 'style' : 'margin-bottom:2px;'}),
+        'apellido' : forms.TextInput(attrs={'type' : 'text', 'class' : 'form-control form-control-user', 'placeholder' : 'Apellido', 'style' : 'margin-bottom:2px;'}),
+        'fechaNac' : forms.DateInput(attrs={'type':'date','class':'form-control'}),
+        'sexo' : forms.TextInput(attrs={'type' : 'text', 'class' : 'form-control form-control-user', 'placeholder' : 'Sexo', 'style' : 'margin-bottom:2px;'}),
+        'domicilio' : forms.Select(attrs={'class' : 'js-example-basic-single form-control form-control-user'}),
+        'telefono' : forms.Select(attrs={'class' : 'js-example-basic-single form-control form-control-user'}),
+        'correoElectronico' : forms.TextInput(attrs={'type' : 'text', 'class' : 'form-control form-control-user', 'placeholder' : 'Correo Electronico', 'style' : 'margin-bottom:2px;'}),
+        'turno': forms.TextInput(attrs={'type' : 'text', 'class' : 'form-control form-control-user', 'placeholder' : 'Turno', 'style' : 'margin-bottom:2px;'}),
+        'puesto': forms.TextInput(attrs={'type' : 'text', 'class' : 'form-control form-control-user', 'placeholder' : 'Puesto', 'style' : 'margin-bottom:2px;'}),
+        }
 
 

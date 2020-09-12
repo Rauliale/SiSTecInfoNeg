@@ -25,7 +25,7 @@ SECRET_KEY = 'wtx1t^&ovzuibap)!2y$p3$p22l4q_!#ra2f2)q-@6u##$^l)i'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'aplicaciones.Personas',
     'aplicaciones.Servicios',
+    'aplicaciones.Stock',
     'import_export',    #sirve para hacer importaciones y exportaciones del sitio de administracion de django crack el tipo
     'ckeditor',         #sirve para darle formatos a un campo de texto tipo word
 ]

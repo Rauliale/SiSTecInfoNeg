@@ -1,0 +1,44 @@
+{% extends 'wiki.html' %}
+{% load static %}
+
+{% block titulo%}Listar Blogs{% endblock titulo%}
+
+{% block section %}Ver Blogs por categoria {% endblock section %}
+
+
+
+{%block content%}
+        <!-- Blog Post -->
+            
+        <div class="card mb-4">
+        {% block post%}
+          {% if catblog %}
+            {% for catblog in blogcategoria %}
+            1
+            {{blogcategoria}}
+            2
+            {{catblog}}
+            3   
+              <h2 class="card-title">{{ catblog.titulo }}</h2>      
+              <img class="card-img-top" src="{{ catblog.imagen }}" alt="Card image cap">
+              <h4 class="card-title">{{ catblog.titulo }}:</h4>
+              <div class="card-body">
+                <p class="card-text">{{ catblog.descripcion }}</p>
+                <a href="/Servicios/leer_mas_blog/{{blog.pk}}" class="btn btn-primary">Leer mas &rarr;</a>
+              </div>
+              <div class="card-footer text-muted">
+                
+                Posteado el {{catblog.fecha_creacion}} por <strong>{{catblog.autor}}</strong> 
+                <a href="/Servicios/editar_blog/{{blog.pk}}">{{catblog.titulo}}</a>
+                
+              </div>
+              <hr>
+            {% endfor %}
+          {% else %}
+            <h1>No Hay Blogs para esta categoria</h1>
+          {% endif %}
+        {% endblock post%}
+        </div>
+        
+{% endblock content %}
+

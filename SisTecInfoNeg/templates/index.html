@@ -13,6 +13,9 @@
 
   <title>{% block titulo %}SiSTecInfoNeg{% endblock titulo %}</title>
 
+  <!-- JQuery -->
+  <script src="{% static 'libs/jquery.js' %}"></script>
+
   <!-- Custom fonts for this template-->
 
   <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
@@ -27,6 +30,9 @@
   <!-- Select2 -->
   <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
 
+  <!-- CSS datepiker 1.9 -->
+  <link rel="stylesheet" href="{% static 'libs/css/bootstrap-datepicker.standalone.css' %}">
+
 </head>
 {%endblock head%}
 
@@ -37,14 +43,19 @@
   <div id="wrapper">
 
     <!-- Sidebar -->
-    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+    <ul class="navbar-nav bg-dark sidebar sidebar-gray accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{% url 'index'  %}">
-        <div class="sidebar-brand-icon">
-          <i class="fa fa-adjust"></i>
+      
+      <a class="sidebar-brand d-flex align-items-center justify-content-left" href="{% url 'index'  %}">
+        
+        <div class="sidebar-brand-text mx-3">
+          <div class="sidebar-brand-icon">
+            <i class="fa"></i>
+            <img src="{% static 'img/infoneg3.png' %}" alt="">
+          </div>
+          SiSTecInfoNeg
         </div>
-        <div class="sidebar-brand-text mx-3">SiSTecInfoNeg</div>
       </a>
 
       <!-- Divider -->
@@ -71,23 +82,47 @@
       <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-          <i class="fas fa-fw fa-cog"></i>
-          <span>Servicios</span>
+          <i class="fas fa-fw fa"> <img src="https://img.icons8.com/dusk/24/000000/virtual-machine2.png"/>  </i>
+          <span> <strong>Servicios</strong> </span>
         </a>
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
+          <div class="bg-primary py-2 collapse-inner rounded">
             <h6 class="collapse-header">Gestionar</h6>
             <a class="collapse-item" href="/Servicios/crear_servicio/">Crear Servicio</a>
             <a class="collapse-item" href="/Servicios/listar_servicio/">Ver Servicio</a>
             <hr>
-            <a class="collapse-item" href="">Pila de Trabajos</a>
+            <a class="collapse-item" href="/Servicios/crear_pila_servicio/">Pila de Trabajos</a>
             <hr>
             <a class="collapse-item" href="/Servicios/crear_equipo/">Crear Equipos</a>
             <a class="collapse-item" href="/Servicios/listar_equipo/">Ver Equipos</a>
             <hr>
-            <a class="collapse-item" href="">Stock</a>
-            <hr>
             <a class="collapse-item" href="/Servicios/wiki">Wikis</a>
+          </div>
+        </div>
+      </li>
+      
+      <!-- Divider -->
+      <hr class="sidebar-divider">
+
+      <!-- Heading -->
+      <div class="sidebar-heading">
+        Control de Stock
+      </div>
+
+    <!-- Lista desplegable Menu Usuario-->
+      <!-- Nav Item - Pages Collapse Menu -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseStock" aria-expanded="true" aria-controls="collapseStock">
+          <i class="fas fa-fw"> <img src="https://img.icons8.com/dusk/24/000000/sell-stock.png"/></i>
+          <span> <strong>Stock</strong> </span>
+        </a>
+        <div id="collapseStock" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div class="bg-primary py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Gestionar Stock</h6>
+            <a class="collapse-item" href="/Stock/crear_articulo">Almacen</a>
+            <a class="collapse-item" href="/Stock/listar_movimientos">Movimientos</a>
+            <a class="collapse-item" href="/Stock/registrar_ingreso">Registrar Ingreso</a>
+            <a class="collapse-item" href="/Stock/crear_empleado">Registrar Salida</a>
           </div>
         </div>
       </li>
@@ -104,11 +139,11 @@
       <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUsuario" aria-expanded="true" aria-controls="collapseUsuario">
-          <i class="fas fa-fw fa-cog"></i>
-          <span>Usuarios</span>
+          <i class="fas fa-fw"> <img src="https://img.icons8.com/dusk/25/000000/conference.png"/></i>
+          <span> <strong>Usuarios</strong> </span>
         </a>
         <div id="collapseUsuario" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
+          <div class="bg-primary py-2 collapse-inner rounded">
             <h6 class="collapse-header">Gestionar Usuario</h6>
             <a class="collapse-item" href="/Personas/crear_cliente">Cliente</a>
             <a class="collapse-item" href="/Personas/crear_tecnico">Tecnico</a>
@@ -129,17 +164,20 @@
     <!-- Nav Item - Charts -->
       <li class="nav-item">
           <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseGestionarParametros" aria-expanded="true" aria-controls="collapseGestionarParametros">
-            <i class="fas fa-fw fa-cog"></i>
-            <span>Parametros</span>
+            <i class="fas fa-fw"><img src="https://img.icons8.com/dusk/24/000000/video-editing.png"/></i>
+            <span> <strong>Parametros</strong> </span>
           </a>
           <div id="collapseGestionarParametros" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
+            <div class="bg-primary py-2 collapse-inner rounded">
               <h6 class="collapse-header">Gestionar Parametros</h6>
               <a class="collapse-item" href="{% url 'Servicios:crear_tipo_equipo' %}">Crear Tipo de Equipo</a>
               <a class="collapse-item" href="{% url 'Servicios:listar_tipo_equipo' %}">Ver Tipos de Equipo</a>
               <hr>
               <a class="collapse-item" href="/Servicios/crear_marca">Crear Nueva Marca</a>
               <a class="collapse-item" href="/Servicios/listar_marcas">Ver Marcas</a>  
+              <hr>
+              <a class="collapse-item" href="/Servicios/crear_accesorio">Crear Nuevo Accesorio</a>
+              <a class="collapse-item" href="/Servicios/listar_accesorios">Ver Accesorios</a>  
               <hr>
               <a class="collapse-item" href="/Servicios/crear_estado_equipo">Crear Estado de Equipo</a>
               <a class="collapse-item" href="/Servicios/listar_estado_equipo">Ver Estado de Equipo</a>
@@ -152,7 +190,23 @@
               <hr>
               <a class="collapse-item" href="/Personas/crear_localidad">Crear Localidad</a>
               <a class="collapse-item" href="/Personas/listar_localidad">Ver Localidad</a>
-
+              <hr>
+              <a class="collapse-item" href="/Servicios/crear_tipo_memoria">Tipo de Memoria</a>  
+              <hr>
+              <a class="collapse-item" href="/Servicios/crear_tipo_disco">Tipo de Disco</a>  
+              <hr>
+              <a class="collapse-item" href="/Stock/crear_categoria">Crear Nueva Categoria</a>
+              <a class="collapse-item" href="/Stock/listar_categorias">Ver Categorias</a>  
+              <hr>
+              <a class="collapse-item" href="/Stock/crear_grupo">Crear Nuevo Grupo</a>
+              <a class="collapse-item" href="/Stock/listar_grupos">Ver Grupo</a>  
+              <hr>
+              <a class="collapse-item" href="/Stock/crear_unidad">Crear Nueva Unidad</a>
+              <a class="collapse-item" href="/Stock/listar_unidades">Ver Unidades</a>  
+              <hr>
+              <a class="collapse-item" href="/Stock/crear_tipo_movimiento">Crear Tipo de Movimiento</a>
+              <a class="collapse-item" href="/Stock/listar_tipo_movimientos">Ver Tipos de Movimientos</a>  
+              <hr>
             </div>
           </div>
         
@@ -170,11 +224,11 @@
       <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePromociones" aria-expanded="true" aria-controls="collapsePromociones">
-          <i class="fas fa-fw fa-cog"></i>
-          <span>Promociones</span>
+          <i class="fas fa-fw"><img src="https://img.icons8.com/dusk/24/000000/price-tag-euro.png"/></i>
+          <span> <strong>Promociones</strong> </span>
         </a>
         <div id="collapsePromociones" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
+          <div class="bg-primary py-2 collapse-inner rounded">
             <h6 class="collapse-header">Gestionar Promociones</h6>
             <a class="collapse-item" href="">Promociones por Equipos</a>
             <a class="collapse-item" href="">Promociones por Articulo</a>
@@ -195,11 +249,11 @@
       <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseEstadisticas" aria-expanded="true" aria-controls="collapseEstadisticas">
-          <i class="fas fa-fw fa-cog"></i>
-          <span>Estadisticas</span>
+          <i class="fas fa-fw"><img src="https://img.icons8.com/dusk/24/000000/accounting.png"/></i>
+          <span> <strong>Estadisticas</strong> </span>
         </a>
         <div id="collapseEstadisticas" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
+          <div class="bg-primary py-2 collapse-inner rounded">
             <h6 class="collapse-header">Gestionar Estadisticas</h6>
             <a class="collapse-item" href="">Tecnicos</a>
             <a class="collapse-item" href="">Servicios</a>
@@ -212,7 +266,7 @@
 
       <!-- Heading -->
       <div class="sidebar-heading">
-        Auditoria
+        <strong>Auditoria</strong>
       </div>
 
      <!-- Lista desplegable Menu Estadisticas-->
@@ -220,10 +274,10 @@
      <li class="nav-item">
        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAuditoria" aria-expanded="true" aria-controls="collapseAuditoria">
          <i class="fas fa-fw fa-cog"></i>
-         <span>Auditoria</span>
+         <span> <strong>Auditoria</strong> </span>
        </a>
        <div id="collapseAuditoria" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-         <div class="bg-white py-2 collapse-inner rounded">
+         <div class="bg-primary py-2 collapse-inner rounded">
            <h6 class="collapse-header">Gestionar Auditoria</h6>
            <a class="collapse-item" href="">Tecnicos</a>
            <a class="collapse-item" href="">Servicios</a>
@@ -248,10 +302,10 @@
 
       <!-- Main Content -->
       <!-- Color oscuro de fondo -->
-      <div id="content" style="background: #150550">
+      <div id="content" style="background: #4e73df">
 
         <!-- Topbar -->
-        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+        <nav class="navbar navbar-expand navbar-gray bg-secondary topbar mb-5 static-top shadow">
 
           <!-- Sidebar Toggle (Topbar) -->
           <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
@@ -259,7 +313,7 @@
           </button>
 
           <!-- Topbar Search -->
-          <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+          <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-0 my-md-0 mw-100 navbar-search">
             <div class="input-group">
               <input type="text" class="form-control bg-light border-0 small" placeholder="Buscar..." aria-label="Search" aria-describedby="basic-addon2">
               <div class="input-group-append">
@@ -390,7 +444,8 @@
                     <div class="status-indicator bg-success"></div>
                   </div>
                   <div>
-                    <div class="text-truncate">Am I a good boy? The reason I ask is because someone told me that people say this to all dogs, even if they aren't good...</div>
+                    <div class="text-truncate">Am I a good boy? The reason I ask is because someone told me that people say this to all dogs, even if they aren'
+                       good...</div>
                     <div class="small text-gray-500">Chicken the Dog · 2w</div>
                   </div>
                 </a>
@@ -403,7 +458,7 @@
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Rauli</span>
+                <span class="mr-2 d-none d-lg-inline text-white-50 small">Rauli</span>
                 <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
               </a>
               <!-- Dropdown - User Information -->
@@ -438,8 +493,8 @@
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-300">{% block section %}Datos Importantes{% endblock section %}</h1>
+          <div class="d-sm-flex align-items-center justify-content-between  mb-0">
+            <h4 class="h3 mb-2 text-gray-300">{% block section %}Datos Importantes{% endblock section %}</h4>
           </div>
 
           <!-- Content Row -->
@@ -456,7 +511,7 @@
 
             <!-- Area Chart -->
             <div class="col-xl-8 col-lg-7">
-              <div class="card shadow mb-4">
+              <div class="card shadow mb-2">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">Resumen de ganancias</h6>
@@ -684,6 +739,14 @@ $(document).ready(function() {
 });
 </script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+
+<!-- Datepiker -->
+<script src="{% static 'libs/js/bootstrap-datepicker.min.js' %}"></script>
+<script src="{% static 'libs/locales/bootstrap-datepicker.ar.min.js' %}"></script>
+
+<script>
+  $('.datepicker').datepicker();
+</script>
 
 
 </body>

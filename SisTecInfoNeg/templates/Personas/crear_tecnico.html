@@ -15,22 +15,22 @@
         <div class="row">
             <div class="col-3">
               <p style="margin-bottom: 0px;">DNI</p>
-              {{usuario_form.dni}}
+              {{tecnico_form.dni}}
             </div>
 
             <div class="col-3">
               <p style="margin-bottom: 0px;">Nombre:</p>
-              {{usuario_form.nombre}}            <!-- Ver como hacer para cargar solo los equipos de ese cliente-->
+              {{tecnico_form.nombre}}            <!-- Ver como hacer para cargar solo los equipos de ese cliente-->
             </div>
             
             <div class="col-3">
               <p style="margin-bottom: 0px;">Apellido</p>
-              {{usuario_form.apellido}}
+              {{tecnico_form.apellido}}
             </div>
 
             <div class="col-3">
               <p style="margin-bottom: 0px;">Fecha de Nacimiento:</p>
-              {{usuario_form.fechaNac}}
+              {{tecnico_form.fechaNac}}
             </div>
 
         </div>
@@ -39,29 +39,33 @@
         <div class="row">
           <div class="col-3">
             <p style="margin-bottom: 0px;">Sexo:</p>
-            {{usuario_form.sexo}}
+            {{tecnico_form.sexo}}
           </div>
           
           <div class="col-3">
             <p style="margin-bottom: 0px;">Domicilio:</p>
-            {{usuario_form.domicilio}}
+            {{tecnico_form.domicilio}}
           </div>
 
           <div class="col-3">
             <p style="margin-bottom: 0px;">Telefono:</p>
-            {{usuario_form.telefono}}
+            {{tecnico_form.telefono}}
           </div>
           
           <div class="col-3" style="margin-left: 0px;">
             <p style="margin-bottom: 0px;">Correo Electronico:</p>
-            {{usuario_form.correoElectronico}}
+            {{tecnico_form.correoElectronico}}
           </div>
       </div>
       
       <div class="row">
-        <div class="col-3">
+        <div class="col-6">
           <p style="margin-bottom: 0px;">Especialidad del Tecnico:</p>
-          {{tecnico_form.Especialidad}}
+          {{tecnico_form.especialidades}}
+        </div>
+        <div class="col-6">
+          <p style="margin-bottom: 0px;">Turno del Tecnico:</p>
+          {{tecnico_form.turno}}
         </div>
     </div>
   
@@ -112,10 +116,10 @@
                     <td style="text-align: left;">{{tecnic.domicilio}}</td>
                     <td style="text-align: left;">{{tecnic.telefono}}</td>
                     <td style="text-align: left;">{{tecnic.correoElectronico}}</td>
-                    <td style="text-align: left;">{{usuario.tecnic.especialidades}}</td>
+                    <td style="text-align: left;">{{tecnic.especialidades}}</td>
                     <td width="10%" align="center">
                           <div class="table-data-feature">
-                            <button type="button" class="btn btn-info" onclick="location.href='/Servicios/listar_servicio/'">Ver mas</button>
+                            <button type="button" class="btn btn-info" onclick="location.href='/Personas/listar_tecnico/'">Ver mas</button>
                           </div>
                       </td>
                   </tr>

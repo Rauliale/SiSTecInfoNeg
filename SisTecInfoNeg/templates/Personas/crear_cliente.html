@@ -15,22 +15,22 @@
         <div class="row">
             <div class="col-3">
               <p style="margin-bottom: 0px;">DNI</p>
-              {{usuario_form.dni}}
+              {{cliente_form.dni}}
             </div>
 
             <div class="col-3">
               <p style="margin-bottom: 0px;">Nombre:</p>
-              {{usuario_form.nombre}}            <!-- Ver como hacer para cargar solo los equipos de ese cliente-->
+              {{cliente_form.nombre}}            <!-- Ver como hacer para cargar solo los equipos de ese cliente-->
             </div>
             
             <div class="col-3">
               <p style="margin-bottom: 0px;">Apellido</p>
-              {{usuario_form.apellido}}
+              {{cliente_form.apellido}}
             </div>
 
             <div class="col-3">
               <p style="margin-bottom: 0px;">Fecha de Nacimiento:</p>
-              {{usuario_form.fechaNac}}
+              {{cliente_form.fechaNac}}
             </div>
 
         </div>
@@ -39,22 +39,22 @@
         <div class="row">
           <div class="col-3">
             <p style="margin-bottom: 0px;">Sexo:</p>
-            {{usuario_form.sexo}}
+            {{cliente_form.sexo}}
           </div>
           
           <div class="col-3">
             <p style="margin-bottom: 0px;">Domicilio:</p>
-            {{usuario_form.domicilio}}
+            {{cliente_form.domicilio}}
           </div>
 
           <div class="col-3">
             <p style="margin-bottom: 0px;">Telefono:</p>
-            {{usuario_form.telefono}}
+            {{cliente_form.telefono}}
           </div>
           
           <div class="col-3" style="margin-left: 0px;">
             <p style="margin-bottom: 0px;">Correo Electronico:</p>
-            {{usuario_form.correoElectronico}}
+            {{cliente_form.correoElectronico}}
           </div>
       </div>
       
@@ -115,7 +115,7 @@
                     <td style="text-align: left;">{{clien.nombreEmpresa}}</td>
                     <td width="10%" align="center">
                           <div class="table-data-feature">
-                            <button type="button" class="btn btn-info" onclick="location.href='/Servicios/listar_servicio/'">Ver mas</button>
+                            <button type="button" class="btn btn-info" onclick="location.href='/Personas/listar_cliente/'">Ver mas</button>
                           </div>
                       </td>
                   </tr>

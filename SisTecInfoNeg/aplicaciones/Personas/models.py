@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from datetime import datetime, date, time, timedelta
 import calendar
 
+
 class Provincia(models.Model):
     id_provincia=models.AutoField(primary_key=True)
     provincia=models.CharField('Provincia', max_length=50,blank=False,null=False)
@@ -87,7 +88,8 @@ class Rol(models.Model):
         self.descripcion = (self.descripcion).upper()
         return super(Rol, self).save(*args, **kwargs)
 
-class Usuario(models.Model):
+   
+class Cliente(models.Model):
     dni = models.PositiveIntegerField('DNI', primary_key = True, null = False, blank = False)
     rol = models.ForeignKey(Rol, on_delete = models.DO_NOTHING,  null = True, blank = True)
     nombre = models.CharField('Nombre del usuario', max_length = 100, null = False, blank = False)
@@ -98,34 +100,23 @@ class Usuario(models.Model):
     telefono=models.ForeignKey(Telefono, on_delete=models.PROTECT,null=True)
     correoElectronico = models.EmailField('Correo electronico del usuario', null =  False, blank = False)
     estado = models.BooleanField('Usuario activo/inactivo', default = False)
+    nombreEmpresa = models.TextField('Empresa del cliente', null = True, blank = True)
     
     class Meta:
-        abstract = True
+        verbose_name = 'Cliente'
+        verbose_name_plural = 'Clientes'
+        permissions = (("es_cliente", "es cliente"),("es_pre_cliente", "es pre cliente"))
 
     def __str__(self):
-        return str(self.dni) + ' - ' + self.apellido + ' ' + self.nombre
-        #return self.apellido
+            return str(self.nombre) + ' ' + str(self.apellido )
+            #return self.apellido
 
     def save(self, *args, **kwargs):
         self.nombre = (self.nombre).upper()
         self.apellido = (self.apellido).upper()
-      
-        self.domicilio = (self.domicilio)
-        
-        return super(Usuario, self).save(*args, **kwargs)
-   
-class Cliente(Usuario):
-    nombreEmpresa = models.TextField('Empresa del cliente', null = True, blank = True)
-
-def save(self, *args, **kwargs):
-        self.nombreEmpresa = (self.nombreEmpresa).upper()
+        self.domicilio = (self.domicilio)        
         return super(Cliente, self).save(*args, **kwargs)
-    
 
-class Meta:
-    verbose_name = 'Cliente'
-    verbose_name_plural = 'Clientes'
-    permissions = (("es_cliente", "es cliente"),("es_pre_cliente", "es pre cliente"))
 
 
 class Especialidad(models.Model):
@@ -148,20 +139,60 @@ class Especialidad(models.Model):
         self.descripcion = (self.descripcion).upper()
         return super(Especialidad, self).save(*args, **kwargs)
 
-class Tecnico(Usuario):
-    turno = models.CharField('Turno de trabajo del tecnico', max_length = 100, null = False, blank = False)
+class Tecnico(models.Model):
+    dni = models.PositiveIntegerField('DNI', primary_key = True, null = False, blank = False)
+    rol = models.ForeignKey(Rol, on_delete = models.DO_NOTHING,  null = True, blank = True)
+    nombre = models.CharField('Nombre del usuario', max_length = 100, null = False, blank = False)
+    apellido = models.CharField('Apellido del usuario', max_length = 200, null = False, blank = False)
+    fechaNac = models.DateField('Fecha de Nacimiento', null = False, blank = False)
+    sexo = models.CharField('Sexo de la persona', max_length = 50, null = False, blank = False)
+    domicilio=models.ForeignKey(Domicilio, on_delete=models.PROTECT)
+    telefono=models.ForeignKey(Telefono, on_delete=models.PROTECT,null=True)
+    correoElectronico = models.EmailField('Correo electronico del usuario', null =  False, blank = False)
+    estado = models.BooleanField('Usuario activo/inactivo', default = False)
+    turno = models.CharField('Turno de trabajo del tecnico', max_length = 100, null = True, blank = True)
     especialidades = models.ManyToManyField(Especialidad, blank = True)
 
-class Meta:
-    verbose_name = 'Tecnico'
-    verbose_name_plural = 'Tecnicos'
-    permissions = (("es_Tecnico", "es Tecnico"),("es_pre_Tecnico", "es pre Tecnico"))
+    class Meta:
+        verbose_name = 'Tecnico'
+        verbose_name_plural = 'Tecnicos'
+        permissions = (("es_Tecnico", "es Tecnico"),("es_pre_Tecnico", "es pre Tecnico"))
 
-class Empleado(Usuario):
+    def __str__(self):
+        return str(self.dni) + ' - ' + self.apellido + ' ' + self.nombre
+        #return self.apellido
+
+    def save(self, *args, **kwargs):
+        self.nombre = (self.nombre).upper()
+        self.apellido = (self.apellido).upper()
+        self.domicilio = (self.domicilio)        
+        return super(Tecnico, self).save(*args, **kwargs)
+
+class Empleado(models.Model):
+    dni = models.PositiveIntegerField('DNI', primary_key = True, null = False, blank = False)
+    rol = models.ForeignKey(Rol, on_delete = models.DO_NOTHING,  null = True, blank = True)
+    nombre = models.CharField('Nombre del usuario', max_length = 100, null = False, blank = False)
+    apellido = models.CharField('Apellido del usuario', max_length = 200, null = False, blank = False)
+    fechaNac = models.DateField('Fecha de Nacimiento', null = False, blank = False)
+    sexo = models.CharField('Sexo de la persona', max_length = 50, null = False, blank = False)
+    domicilio=models.ForeignKey(Domicilio, on_delete=models.PROTECT)
+    telefono=models.ForeignKey(Telefono, on_delete=models.PROTECT,null=True)
+    correoElectronico = models.EmailField('Correo electronico del usuario', null =  False, blank = False)
+    estado = models.BooleanField('Usuario activo/inactivo', default = False)
     turno = models.CharField('Turno de trabajo del Empleado', max_length = 100, null = False, blank = False)
     puesto = models.CharField('Puesto de trabajo del Empleado', max_length = 100, null = False, blank = False)
 
-class Meta:
-    verbose_name = 'Empleado'
-    verbose_name_plural = 'Empleados'
-    permissions = (("es_Empleado", "es Empleado"),("es_pre_Empleado", "es pre Empleado"))
+    class Meta:
+        verbose_name = 'Empleado'
+        verbose_name_plural = 'Empleados'
+        permissions = (("es_Empleado", "es Empleado"),("es_pre_Empleado", "es pre Empleado"))
+
+    def __str__(self):
+        return str(self.dni) + ' - ' + self.apellido + ' ' + self.nombre
+        #return self.apellido
+
+    def save(self, *args, **kwargs):
+        self.nombre = (self.nombre).upper()
+        self.apellido = (self.apellido).upper()
+        self.domicilio = (self.domicilio)        
+        return super(Empleado, self).save(*args, **kwargs)

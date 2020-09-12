@@ -117,3 +117,44 @@
 
 
 {% static 'wiki/'%}
+
+
+<div class="row">
+          <div class="col-6">    
+            <h5 class="card-title">Cliente: {{equi.cliente}}</h5>
+          </div>
+          <div class="col-6">
+            <h5 class="card-title">Fecha de Ingreso: {{servicio.fechaIngreso}}</h5>
+          </div>  
+        </div>
+
+        <div class="row">
+          <div class="col-6">    
+            <h5 class="card-title">Equipo: {{servicio.equipo}}</h5>
+          </div>
+          <div class="col-6">
+            <h5 class="card-title">Tipo de Equipo: {{equi.tipoEquipo}}</h5>
+          </div>  
+        </div>
+
+        <div class="row">
+          <div class="col-6">    
+            <h5 class="card-title">Contraseña: {{servicio.contraseña}}</h5>
+          </div>
+          <div class="col-6">
+            <p class="card-text">Problema: {{servicio.problema}}</p>
+          </div>  
+        </div>
+
+        <div class="row">
+          <div class="col-6">    
+            <h5 class="card-title">Cargador: {{servicio.cargador}}</h5>
+          </div>
+          <div class="col-6">
+            
+          </div>  
+        </div>
+        
+      </div>
+      
+#, decimal_places=2

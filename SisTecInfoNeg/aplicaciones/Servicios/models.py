@@ -5,6 +5,58 @@ from aplicaciones.Personas.models import *
 from django.core.validators import MinValueValidator
 from ckeditor.fields import RichTextField
 
+class TipoMemoria(models.Model):
+    id=models.AutoField(primary_key=True)
+    tipo=models.CharField('Tipo de Memoria', max_length=50,blank=False,null=False)
+    borrado = models.BooleanField('borrado',default=False)
+
+    def __str__(self):
+        return self.tipo
+
+class CapacidadMemoria(models.Model):
+    id=models.AutoField(primary_key=True)
+    capacidad=models.CharField('Capacidad de Memoria', max_length=50,blank=False,null=False)
+    borrado = models.BooleanField('borrado',default=False)
+
+    def __str__(self):
+        return self.capacidad
+
+class TipoDisco(models.Model):
+    id=models.AutoField(primary_key=True)
+    tipo=models.CharField('Tipo de Disco', max_length=50,blank=False,null=False)
+    borrado = models.BooleanField('borrado',default=False)
+
+    def __str__(self):
+        return self.tipo
+
+class CapacidadDisco(models.Model):
+    id=models.AutoField(primary_key=True)
+    capacidad=models.CharField('Capacidad de Disco', max_length=50,blank=False,null=False)
+    borrado = models.BooleanField('borrado',default=False)
+
+    def __str__(self):
+        return self.capacidad
+
+class TipoSO(models.Model):
+    id=models.AutoField(primary_key=True)
+    tipo=models.CharField('Tipo de Sistema Operativo', max_length=50,blank=False,null=False)
+    version = models.CharField('Tipo de Sistema Operativo', max_length=50,blank=False,null=False)
+    borrado = models.BooleanField('borrado',default=False)
+
+    class Meta:
+        verbose_name = 'TipoSO'
+        verbose_name_plural = 'TipoSO'
+
+    def __str__(self):
+        return str(self.tipo) + ' ' + str(self.version)
+
+    def save(self, *args, **kwargs):
+        self.tipo = (self.tipo).upper()
+        self.version = (self.tipo).upper()
+        return super(TipoSO, self).save(*args, **kwargs)
+
+
+
 ##################################### Modelo de Tipo de Equipo ##########################################
 class TipoEquipo(models.Model):
     id = models.AutoField(primary_key = True)
@@ -115,6 +167,12 @@ class Equipo(models.Model):
     marca = models.ForeignKey(Marca, on_delete = models.PROTECT)
     modelo = models.CharField('Modelo del equipo', max_length = 100, null = False, blank = False)
     cliente = models.ForeignKey(Cliente, on_delete = models.PROTECT)
+    memoria = models.ForeignKey(TipoMemoria,on_delete = models.PROTECT,null = True, blank = True)
+    capacidadMemoria = models.ForeignKey(CapacidadMemoria,on_delete = models.PROTECT,null = True, blank = True)
+    disco = models.ForeignKey(TipoDisco,on_delete = models.PROTECT,null = True, blank = True)
+    capacidadDisco = models.ForeignKey(CapacidadDisco,on_delete = models.PROTECT,null = True, blank = True)
+    sistemaOperativo = models.ForeignKey(TipoSO,on_delete = models.PROTECT,null = True, blank = True)
+    
 
     class Meta:
         verbose_name = 'Equipo'
@@ -122,7 +180,7 @@ class Equipo(models.Model):
         ordering = ['cliente']
     
     def __str__(self):
-        return str(self.marca) + ' - ' + str(self.modelo) + ' - ' + str(self.cliente)
+        return str(self.marca) + ' - ' + str(self.modelo)
 
 ################################## Modelo de Estado de Repuesto ##################################
 class Estado_Repuesto(models.Model):
@@ -191,6 +249,23 @@ class Tipo_Sistema_Operativo(models.Model):
         self.sistemaOperativo = (self.sistemaOperativo).upper()
         return super(Tipo_Sistema_Operativo, self).save(*args, **kwargs)
 
+################################## Modelo de Accesorios ###########################################
+class Accesorio(models.Model):
+    id = models.AutoField(primary_key = True)
+    nombre = models.CharField('Nombre Accesorio', max_length = 100, null = False, blank = False)
+    
+    class Meta:
+        verbose_name = 'Accesorio'
+        verbose_name_plural = 'Accesorio'
+    
+    def __str__(self):
+        return str(self.nombre)
+
+    def save(self, *args, **kwargs):
+        self.nombre = (self.nombre).upper()
+        return super(Accesorio, self).save(*args, **kwargs)
+
+
 ################################## Modelo de Servicio Tecnico ###########################################
 class Servicio_Tecnico(models.Model):
     codServicio = models.AutoField('Codigo de Servicio', primary_key = True, null = False, blank = False)
@@ -198,12 +273,14 @@ class Servicio_Tecnico(models.Model):
     estado = models.ForeignKey(Estado, on_delete = models.PROTECT)
     problema = models.CharField('Descripcion del problema', max_length = 120, null = False, blank = False)
     contraseña = models.CharField('Contraseña del equipo', max_length = 50, null = True, blank = True)
-    cargador = models.BooleanField(default = False)
+    accesorio = models.ForeignKey(Accesorio, on_delete = models.PROTECT)
     fechaEntrega = models.DateField('Fecha de Entrega', null = True, blank = True)
     presupuesto = models.DecimalField(max_digits=10, decimal_places=2, null = True, blank=True, validators=[MinValueValidator(0.00)], default=0)
     trabajosRealizados = models.CharField('Trabajos realizados sobre el equipo', max_length = 120, null = True, blank = True)
     ubicacion = models.CharField('Ubicacion o Estante en el que se encuentra', max_length = 30, null = True, blank = True)
     equipo = models.ForeignKey(Equipo, on_delete = models.PROTECT)
+    tecnico = models.ForeignKey(Tecnico, on_delete = models.PROTECT, null = True, blank = True)
+
     #repuesto = models.ForeignKey(Repuesto, on_delete = models.PROTECT)
 
     class Meta:

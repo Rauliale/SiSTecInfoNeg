@@ -6,90 +6,79 @@
 {% block section %}Crear Servicio Tecnico{% endblock section %}
 
 {% block content%}
-
-<div class="card mb-4 py-3 border-left-success">
+<div class="card-header py-4 bg-info">
+  <h4 class="m-0 font-weight-bold text-white ">Servicios Tecnicos</h4>
+</div>
+<div class="card text-primary bg-ligth">
     <div class="col-12">
       <!-- Form -->
       <form method="POST">
         {%csrf_token%}
-        <div class="row">
-            <div class="col-3">    
-              <p style="margin-bottom: 0px;">Cliente:   <button type="button" class="btn btn-info">+</button></p>
+        <div class="row text-dark">
+            <div class="col-4">    
+              <p style="margin-bottom: 0px; font-size: 3vh; font-size: 3vh;">Cliente:   <button type="button" class="fas fa-plus-circle fa-md" onclick="location.href='/Personas/crear_cliente'"></button></p>
               {{equipo_form.cliente}}
             </div>
 
-            <div class="col-3">
-              <p style="margin-bottom: 0px;">Equipo:   <button type="button" class="btn btn-info">+</button></p>
+            <div class="col-4">
+              <p style="margin-bottom: 0px; font-size: 3vh; font-size: 3vh;;">Equipo:   <button type="button" class="fas fa-plus-circle fa-md" onclick="location.href='/Servicios/crear_equipo'"></button></p>
               {{servicio_form.equipo}}            <!-- Ver como hacer para cargar solo los equipos de ese cliente-->
             </div>
             
-            <div class="col-3">
-              <p style="margin-bottom: 0px;">Fecha de Ingreso</p>
+            <div class="col-4">
+              <p style="margin-top: 4%; margin-bottom: 8px;font-size: 3vh; font-size: 3vh;">Fecha de Ingreso</p>
               {{servicio_form.fechaIngreso}}
             </div>
-
-            <div class="col-3">
-              <p style="margin-bottom: 0px;">Fecha de Entrega:</p>
-              {{servicio_form.fechaEntrega}}
-            </div>
-
+            
         </div>
         
 
-        <div class="row">
-          <div class="col-3">
-            <p style="margin-bottom: 0px;">Estado:</p>
+        <div class="row text-dark">
+          <div class="col-4">
+            <p style="margin-bottom: 0px; font-size: 3vh; font-size: 3vh;">Estado:</p>
             {{servicio_form.estado}}
           </div>
           
-          <div class="col-3">
-            <p style="margin-bottom: 0px;">Tipo de Equipo:</p>
+          <div class="col-4">
+            <p style="margin-bottom: 0px; font-size: 3vh; font-size: 3vh;">Tipo de Equipo: </p>
             {{equipo_form.tipoEquipo}}
           </div>
 
-          <div class="col-3">
-            <p style="margin-bottom: 0px;">Contraseña:</p>
+          <div class="col-4">
+            <p style="margin-bottom: 0px; font-size: 3vh; font-size: 3vh;">Contraseña:</p>
             {{servicio_form.contraseña}}
           </div>
           
-          <div class="col-3" style="margin-left: 0px;">
-            <p style="margin-bottom: 0px;">Ubicacion:</p>
-            {{servicio_form.ubicacion}}
-          </div>
       </div>
       
-      <div class="row">
-        <div class="col-3">
-          <p style="margin-bottom: 0px;">Marca:</p>
+      <div class="row text-dark">
+        <div class="col-4">
+          <p style="margin-bottom: 0px; font-size: 3vh; font-size: 3vh;">Marca: <button type="button" class="fas fa-plus-circle fa-md" onclick="location.href='/Servicios/crear_marca'"></button></p>
           {{equipo_form.marca}}
         </div>
         
-        <div class="col-3">
-          <p style="margin-bottom: 0px;">Modelo:</p>
+        <div class="col-4">
+          <p style="margin-bottom: 0px; font-size: 3vh; font-size: 3vh;">Modelo:</p>
           {{equipo_form.modelo}}
         </div>
-        
-        <div class="col-4">
-          <p style="margin-bottom: 0px;">Presupuesto:</p>
-          {{servicio_form.presupuesto}}
-        </div>
-
-        <div class="col-2">
-          <p style="margin-bottom: 0px;">Cargador:</p>
-          {{servicio_form.cargador}}
+        <div class="col-4" style="margin-left: 0px; font-size: 3vh; font-size: 3vh;">
+          <p style="margin-bottom: 0px; font-size: 3vh; font-size: 3vh;">Ubicacion:</p>
+          {{servicio_form.ubicacion}}
         </div>
     </div>
+    
+    <div class="row text-dark">
+      <div class="col-4">
+        <p style="margin-bottom: 0px; font-size: 3vh; font-size: 3vh;">Accesorio:   <button type="button" class="fas fa-plus-circle fa-md" onclick="location.href='/Servicios/crear_accesorio'"></button></p>
+        {{servicio_form.accesorio}}
+      </div>
+    </div>
+    
 
-
-  <div class="row">
-    <div class="col-6">
-      <p style="margin-bottom: 0px;">Descripcion del Problema:</p>
+  <div class="row text-dark">
+    <div class="col-12">
+      <p style="margin-bottom: 0px; font-size: 3vh; font-size: 3vh;">Descripcion del Problema:</p>
       {{servicio_form.problema}}
-    </div>
-
-    <div class="col-6">
-      <p style="margin-bottom: 0px;">Trabajos Realizados:</p>
-        {{servicio_form.trabajosRealizados}}
     </div>
   </div>
         
@@ -106,17 +95,19 @@
       </form>
       <!--end Form -->
     </div>
-  </div>
+</div>
+
+<hr>
 
 <!-- List -->
 {% if servicios%}
-<div class="card shadow">
-        <div class="card-header py-3">
-          <h6 class="m-0 font-weight-bold text-secondary">Listado de Servicios Tecnicos</h6>
+<div class="card shadow text-primary">
+        <div class="card-header py-4 bg-info">
+          <h4 class="m-0 font-weight-bold text-white">Listado de Servicios Tecnicos</h4>
         </div>
-        <div class="card-body">
+        <div class="card-body text-dark">
            <div class="table-responsive">
-            <table class="table table-bordered dataTable" id="dataTable">
+            <table class="table table-bordered dataTable text-dark" id="dataTable">
                 <thead>
                   <tr>
                     <th>Cliente</th>
@@ -129,6 +120,7 @@
                     <th>tipo de equipo</th>
                     <th>marca</th>
                     <th>modelo</th>
+                    <th>acciones</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -144,7 +136,7 @@
                     <td style="text-align: left;">{{servicio.equipo.tipoEquipo}}</td>
                     <td style="text-align: left;">{{servicio.equipo.marca}}</td>
                     <td style="text-align: left;">{{servicio.equipo.modelo}}</td>
-                    <td width="10%" align="center">
+                    <td width="2%" align="center">
                           <div class="table-data-feature">
                             <button type="button" class="btn btn-info" onclick="location.href='/Servicios/editar_servicio/{{servicio.pk}}'">Ver mas</button>
                           </div>
@@ -162,4 +154,3 @@
 <!-- end List -->
 
 {% endblock content%}
-
