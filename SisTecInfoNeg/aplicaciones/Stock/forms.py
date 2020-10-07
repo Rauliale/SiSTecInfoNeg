@@ -1,4 +1,5 @@
 from django import forms
+from django.forms import ModelForm, TextInput
 from .models import *
 
 
@@ -68,3 +69,35 @@ class ArticuloForm(forms.ModelForm):
         
         }
         
+class ArticuloForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+
+    class Meta:
+        model = Articulo
+        fields = '__all__'
+        widgets = {
+            'nombreArticulo': TextInput(
+                attrs={
+                    'placeholder': 'Ingrese el nombre del Articulo',
+                }
+            ),
+            'nombre_corto': TextInput(
+                attrs={
+                    'placeholder': 'Ingrese el nombre corto del Articulo (30 caracteres máximo)',
+                }
+            ),
+        }
+
+    def save(self, commit=True):
+        data = {}
+        form = super()
+        try:
+            if form.is_valid():
+                form.save()
+            else:
+                data['error'] = form.errors
+        except Exception as e:
+            data['error'] = str(e)
+        return data

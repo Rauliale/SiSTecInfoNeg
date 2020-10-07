@@ -40,8 +40,12 @@ INSTALLED_APPS = [
     'aplicaciones.Personas',
     'aplicaciones.Servicios',
     'aplicaciones.Stock',
+    'aplicaciones.Auditoria',
+    'aplicaciones.configuracion',
     'import_export',    #sirve para hacer importaciones y exportaciones del sitio de administracion de django crack el tipo
     'ckeditor',         #sirve para darle formatos a un campo de texto tipo word
+    'simple_history',   #Para la auditoria
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -52,6 +56,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'simple_history.middleware.HistoryRequestMiddleware',
 ]
 
 ROOT_URLCONF = 'SisTecInfoNeg.urls'

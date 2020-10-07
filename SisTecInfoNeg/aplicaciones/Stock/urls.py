@@ -38,6 +38,11 @@ urlpatterns = [
     path('registrar_salida/<int:id>/<int:baja>',regisrarSalida, name= 'registrar_salida'),
     path('eliminar_movimiento/<int:id>',eliminarMovimiento, name= 'eliminar_movimiento'),
 
+############################### ABM Articulo Vistas en Clases ###########################
+    #path('Stock/list/', ArticuloListView.as_view(), name='artucilo_list'),
+    #path('Stock/add/', ArticuloCreateView.as_view(), name='articulo_create'),
+    #path('Stock/update/<int:pk>/', ArticuloUpdateView.as_view(), name='articulo_update'),
+    #path('Stock/delete/<int:pk>/', ArticuloDeleteView.as_view(), name='articulo_delete'),
 
-    
+
 ]

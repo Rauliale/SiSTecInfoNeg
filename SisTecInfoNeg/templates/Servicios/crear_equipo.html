@@ -7,48 +7,108 @@
 
 {% block content%}
 
-<div class="card mb-4 py-3 border-left-success">
+
+<div class="card">
+  <div class="card-header py-4 bg-info">
+    <h4 class="m-0 font-weight-bold text-white "> Equipo</h4>
+  </div>
+  <div class="card-body">
     <div class="col-12">
       <!-- Form -->
       <form method="POST">
         {%csrf_token%}
         <div class="row">
-            <div class="col-3">
-              <p style="margin-bottom: 0px;">Cliente</p>
-              {{equipo_form.cliente}}
-            </div>
+          <div class="col-6">
+            <p style="margin-bottom: 0px;">Cliente</p>
+            {{equipo_form.cliente}}
+          </div>
 
-            <div class="col-3">
-                <p style="margin-bottom: 0px;">Tipo de Equipo:</p>
-                {{equipo_form.tipoEquipo}}
-              </div>
+          <div class="col-6">
+            <p style="margin-bottom: 0px;">Tipo de Equipo:</p>
+            {{equipo_form.tipoEquipo}}
+          </div>
         </div>
-        
-      
-      <div class="row">
-        <div class="col-3">
-          <p style="margin-bottom: 0px;">Marca:</p>
-          {{equipo_form.marca}}
-        </div>
-        
-        <div class="col-3">
-          <p style="margin-bottom: 0px;">Modelo:</p>
-          {{equipo_form.modelo}}
-        </div>
-    </div>
 
-  
-    <hr>
-    <button type="submit" class="btn btn-success" style="float: right; margin: 1%;">
-      <i class="fa fa-plus"></i> Crear
-    </button>
-  
-        <button type="button" class="btn btn-secondary" onclick="window.history.back()" style="float: right;margin: 1%;">
-          <i class="fa fa-reply"></i> Volver
-        </button>
-  
+
+        <div class="row">
+          <div class="col-6">
+            <p style="margin-bottom: 0px;">Marca:</p>
+            {{equipo_form.marca}}
+          </div>
+
+          <div class="col-6">
+            <p style="margin-bottom: 0px;">Modelo:</p>
+            {{equipo_form.modelo}}
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-12">
+            <p style="margin-bottom: 0px;">Componentes:</p>
+
+            {{equipo_form.componente}}
+          </div>
+        </div>
+
       </form>
       <!--end Form -->
+      <hr>
+      <button type="submit" class="btn btn-success" style="float: right; margin: 1%;">
+        <i class="fa fa-plus"></i> Crear
+      </button>
+
+      <button type="button" class="btn btn-secondary" onclick="window.history.back()" style="float: right;margin: 1%;">
+        <i class="fa fa-reply"></i> Volver
+      </button>
     </div>
   </div>
+</div>
+
+<hr>
+
+<!-- List -->
+{% if equipo%}
+<div class="card shadow text-primary">
+  <div class="card-header py-4 bg-info">
+    <h6 class="m-0 font-weight-bold text-white">Listado de equipos</h6>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-bordered dataTable" id="dataTable">
+        <thead>
+          <tr>
+            <th>Tipo de equipo</th>
+            <th>Marca</th>
+            <th>Modelo</th>
+            <th>Cliente</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {%for equi in equipo%}
+          <tr>
+            <td style="text-align: left;">{{equi.tipoEquipo}}</td>
+            <td style="text-align: left;">{{equi.marca}}</td>
+            <td style="text-align: left;">{{equi.modelo}}</td>
+            <td style="text-align: left;">{{equi.cliente}}</td>
+            <td width="10%" align="center">
+              <div class="table-data-feature">
+                <button type="button" class="btn btn-info"
+                  onclick="location.href='/Servicios/editar_equipo/{{equi.pk}}'">Ver mas</button>
+              </div>
+            </td>
+          </tr>
+          {% endfor %}
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+{% else %}
+<p>Aún no hay datos cargados</p>
+{% endif %}
+<!-- end List -->
+
 {% endblock content%}

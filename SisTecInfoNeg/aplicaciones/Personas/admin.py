@@ -1,5 +1,6 @@
 from django.contrib import admin
 from .models import *
+from aplicaciones.Servicios.models import Equipo
 
 admin.site.register(Cliente)
 admin.site.register(Tecnico)
@@ -11,5 +12,6 @@ admin.site.register(Tipo_Telefono)
 admin.site.register(Telefono)
 #admin.site.register(Usuario)
 admin.site.register(Especialidad)
+
 
 

@@ -1,0 +1,266 @@
+{% extends "index.html" %}
+{% load static %}
+{% block titulo %}Auditoria{% endblock titulo %}
+{% block section %}Auditoria Equipos{% endblock section %}
+
+{% block content %}
+
+<input type="hidden" name="titulo" class="titulo_reporte" id="titulo" value="Auditoría de Equipos">
+<input type="hidden" name="empresa" class="empresa_reporte" id="empresa" value="{{reporte.empresa}}">
+<input type="hidden" name="direccion" class="direccion_reporte" id="direccion" value="{{reporte.direccion}}">
+<input type="hidden" name="telefono" class="telefono_reporte" id="telefono" value="{{reporte.telefono}}">
+<input type="hidden" name="usuario" class="usuario_reporte" id="usuario" value="{{user.username}}">
+
+
+<div class="col-12 alineado-derecha">
+    <div class="fa-hover">
+        <a href="JavaScript:Void(0);">
+            <i class="fa fa-question-circle" onclick="javascript:introJs().start();"></i>
+        </a>
+    </div>
+</div>
+
+
+<hr>
+
+<div class="card shadow text-primary">
+    <div class="card-header py-4 bg-info">
+        <h4 class="m-0 font-weight-bold text-white">Auditoria de Equipos</h4>
+    </div>
+    <div class="card-body text-dark">
+        <!-- start accordion -->
+        <div class="accordion" id="accordion" role="tablist" aria-multiselectable="true">
+            <div class="panel">
+                <a class="panel-heading collapsed" role="tab" id="headingTwo" data-toggle="collapse"
+                    data-parent="#accordion" href="#collapseTwoFiltro" aria-expanded="false"
+                    aria-controls="collapseTwoFiltro">
+                    <h4 class="panel-title"><i class="fa fa-filter" aria-hidden="true"></i>Filtros</h4>
+                </a>
+                <div id="collapseTwoFiltro" class="panel-collapse collapse" role="tabpanel"
+                    aria-labelledby="headingTwo">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-3"><span id="date-label-from" class="date-label" >Desde: </span><input
+                                    class="date_range_filter date filter" name="Desde" type="date" id="min" value="" />
+                            </div>
+                            <div class="col-md-3"><span id="date-label-to" class="date-label">Hasta: </span><input
+                                    class="date_range_filter date filter" name="Hasta" type="date" id="max" value="" />
+                            </div>
+                            <div class="col-md-3">
+                                <div class="table-data__tool-left" data-step="3" data-intro='Por acción realizada'>
+                                    <div class="rs-select2--light"><span id="date-label-accion" class="date-label">Acción: </span>
+                                        <select class="form-control" name="" id="select-accion">
+                                            <option value=""></option>
+                                            <option value="">Alta</option>
+                                            <option value="">Baja</option>
+                                            <option value="">Modificación</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- end of accordion -->
+
+        <hr>
+
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered" id="midatatable" data-step="5" data-intro='Tabla de auditoría'>
+                <thead>
+                    <tr>
+                        <th class="noExport" style="text-align: center;">N°</th>
+                        <th style="text-align: center;">Acción</th>
+                        <th style="text-align: center;">Id Equipo</th>
+                        <th style="text-align: center;">Marca</th>
+                        <th style="text-align: center;">Modelo</th>
+                        <th style="text-align: center;">Fecha y Hora</th>
+                        <th style="text-align: center;">Usuario</th>
+                        <th class="noExport" style="text-align: center;">Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for audi in audit_equipos %}
+                    <tr class="tr-shadow">
+                        <td class="noExport" style="text-align: center;">{{audi.history_id}}</td>
+                        <td style="text-align: center;" data-step="6"
+                            data-intro='Se muestra la acción realizada sobre el pedido'>
+                            {% if audi.history_type == '-' %}
+                            Baja
+                            {% endif %}
+                            {% if audi.history_type == '~' %}
+                            Modificación
+                            {% endif %}
+                            {% if audi.history_type == '+' %}
+                            Alta
+                            {% endif %}
+                        </td>
+                        <td data-step="7" data-intro='Codigo de Equipo' style="text-align: center;">
+                            {{audi.id}}</td>
+                        <td data-step="8" data-intro='El modelo del equipo' style="text-align: center;">{{audi.marca_id}}</td>
+                        <td data-step="8" data-intro='El modelo del equipo' style="text-align: center;">{{audi.modelo}}</td>
+                        <td data-step="9" data-intro='Cuando se realizó la acción' style="text-align: center;">
+                            {{audi.history_date |date:'d-m-Y h:i:s'}}</td>
+                        <td data-step="10" data-intro='Y el usuario que la realizó' style="text-align: center;">
+                            {{audi.history_user}}</td>
+                        <td class="noExport" style="text-align: center;">
+                            {% if audi.history_type == '~' %}
+                            <!-- Modal ver cambios -->
+                            <button type="button" class="btn btn-primary btn-sm"
+                                onclick="f1({{audi.id}},{{audi.pk}})" data-toggle="modal"
+                                data-target=".ver_auditoria_equipos" data-step="10"
+                                data-intro='Si selecciona la opción "Ver Cambios" se mostrará una ventana donde se observarán los cambios al elemento'>
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <div class="modal fade ver_auditoria_equipos" id="ver_auditoria_equipos{{audi.pk}}" tabindex="-1"
+                                role="dialog" aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title" id="ver_auditoria_equipos{{audi.pk}}">Ver Cambios</h4>
+                                            <button type="button" class="close" data-dismiss="modal"><span
+                                                    aria-hidden="true">×</span></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div class="col-12 alineado-centro">
+                                                        <strong>Estado Previo</strong>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="alert alert-danger" id="detail_modal_old"
+                                                            role="alert">
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="col-12 alineado-centro">
+                                                        <strong>Estado Posterior</strong>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="alert alert-success" id="detail_modal_new"
+                                                            role="alert">
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                        <div class="modal-footer">
+                                            <div class="alineado-derecha">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-dismiss="modal">Volver</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End Modal -->
+                            {% endif %}
+                        </td>
+                    </tr>
+
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!-- END DATA TABLE -->
+
+<script type="text/javascript">
+    function f1(pk, id_history) {
+        $.ajax({
+            url: '/Auditoria/ver_auditoria_equipos/' + pk + '/' + id_history,
+            dataType: 'json',
+            success: function (data) {
+                var html = "";
+                var html2 = "";
+                for (var i = 0; i < data.length; i++) {
+                    html += '<p><strong>' + String(data[i].change).replace(/\b[a-z]/g, c => c.toUpperCase()) + ': </strong>' + data[i].old + '</p>'
+                    html2 += '<p><strong>' + String(data[i].change).replace(/\b[a-z]/g, c => c.toUpperCase()) + ': </strong>' + data[i].new + '</p>'
+                }
+                $('#detail_modal_old').html(html);
+                $('#detail_modal_new').html(html2);
+            }
+        })
+    }
+</script>
+
+<!-- Jquery JS-->
+<script src="{% static 'libs/jquery.js' %}"></script>
+
+<script type="text/javascript">
+    //un boton con id filtrar
+
+    $('#select-accion').change(function () {
+
+        var table = $('#midatatable').DataTable();
+        //aca se obtienen los valores
+        var filtro = $('#select-accion option:selected').text();
+        //no olvidarme de volver a poner (pop) las filas
+        //esto es por si se realizo algun filtro asi se vuelve a cargar el datatable
+
+        $.fn.dataTable.ext.search.pop(
+            function (settings, data, dataIndex) {
+                if (1) {
+                    return true;
+                }
+                return false;
+            }
+        );
+        table.draw();
+
+        if (filtro != "") {
+
+            var accion = String($('#select-accion option:selected').text());
+
+            if (filtro != "") {
+                var filtradoTabla = function FuncionFiltrado(settings, data, dataIndex) {
+                    if (accion == String(data[1])) {
+                        return true;
+
+                    } else {
+                        return false;
+                    }
+                }
+                $.fn.dataTableExt.afnFiltering.push(
+                    function (oSettings, aData, iDataIndex) {
+                        var iFini = document.getElementById('min').value;
+                        var iFfin = document.getElementById('max').value;
+                        var iStartDateCol = 4;
+                        var iEndDateCol = 4;
+                        iFini = iFini.substring(6, 10) + iFini.substring(3, 5) + iFini.substring(0, 2);
+                        iFfin = iFfin.substring(6, 10) + iFfin.substring(3, 5) + iFfin.substring(0, 2);
+
+                        var datofini = aData[iStartDateCol].substring(6, 10) + aData[iStartDateCol].substring(3, 5) + aData[iStartDateCol].substring(0, 2);
+                        var datoffin = aData[iEndDateCol].substring(6, 10) + aData[iEndDateCol].substring(3, 5) + aData[iEndDateCol].substring(0, 2);
+
+                        if (iFini === "" && iFfin === "") {
+                            return true;
+                        } else if (iFini <= datofini && iFfin === "") {
+                            return true;
+                        } else if (iFfin >= datoffin && iFini === "") {
+                            return true;
+                        } else if (iFini <= datofini && iFfin >= datoffin) {
+                            return true;
+                        }
+                        return false;
+                    }
+                );
+
+                $.fn.dataTable.ext.search.push(filtradoTabla)
+                table.draw();
+            }
+        }
+    });
+</script>
+{% endblock content %}

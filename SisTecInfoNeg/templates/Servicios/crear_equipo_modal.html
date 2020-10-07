@@ -1,0 +1,53 @@
+<div class="modal-dialog modal-lg" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2 class="modal-title"> Crear Equipo</h2>
+      <button class="close" type="button" data-dismiss="modal" aria-label="close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <form action="{% url 'Servicios:crear_servicio' %}" method="POST">
+      {%csrf_token%}
+      <div class="modal-body">
+        
+        <div class="row">
+          <div class="col-3">
+            <p style="margin-bottom: 0px;">Cliente</p>
+            {{equipo_form.cliente}}
+          </div>
+
+          <div class="col-3">
+            <p style="margin-bottom: 0px;">Tipo de Equipo:</p>
+            {{equipo_form.tipoEquipo}}
+          </div>
+        </div>
+
+
+        <div class="row">
+          <div class="col-3">
+            <p style="margin-bottom: 0px;">Marca:</p>
+            {{equipo_form.marca}}
+          </div>
+
+          <div class="col-3">
+            <p style="margin-bottom: 0px;">Modelo:</p>
+            {{equipo_form.modelo}}
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-12">
+            <p style="margin-bottom: 0px;">Componente:</p>
+            {{equipo_form.componente}}
+          </div>
+        </div>
+        
+      </div>
+      
+      <div class="modal-faater">
+        <button class="btn btn-danger" type="button" data-dismiss="modal">Cancelar</button>
+        <button class="btn btn-primary" type="submit" name="crear_equipo_modal">Confirmar</button>
+      </div>
+    </form>
+  </div>
+</div>

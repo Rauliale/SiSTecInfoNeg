@@ -22,6 +22,6 @@ urlpatterns = [
     path('',Home, name = 'index'),
     path('Servicios/',include(('aplicaciones.Servicios.urls','Servicios'))),    #aqui decimos que todas las urls de la aplicacion servicios van an a estar en el tag "Servicios" para poder usar el {% url 'Servicios:elnombredeurldelaAplicacion' %}
     path('Personas/',include(('aplicaciones.Personas.urls','Personas'))),
-    path('Stock/',include(('aplicaciones.Stock.urls','Stock')))
-    
+    path('Stock/',include(('aplicaciones.Stock.urls','Stock'))),
+    path('Auditoria/',include(('aplicaciones.Auditoria.urls','Auditoria'))),
 ]

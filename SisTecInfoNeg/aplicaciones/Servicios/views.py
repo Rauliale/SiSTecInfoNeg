@@ -1,10 +1,34 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import *
 from .models import *
-
 from django.contrib import messages
+from aplicaciones.configuracion.models import Configuracion
+from aplicaciones.Personas.models import Cliente
+from aplicaciones.Personas.forms import ClienteForm
+
+from django.core import serializers
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework.renderers import JSONRenderer
+from rest_framework.parsers import JSONParser
+from .serializers import *
+import json
+from django.http import HttpResponse
+from django.http import JsonResponse
+from django.http import HttpResponse
+from rest_framework.renderers import JSONRenderer
+from rest_framework.parsers import JSONParser
+
 
 # Create your views here.
+
+class JSONResponse(HttpResponse):
+    """
+    An HttpResponse that renders its content into JSON.
+    """
+    def __init__(self, data, **kwargs):
+        content = JSONRenderer().render(data)
+        kwargs['content_type'] = 'application/json'
+        super(JSONResponse, self).__init__(content, **kwargs)
 
 #Home
 def Home(request):
@@ -69,18 +93,32 @@ def listarBlogCategoria(request,id):
 #Crear Servicio Tecnico
 def crearServicio(request):
     servicios = Servicio_Tecnico.objects.all()
-    equipo = Equipo.objects.all() #aca ver deobtener equipos de una persona particular
+    clientes = Cliente.objects.all()
+    equipos = Equipo.objects.all() #aca ver deobtener equipos de una persona particular
     if request.method == 'POST':
+        if 'crear_equipo_modal' in request.POST:
+                equipo_form = EquipoForm(request.POST) #recibe todos los datos del formulario
+                if equipo_form.is_valid():
+                    equipo = equipo_form.save(commit = False)
         servicio_form = Servicio_TecnicoForm(request.POST) #recibe todos los datos del formulario
-        equipo_form = EquipoForm(request.POST) #recibe todos los datos del formulario
+        cliente_forms = ClienteForm(request.POST)
+        
         print(servicio_form.errors)
         if servicio_form.is_valid():    #is_valid es una funcion de django que valida todos los campos
             servicio_form.save()        #guardar o registrar en la base de datos lo que esta en el formullario
+            cliente_forms.save()
+            print("me redireccione")
             return redirect('/Servicios/crear_servicio')    #redireccionar para volver a cargar otro servicio
     else:
         servicio_form = Servicio_TecnicoForm()
+        cliente_forms = ClienteForm()
         equipo_form = EquipoForm()
-    return render(request,'Servicios/crear_servicio.html',{'servicio_form':servicio_form,'equipo_form':equipo_form,'servicios':servicios,'equipo':equipo})
+        print("por el modal?")
+    reporte = Configuracion.objects.all().last()
+    print(reporte)
+    context = {'servicio_form':servicio_form,'equipo_form':equipo_form,'servicios':servicios,'equipos':equipos,'reporte':reporte,'clientes':clientes,'cliente_forms':cliente_forms}
+    return render(request,'Servicios/crear_servicio.html',context)
+
 
 #Editar un Servicio
 def editarServicio(request,codServicio):
@@ -121,6 +159,49 @@ def eliminarServicio (request,id):
 def listarServicio(request):
     servicios = Servicio_Tecnico.objects.all()
     return render(request,'Servicios/listar_servicio.html',{'servicios':servicios})
+
+
+@csrf_exempt
+#Mostrar equipos de Clientes
+def mostrarEquipos(request):
+    id = request.GET.get('cliente',None)
+    cliente = Cliente.objects.get(dni = id)
+    result = dict()   
+    equipos = cliente.equipo_set.all()  #aca obtengo una consulta de manera inversa re chevere
+    serializer = EquipoSerializer(equipos, many=True)
+    result = serializer.data
+    return JsonResponse(result,safe=False)
+
+@csrf_exempt
+#Mostrar equipos de Clientes
+def mostrarMarca(request):
+    id = request.GET.get('equipo',None)
+    equipo = Equipo.objects.get(id = id)
+    result = dict()   
+    marca = equipo.marca  #aca obtengo una consulta de manera inversa re chevere
+    serializer = MarcaSerializer(marca)
+    result = serializer.data
+    return JsonResponse(result,safe=False)
+
+@csrf_exempt
+#Mostrar equipos de Clientes
+def mostrarModelo(request):
+    id = request.GET.get('equipo',None)
+    equipo = Equipo.objects.get(id = id)
+    print("mierda")
+    print(equipo)
+    result = dict()   
+    modelo = equipo.modelo  #aca obtengo una consulta de manera inversa re chevere
+    print("bandera")
+    print(modelo)
+    serializer = ModeloSerializer(modelo)
+    print("Serialicer tiene ->")
+    print(serializer)
+    result = serializer.data
+    print("Result tiene ->")
+    print(result)
+    return JsonResponse(result,safe=False)
+
 #################################################################################################################
 
 ############################################################## Pila de Servicio Tecnico ###################################################
@@ -251,6 +332,29 @@ def crearEquipo(request):
         equipo_form = EquipoForm()
     return render(request,'Servicios/crear_equipo.html',{'equipo_form':equipo_form,'equipo':equipo})    
 
+
+#Crear Equipo Modal
+def crearEquipoModal(request):
+    equipo = Equipo.objects.all()
+    servicios = Servicio_Tecnico.objects.all()
+    marcas = Marca.objects.all()
+    if request.method == 'POST':
+        equipo_form = EquipoForm(request.POST) #recibe todos los datos del formulario
+        print(equipo_form.errors)
+        if equipo_form.is_valid():    #is_valid es una funcion de django que valida todos los campos
+            print("entro")
+            equipo_form.save()        #guardar o registrar en la base de datos lo que esta en el formullario
+        else:
+            print('Ocurrió un error al tratar de crear el equipo')
+            print(servicios)
+            return redirect('crear_servicio',{'servicios':servicios})    #redireccionar al index
+    
+    else:
+        equipo_form = EquipoForm()
+        servicio_form = Servicio_TecnicoForm()
+    servicio_form = Servicio_TecnicoForm()
+    return render(request,'Servicios/crear_equipo_modal.html',{'servicio_form':servicio_form,'equipo_form':equipo_form,'equipo':equipo,'servicios':servicios,'marcas':marcas})    
+
 #Editar equipo
 def editarEquipo(request,id):
     equipo = Equipo.objects.all()
@@ -299,7 +403,23 @@ def crearMarca(request):
     else:
         marca_form = MarcaForm()
     return render(request,'Servicios/crear_marca.html',{'marca_form':marca_form,'marcas':marcas})
-    
+
+def crearMarcaModal(request):
+    marcas = Marca.objects.all()
+    equipo = Equipo.objects.all()
+    servicios = Servicio_Tecnico.objects.all()
+    if request.method == 'POST':
+        marca_form = MarcaForm(request.POST) #recibe todos los datos del formulario
+        if marca_form.is_valid():    #is_valid es una funcion de django que valida todos los campos
+            marca_form.save()        #guardar o registrar en la base de datos lo que esta en el formullario
+            print('Ocurrió un error al tratar de crear el equipo')
+            return redirect('/Servicios/crear_servicio')    #redireccionar al index
+    else:
+        marca_form = MarcaForm()
+    marcas = Marca.objects.all()
+    return render(request,'Servicios/crear_marca_modal.html',{'marca_form':marca_form,'marcas':marcas,'equipo':equipo,'servicios':servicios})
+
+
 #Editar Marca
 def editarMarca(request,id):
     marcas = Marca.objects.all()

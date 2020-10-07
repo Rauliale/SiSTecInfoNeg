@@ -1,4 +1,5 @@
 {% extends 'index.html' %}
+{% load static %}
 
 <!DOCTYPE html>
 
@@ -6,151 +7,196 @@
 {% block section %}Crear Servicio Tecnico{% endblock section %}
 
 {% block content%}
+<input type="hidden" name="titulo" class="titulo_reporte" id="titulo" value="Listado de Servicios">
+<input type="hidden" name="empresa" class="empresa_reporte" id="empresa" value="{{reporte.empresa}}">
+<input type="hidden" name="direccion" class="direccion_reporte" id="direccion" value="{{reporte.direccion}}">
+<input type="hidden" name="telefono" class="telefono_reporte" id="telefono" value="{{reporte.telefono}}">
+<input type="hidden" name="usuario" class="usuario_reporte" id="usuario" value="{{user.username}}">
+
 <div class="card-header py-4 bg-info">
   <h4 class="m-0 font-weight-bold text-white ">Servicios Tecnicos</h4>
 </div>
 <div class="card text-primary bg-ligth">
-    <div class="col-12">
-      <!-- Form -->
-      <form method="POST">
-        {%csrf_token%}
-        <div class="row text-dark">
-            <div class="col-4">    
-              <p style="margin-bottom: 0px; font-size: 3vh; font-size: 3vh;">Cliente:   <button type="button" class="fas fa-plus-circle fa-md" onclick="location.href='/Personas/crear_cliente'"></button></p>
-              {{equipo_form.cliente}}
-            </div>
+  <div class="col-12">
+    <!-- Form -->
+    <form method="POST">
+      {%csrf_token%}
+      <div class="row text-dark">
 
-            <div class="col-4">
-              <p style="margin-bottom: 0px; font-size: 3vh; font-size: 3vh;;">Equipo:   <button type="button" class="fas fa-plus-circle fa-md" onclick="location.href='/Servicios/crear_equipo'"></button></p>
-              {{servicio_form.equipo}}            <!-- Ver como hacer para cargar solo los equipos de ese cliente-->
-            </div>
-            
-            <div class="col-4">
-              <p style="margin-top: 4%; margin-bottom: 8px;font-size: 3vh; font-size: 3vh;">Fecha de Ingreso</p>
-              {{servicio_form.fechaIngreso}}
-            </div>
-            
+        <div class="col-4">
+          <p style="margin-bottom: 0px; font-size: 3vh; font-size: 3vh;">Cliente: <button type="button"
+              class="fas fa-plus-circle fa-md" onclick="location.href='/Personas/crear_cliente'"></button></p>
+          {{equipo_form.cliente}}
         </div>
-        
 
-        <div class="row text-dark">
-          <div class="col-4">
-            <p style="margin-bottom: 0px; font-size: 3vh; font-size: 3vh;">Estado:</p>
-            {{servicio_form.estado}}
-          </div>
-          
-          <div class="col-4">
-            <p style="margin-bottom: 0px; font-size: 3vh; font-size: 3vh;">Tipo de Equipo: </p>
-            {{equipo_form.tipoEquipo}}
-          </div>
+        <div class="col-4">
+          <p style="margin-bottom: 0px; font-size: 3vh; font-size: 3vh;;">Equipo: <button type="button"
+              class="fas fa-plus-circle fa-md"
+              onclick="abrir_modal_creacion('{% url 'Servicios:crear_equipo_modal' %}')"> </button></p>
+          <select id="comboEquipo" name='equipo' class="form-control">
 
-          <div class="col-4">
-            <p style="margin-bottom: 0px; font-size: 3vh; font-size: 3vh;">Contraseña:</p>
-            {{servicio_form.contraseña}}
-          </div>
-          
+          </select>
+          <!-- Ver como hacer para cargar solo los equipos de ese cliente-->
+        </div>
+
+        <div class="col-4">
+          <p style="margin-top: 0%; margin-bottom: 0px;font-size: 3vh; font-size: 3vh;">Fecha de Ingreso</p>
+          {{servicio_form.fechaIngreso}}
+        </div>
+
       </div>
-      
+
+
       <div class="row text-dark">
         <div class="col-4">
-          <p style="margin-bottom: 0px; font-size: 3vh; font-size: 3vh;">Marca: <button type="button" class="fas fa-plus-circle fa-md" onclick="location.href='/Servicios/crear_marca'"></button></p>
-          {{equipo_form.marca}}
+          <p style="margin-bottom: 0px; font-size: 3vh; font-size: 3vh;">Estado:</p>
+          {{servicio_form.estado}}
         </div>
-        
+
+        <div class="col-4">
+          <p style="margin-bottom: 0px; font-size: 3vh; font-size: 3vh;">Tipo de Equipo: </p>
+          {{equipo_form.tipoEquipo}}
+        </div>
+
+        <div class="col-4">
+          <p style="margin-bottom: 0px; font-size: 3vh; font-size: 3vh;">Contraseña:</p>
+          {{servicio_form.contraseña}}
+        </div>
+
+      </div>
+
+      <div class="row text-dark">
+        <div class="col-4">
+          <p style="margin-bottom: 0px; font-size: 3vh; font-size: 3vh;">Marca: <button type="button"
+              class="fas fa-plus-circle fa-md"
+              onclick="abrir_modal_creacion('{% url 'Servicios:crear_marca_modal' %}')"></button></p>
+              {{equipo_form.marca}}
+        </div>
+
         <div class="col-4">
           <p style="margin-bottom: 0px; font-size: 3vh; font-size: 3vh;">Modelo:</p>
-          {{equipo_form.modelo}}
+          <form name="modelo" id="modelo">
+            <input type="text" name="textModelo" id="textModelo">
+          </form>
         </div>
         <div class="col-4" style="margin-left: 0px; font-size: 3vh; font-size: 3vh;">
           <p style="margin-bottom: 0px; font-size: 3vh; font-size: 3vh;">Ubicacion:</p>
           {{servicio_form.ubicacion}}
         </div>
-    </div>
-    
-    <div class="row text-dark">
-      <div class="col-4">
-        <p style="margin-bottom: 0px; font-size: 3vh; font-size: 3vh;">Accesorio:   <button type="button" class="fas fa-plus-circle fa-md" onclick="location.href='/Servicios/crear_accesorio'"></button></p>
-        {{servicio_form.accesorio}}
       </div>
-    </div>
-    
 
-  <div class="row text-dark">
-    <div class="col-12">
-      <p style="margin-bottom: 0px; font-size: 3vh; font-size: 3vh;">Descripcion del Problema:</p>
-      {{servicio_form.problema}}
-    </div>
+      <div class="row text-dark">
+        <div class="col-8">
+          <p style="margin-bottom: 0px; font-size: 3vh; font-size: 3vh;">Accesorio : <button type="button"
+              class="fas fa-plus-circle fa-md" onclick="location.href='/Servicios/crear_accesorio'"></button></p>
+          {{servicio_form.accesorio}}
+        </div>
+        <div class="col-4">
+          <p style="margin-bottom: 0px; font-size: 3vh; font-size: 3vh;">Prioridad: </button></p>
+          {{servicio_form.prioridad}}
+        </div>
+      </div>
+
+
+      <div class="row text-dark">
+        <div class="col-12">
+          <p style="margin-bottom: 0px; font-size: 3vh; font-size: 3vh;">Descripcion del Problema:</p>
+          {{servicio_form.problema}}
+        </div>
+      </div>
+
+
+      <hr>
+      <button type="submit" class="btn btn-success" style="float: right; margin: 1%;">
+        <i class="fa fa-plus"></i> Crear
+      </button>
+
+      <button type="button" class="btn btn-secondary" onclick="window.history.back()" style="float: right;margin: 1%;">
+        <i class="fa fa-reply"></i> Volver
+      </button>
+
+    </form>
+    <!--end Form -->
   </div>
-        
-  
-    <hr>
-    <button type="submit" class="btn btn-success" style="float: right; margin: 1%;">
-      <i class="fa fa-plus"></i> Crear
-    </button>
-  
-        <button type="button" class="btn btn-secondary" onclick="window.history.back()" style="float: right;margin: 1%;">
-          <i class="fa fa-reply"></i> Volver
-        </button>
-  
-      </form>
-      <!--end Form -->
-    </div>
 </div>
 
 <hr>
 
+
+
 <!-- List -->
 {% if servicios%}
 <div class="card shadow text-primary">
-        <div class="card-header py-4 bg-info">
-          <h4 class="m-0 font-weight-bold text-white">Listado de Servicios Tecnicos</h4>
-        </div>
-        <div class="card-body text-dark">
-           <div class="table-responsive">
-            <table class="table table-bordered dataTable text-dark" id="dataTable">
-                <thead>
-                  <tr>
-                    <th>Cliente</th>
-                    <th>equipo</th>
-                    <th>Codigo de Servicio</th>
-                    <th>estado</th>
-                    <th>fechaIngreso</th>
-                    <th>fechaEntrega</th>
-                    <th>ubicacion</th>
-                    <th>tipo de equipo</th>
-                    <th>marca</th>
-                    <th>modelo</th>
-                    <th>acciones</th>
-                  </tr>
-                </thead>
-                <tbody>
-                {%for servicio in servicios%}
-                  <tr>
-                    <td style="text-align: left;">{{servicio.equipo.cliente}}</td>
-                    <td style="text-align: left;">{{servicio.equipo}}</td>
-                    <td style="text-align: left;">{{servicio.codServicio}}</td>
-                    <td style="text-align: left;">{{servicio.estado}}</td>
-                    <td style="text-align: left;">{{servicio.fechaIngreso}}</td>
-                    <td style="text-align: left;">{{servicio.fechaEntrega}}</td>
-                    <td style="text-align: left;">{{servicio.ubicacion}}</td>
-                    <td style="text-align: left;">{{servicio.equipo.tipoEquipo}}</td>
-                    <td style="text-align: left;">{{servicio.equipo.marca}}</td>
-                    <td style="text-align: left;">{{servicio.equipo.modelo}}</td>
-                    <td width="2%" align="center">
-                          <div class="table-data-feature">
-                            <button type="button" class="btn btn-info" onclick="location.href='/Servicios/editar_servicio/{{servicio.pk}}'">Ver mas</button>
-                          </div>
-                      </td>
-                  </tr>
-                  {% endfor %}
-                  
-                </tbody>
-              </table>
-        </div>
+  <div class="card-header py-4 bg-info">
+    <h4 class="m-0 font-weight-bold text-white">Listado de Servicios Tecnicos</h4>
+  </div>
+  <div class="card-body text-dark">
+    <div class="table-responsive">
+      <table class="table table-bordered dataTable text-dark" id="midatatable">
+        <thead>
+          <tr>
+            <th>equipo</th>
+            <th>N°</th>
+            <th>Cliente</th>
+            <th>estado</th>
+            <th>fechaIngreso</th>
+            <th>fechaEntrega</th>
+            <th>ubicacion</th>
+            <th>tipo de equipo</th>
+            <th>marca</th>
+            <th>modelo</th>
+            <th class="noExport">acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {%for servicio in servicios%}
+          <tr>
+            <td style="text-align: left;">{{servicio.equipo}}</td>
+            <td style="text-align: left;">{{servicio.codServicio}}</td>
+            <td style="text-align: left;">{{servicio.equipo.cliente}}</td>
+            <td style="text-align: left;">{{servicio.estado}}</td>
+            <td style="text-align: left;">{{servicio.fechaIngreso}}</td>
+            <td style="text-align: left;">{{servicio.fechaEntrega}}</td>
+            <td style="text-align: left;">{{servicio.ubicacion}}</td>
+            <td style="text-align: left;">{{servicio.equipo.tipoEquipo}}</td>
+            <td style="text-align: left;">{{servicio.equipo.marca}}</td>
+            <td style="text-align: left;">{{servicio.equipo.modelo}}</td>
+            <td width="2%" align="center">
+              <div class="table-data-feature">
+                <button type="button" class="btn btn-primary btn-sm"
+                  onclick="location.href='/Servicios/editar_servicio/{{servicio.pk}}'">
+                  <i class="fas fa-eye"></i>
+                </button>
+
+              </div>
+            </td>
+          </tr>
+          {% endfor %}
+
+        </tbody>
+      </table>
+    </div>
   </div>
 
 </div>
 {% endif %}
 <!-- end List -->
 
+<div class="modal fade" id="creacion" role="dialog">
+
+</div>
+
+
+
 {% endblock content%}
+
+{% block extrajs %}
+<script type="text/javascript">
+  function abrir_modal_creacion(url) {
+    $('#creacion').load(url, function () {
+      $(this).modal('show');
+    });
+  }
+</script>
+<script src=" {% static 'js/servicios/index.js' %} "></script>
+{% endblock extrajs %}

@@ -3,6 +3,7 @@
 <html lang="es">
 
 {%block head%}
+
 <head>
 
   <meta charset="utf-8">
@@ -16,16 +17,29 @@
   <!-- JQuery -->
   <script src="{% static 'libs/jquery.js' %}"></script>
 
+
   <!-- Custom fonts for this template-->
 
   <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
-  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+    rel="stylesheet">
 
   <!-- Custom styles for this template-->
   <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
+  
+  <!-- DataTables -->
+  <link href="{% static 'css/jquery.dataTables.min.css' %}" rel="stylesheet" media="all">
+  <link href="{% static 'css/datatables.min.css' %}" rel="stylesheet" media="all">
 
   <!-- Datatable -->
-  <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+  <link href="{% static 'vendor/datatables/dataTables.bootstrap4.min.css' %}" rel="stylesheet">
+  <link href="{% static 'DataTables/DataTables-1.10.22/css/dataTables.bootstrap4.min.css' %}" rel="stylesheet">
+
+  
+
+  <!-- Fuentes Asombrosas -->
+  <script src="https://kit.fontawesome.com/c71b7c952e.js" crossorigin="anonymous"></script>
 
   <!-- Select2 -->
   <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
@@ -37,6 +51,7 @@
 {%endblock head%}
 
 {% block body %}
+
 <body id="page-top">
 
   <!-- Page Wrapper -->
@@ -46,9 +61,9 @@
     <ul class="navbar-nav bg-dark sidebar sidebar-gray accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
-      
+
       <a class="sidebar-brand d-flex align-items-center justify-content-left" href="{% url 'index'  %}">
-        
+
         <div class="sidebar-brand-text mx-3">
           <div class="sidebar-brand-icon">
             <i class="fa"></i>
@@ -81,8 +96,9 @@
       <!-- Lista desplegable Menu-->
       <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-          <i class="fas fa-fw fa"> <img src="https://img.icons8.com/dusk/24/000000/virtual-machine2.png"/>  </i>
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
+          aria-controls="collapseTwo">
+          <i class="fas fa-fw fa"> <img src="https://img.icons8.com/dusk/24/000000/virtual-machine2.png" /> </i>
           <span> <strong>Servicios</strong> </span>
         </a>
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
@@ -100,7 +116,7 @@
           </div>
         </div>
       </li>
-      
+
       <!-- Divider -->
       <hr class="sidebar-divider">
 
@@ -109,11 +125,12 @@
         Control de Stock
       </div>
 
-    <!-- Lista desplegable Menu Usuario-->
+      <!-- Lista desplegable Menu Usuario-->
       <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseStock" aria-expanded="true" aria-controls="collapseStock">
-          <i class="fas fa-fw"> <img src="https://img.icons8.com/dusk/24/000000/sell-stock.png"/></i>
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseStock" aria-expanded="true"
+          aria-controls="collapseStock">
+          <i class="fas fa-fw"> <img src="https://img.icons8.com/dusk/24/000000/sell-stock.png" /></i>
           <span> <strong>Stock</strong> </span>
         </a>
         <div id="collapseStock" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
@@ -135,11 +152,12 @@
         Usuarios
       </div>
 
-    <!-- Lista desplegable Menu Usuario-->
+      <!-- Lista desplegable Menu Usuario-->
       <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUsuario" aria-expanded="true" aria-controls="collapseUsuario">
-          <i class="fas fa-fw"> <img src="https://img.icons8.com/dusk/25/000000/conference.png"/></i>
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUsuario"
+          aria-expanded="true" aria-controls="collapseUsuario">
+          <i class="fas fa-fw"> <img src="https://img.icons8.com/dusk/25/000000/conference.png" /></i>
           <span> <strong>Usuarios</strong> </span>
         </a>
         <div id="collapseUsuario" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
@@ -161,70 +179,73 @@
         Parametros
       </div>
 
-    <!-- Nav Item - Charts -->
+      <!-- Nav Item - Charts -->
       <li class="nav-item">
-          <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseGestionarParametros" aria-expanded="true" aria-controls="collapseGestionarParametros">
-            <i class="fas fa-fw"><img src="https://img.icons8.com/dusk/24/000000/video-editing.png"/></i>
-            <span> <strong>Parametros</strong> </span>
-          </a>
-          <div id="collapseGestionarParametros" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-            <div class="bg-primary py-2 collapse-inner rounded">
-              <h6 class="collapse-header">Gestionar Parametros</h6>
-              <a class="collapse-item" href="{% url 'Servicios:crear_tipo_equipo' %}">Crear Tipo de Equipo</a>
-              <a class="collapse-item" href="{% url 'Servicios:listar_tipo_equipo' %}">Ver Tipos de Equipo</a>
-              <hr>
-              <a class="collapse-item" href="/Servicios/crear_marca">Crear Nueva Marca</a>
-              <a class="collapse-item" href="/Servicios/listar_marcas">Ver Marcas</a>  
-              <hr>
-              <a class="collapse-item" href="/Servicios/crear_accesorio">Crear Nuevo Accesorio</a>
-              <a class="collapse-item" href="/Servicios/listar_accesorios">Ver Accesorios</a>  
-              <hr>
-              <a class="collapse-item" href="/Servicios/crear_estado_equipo">Crear Estado de Equipo</a>
-              <a class="collapse-item" href="/Servicios/listar_estado_equipo">Ver Estado de Equipo</a>
-              <hr>
-              <a class="collapse-item" href="/Servicios/crear_estado_repuesto">Estado de Repuesto</a>
-              <a class="collapse-item" href="/Servicios/listar_estado_repuesto">Ver Estado de Repuesto</a>
-              <hr>
-              <a class="collapse-item" href="/Personas/crear_provincia">Crear Provincia</a>
-              <a class="collapse-item" href="/Personas/listar_provincia">Ver Provincia</a>
-              <hr>
-              <a class="collapse-item" href="/Personas/crear_localidad">Crear Localidad</a>
-              <a class="collapse-item" href="/Personas/listar_localidad">Ver Localidad</a>
-              <hr>
-              <a class="collapse-item" href="/Servicios/crear_tipo_memoria">Tipo de Memoria</a>  
-              <hr>
-              <a class="collapse-item" href="/Servicios/crear_tipo_disco">Tipo de Disco</a>  
-              <hr>
-              <a class="collapse-item" href="/Stock/crear_categoria">Crear Nueva Categoria</a>
-              <a class="collapse-item" href="/Stock/listar_categorias">Ver Categorias</a>  
-              <hr>
-              <a class="collapse-item" href="/Stock/crear_grupo">Crear Nuevo Grupo</a>
-              <a class="collapse-item" href="/Stock/listar_grupos">Ver Grupo</a>  
-              <hr>
-              <a class="collapse-item" href="/Stock/crear_unidad">Crear Nueva Unidad</a>
-              <a class="collapse-item" href="/Stock/listar_unidades">Ver Unidades</a>  
-              <hr>
-              <a class="collapse-item" href="/Stock/crear_tipo_movimiento">Crear Tipo de Movimiento</a>
-              <a class="collapse-item" href="/Stock/listar_tipo_movimientos">Ver Tipos de Movimientos</a>  
-              <hr>
-            </div>
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseGestionarParametros"
+          aria-expanded="true" aria-controls="collapseGestionarParametros">
+          <i class="fas fa-fw"><img src="https://img.icons8.com/dusk/24/000000/video-editing.png" /></i>
+          <span> <strong>Parametros</strong> </span>
+        </a>
+        <div id="collapseGestionarParametros" class="collapse" aria-labelledby="headingTwo"
+          data-parent="#accordionSidebar">
+          <div class="bg-primary py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Gestionar Parametros</h6>
+            <a class="collapse-item" href="{% url 'Servicios:crear_tipo_equipo' %}">Crear Tipo de Equipo</a>
+            <a class="collapse-item" href="{% url 'Servicios:listar_tipo_equipo' %}">Ver Tipos de Equipo</a>
+            <hr>
+            <a class="collapse-item" href="/Servicios/crear_marca">Crear Nueva Marca</a>
+            <a class="collapse-item" href="/Servicios/listar_marcas">Ver Marcas</a>
+            <hr>
+            <a class="collapse-item" href="/Servicios/crear_accesorio">Crear Nuevo Accesorio</a>
+            <a class="collapse-item" href="/Servicios/listar_accesorios">Ver Accesorios</a>
+            <hr>
+            <a class="collapse-item" href="/Servicios/crear_estado_equipo">Crear Estado de Equipo</a>
+            <a class="collapse-item" href="/Servicios/listar_estado_equipo">Ver Estado de Equipo</a>
+            <hr>
+            <a class="collapse-item" href="/Servicios/crear_estado_repuesto">Estado de Repuesto</a>
+            <a class="collapse-item" href="/Servicios/listar_estado_repuesto">Ver Estado de Repuesto</a>
+            <hr>
+            <a class="collapse-item" href="/Personas/crear_provincia">Crear Provincia</a>
+            <a class="collapse-item" href="/Personas/listar_provincia">Ver Provincia</a>
+            <hr>
+            <a class="collapse-item" href="/Personas/crear_localidad">Crear Localidad</a>
+            <a class="collapse-item" href="/Personas/listar_localidad">Ver Localidad</a>
+            <hr>
+            <a class="collapse-item" href="/Servicios/crear_tipo_memoria">Tipo de Memoria</a>
+            <hr>
+            <a class="collapse-item" href="/Servicios/crear_tipo_disco">Tipo de Disco</a>
+            <hr>
+            <a class="collapse-item" href="/Stock/crear_categoria">Crear Nueva Categoria</a>
+            <a class="collapse-item" href="/Stock/listar_categorias">Ver Categorias</a>
+            <hr>
+            <a class="collapse-item" href="/Stock/crear_grupo">Crear Nuevo Grupo</a>
+            <a class="collapse-item" href="/Stock/listar_grupos">Ver Grupo</a>
+            <hr>
+            <a class="collapse-item" href="/Stock/crear_unidad">Crear Nueva Unidad</a>
+            <a class="collapse-item" href="/Stock/listar_unidades">Ver Unidades</a>
+            <hr>
+            <a class="collapse-item" href="/Stock/crear_tipo_movimiento">Crear Tipo de Movimiento</a>
+            <a class="collapse-item" href="/Stock/listar_tipo_movimientos">Ver Tipos de Movimientos</a>
+            <hr>
           </div>
-        
+        </div>
+
       </li>
 
-       <!-- Divider -->
-       <hr class="sidebar-divider">
+      <!-- Divider -->
+      <hr class="sidebar-divider">
 
-       <!-- Heading -->
-       <div class="sidebar-heading">
-         Promociones
-       </div>
+      <!-- Heading -->
+      <div class="sidebar-heading">
+        Promociones
+      </div>
 
       <!-- Lista desplegable Menu Promociones-->
       <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePromociones" aria-expanded="true" aria-controls="collapsePromociones">
-          <i class="fas fa-fw"><img src="https://img.icons8.com/dusk/24/000000/price-tag-euro.png"/></i>
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePromociones"
+          aria-expanded="true" aria-controls="collapsePromociones">
+          <i class="fas fa-fw"><img src="https://img.icons8.com/dusk/24/000000/price-tag-euro.png" /></i>
           <span> <strong>Promociones</strong> </span>
         </a>
         <div id="collapsePromociones" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
@@ -232,24 +253,25 @@
             <h6 class="collapse-header">Gestionar Promociones</h6>
             <a class="collapse-item" href="">Promociones por Equipos</a>
             <a class="collapse-item" href="">Promociones por Articulo</a>
-            
+
           </div>
         </div>
       </li>
 
-       <!-- Divider -->
-       <hr class="sidebar-divider">
+      <!-- Divider -->
+      <hr class="sidebar-divider">
 
-       <!-- Heading -->
-       <div class="sidebar-heading">
-         Estadisticas
-       </div>
+      <!-- Heading -->
+      <div class="sidebar-heading">
+        Estadisticas
+      </div>
 
       <!-- Lista desplegable Menu Estadisticas-->
       <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseEstadisticas" aria-expanded="true" aria-controls="collapseEstadisticas">
-          <i class="fas fa-fw"><img src="https://img.icons8.com/dusk/24/000000/accounting.png"/></i>
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseEstadisticas"
+          aria-expanded="true" aria-controls="collapseEstadisticas">
+          <i class="fas fa-fw"><img src="https://img.icons8.com/dusk/24/000000/accounting.png" /></i>
           <span> <strong>Estadisticas</strong> </span>
         </a>
         <div id="collapseEstadisticas" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
@@ -269,23 +291,24 @@
         <strong>Auditoria</strong>
       </div>
 
-     <!-- Lista desplegable Menu Estadisticas-->
-     <!-- Nav Item - Pages Collapse Menu -->
-     <li class="nav-item">
-       <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAuditoria" aria-expanded="true" aria-controls="collapseAuditoria">
-         <i class="fas fa-fw fa-cog"></i>
-         <span> <strong>Auditoria</strong> </span>
-       </a>
-       <div id="collapseAuditoria" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-         <div class="bg-primary py-2 collapse-inner rounded">
-           <h6 class="collapse-header">Gestionar Auditoria</h6>
-           <a class="collapse-item" href="">Tecnicos</a>
-           <a class="collapse-item" href="">Servicios</a>
-         </div>
-       </div>
-     </li>
-      
-      
+      <!-- Lista desplegable Menu Estadisticas-->
+      <!-- Nav Item - Pages Collapse Menu -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAuditoria"
+          aria-expanded="true" aria-controls="collapseAuditoria">
+          <i class="fas fa-fw fa-cog"></i>
+          <span> <strong>Auditoria</strong> </span>
+        </a>
+        <div id="collapseAuditoria" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div class="bg-primary py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Gestionar Auditoria</h6>
+            <a class="collapse-item" href="/Auditoria/audit_serv">Servicios</a>
+            <a class="collapse-item" href="/Auditoria/audit_equi">Equipo</a>
+          </div>
+        </div>
+      </li>
+
+
 
 
       <!-- Sidebar Toggler (Sidebar) -->
@@ -315,7 +338,8 @@
           <!-- Topbar Search -->
           <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-0 my-md-0 mw-100 navbar-search">
             <div class="input-group">
-              <input type="text" class="form-control bg-light border-0 small" placeholder="Buscar..." aria-label="Search" aria-describedby="basic-addon2">
+              <input type="text" class="form-control bg-light border-0 small" placeholder="Buscar..."
+                aria-label="Search" aria-describedby="basic-addon2">
               <div class="input-group-append">
                 <button class="btn btn-primary" type="button">
                   <i class="fas fa-search fa-sm"></i>
@@ -329,14 +353,17 @@
 
             <!-- Nav Item - Search Dropdown (Visible Only XS) -->
             <li class="nav-item dropdown no-arrow d-sm-none">
-              <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-search fa-fw"></i>
               </a>
               <!-- Dropdown - Messages -->
-              <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
+              <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                aria-labelledby="searchDropdown">
                 <form class="form-inline mr-auto w-100 navbar-search">
                   <div class="input-group">
-                    <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                    <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
+                      aria-label="Search" aria-describedby="basic-addon2">
                     <div class="input-group-append">
                       <button class="btn btn-primary" type="button">
                         <i class="fas fa-search fa-sm"></i>
@@ -349,13 +376,15 @@
 
             <!-- Nav Item - Alerts -->
             <li class="nav-item dropdown no-arrow mx-1">
-              <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-bell fa-fw"></i>
                 <!-- Counter - Alerts -->
                 <span class="badge badge-danger badge-counter">3+</span>
               </a>
               <!-- Dropdown - Alerts -->
-              <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
+              <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                aria-labelledby="alertsDropdown">
                 <h6 class="dropdown-header">
                   Alerts Center
                 </h6>
@@ -398,13 +427,15 @@
 
             <!-- Nav Item - Messages -->
             <li class="nav-item dropdown no-arrow mx-1">
-              <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-envelope fa-fw"></i>
                 <!-- Counter - Messages -->
                 <span class="badge badge-danger badge-counter">7</span>
               </a>
               <!-- Dropdown - Messages -->
-              <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="messagesDropdown">
+              <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                aria-labelledby="messagesDropdown">
                 <h6 class="dropdown-header">
                   Message Center
                 </h6>
@@ -414,7 +445,8 @@
                     <div class="status-indicator bg-success"></div>
                   </div>
                   <div class="font-weight-bold">
-                    <div class="text-truncate">Hi there! I am wondering if you can help me with a problem I've been having.</div>
+                    <div class="text-truncate">Hi there! I am wondering if you can help me with a problem I've been
+                      having.</div>
                     <div class="small text-gray-500">Emily Fowler · 58m</div>
                   </div>
                 </a>
@@ -424,7 +456,8 @@
                     <div class="status-indicator"></div>
                   </div>
                   <div>
-                    <div class="text-truncate">I have the photos that you ordered last month, how would you like them sent to you?</div>
+                    <div class="text-truncate">I have the photos that you ordered last month, how would you like them
+                      sent to you?</div>
                     <div class="small text-gray-500">Jae Chun · 1d</div>
                   </div>
                 </a>
@@ -434,7 +467,8 @@
                     <div class="status-indicator bg-warning"></div>
                   </div>
                   <div>
-                    <div class="text-truncate">Last month's report looks great, I am very happy with the progress so far, keep up the good work!</div>
+                    <div class="text-truncate">Last month's report looks great, I am very happy with the progress so
+                      far, keep up the good work!</div>
                     <div class="small text-gray-500">Morgan Alvarez · 2d</div>
                   </div>
                 </a>
@@ -444,8 +478,9 @@
                     <div class="status-indicator bg-success"></div>
                   </div>
                   <div>
-                    <div class="text-truncate">Am I a good boy? The reason I ask is because someone told me that people say this to all dogs, even if they aren'
-                       good...</div>
+                    <div class="text-truncate">Am I a good boy? The reason I ask is because someone told me that people
+                      say this to all dogs, even if they aren'
+                      good...</div>
                     <div class="small text-gray-500">Chicken the Dog · 2w</div>
                   </div>
                 </a>
@@ -457,7 +492,8 @@
 
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
-              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
                 <span class="mr-2 d-none d-lg-inline text-white-50 small">Rauli</span>
                 <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
               </a>
@@ -499,12 +535,12 @@
 
           <!-- Content Row -->
           <div class="row">
-          <div class="col-12">
-            {% block content %}
-          </div>
+            <div class="col-12">
+              {% block content %}
+            </div>
 
           </div>
-
+          
           <!-- Content Row -->
 
           <div class="row">
@@ -516,10 +552,12 @@
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">Resumen de ganancias</h6>
                   <div class="dropdown no-arrow">
-                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false">
                       <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
                     </a>
-                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                      aria-labelledby="dropdownMenuLink">
                       <div class="dropdown-header">Dropdown Header:</div>
                       <a class="dropdown-item" href="#">Action</a>
                       <a class="dropdown-item" href="#">Another action</a>
@@ -544,10 +582,12 @@
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">Fuentes de ingresos</h6>
                   <div class="dropdown no-arrow">
-                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false">
                       <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
                     </a>
-                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                      aria-labelledby="dropdownMenuLink">
                       <div class="dropdown-header">Dropdown Header:</div>
                       <a class="dropdown-item" href="#">Action</a>
                       <a class="dropdown-item" href="#">Another action</a>
@@ -577,178 +617,109 @@
             </div>
           </div>
 
-          <!-- select 2 -->
-          <select class="js-example-basic-single" name="state">
-            <option value="AL">Alabama</option>
-              ...
-            <option value="WY">Wyoming</option>
-          </select>
-
-          <!-- Content Row -->
-          <div class="row">
-
-            <!-- Content Column -->
-            <div class="col-lg-6 mb-4">
-
-              
-              <!-- Color System -->
-              <div class="row">
-                <div class="col-lg-6 mb-4">
-                  <div class="card bg-primary text-white shadow">
-                    <div class="card-body">
-                      Primary
-                      <div class="text-white-50 small">#4e73df</div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-lg-6 mb-4">
-                  <div class="card bg-success text-white shadow">
-                    <div class="card-body">
-                      Success
-                      <div class="text-white-50 small">#1cc88a</div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-lg-6 mb-4">
-                  <div class="card bg-info text-white shadow">
-                    <div class="card-body">
-                      Info
-                      <div class="text-white-50 small">#36b9cc</div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-lg-6 mb-4">
-                  <div class="card bg-warning text-white shadow">
-                    <div class="card-body">
-                      Warning
-                      <div class="text-white-50 small">#f6c23e</div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-lg-6 mb-4">
-                  <div class="card bg-danger text-white shadow">
-                    <div class="card-body">
-                      Danger
-                      <div class="text-white-50 small">#e74a3b</div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-lg-6 mb-4">
-                  <div class="card bg-secondary text-white shadow">
-                    <div class="card-body">
-                      Secondary
-                      <div class="text-white-50 small">#858796</div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-lg-6 mb-4">
-                  <div class="card bg-light text-black shadow">
-                    <div class="card-body">
-                      Light
-                      <div class="text-black-50 small">#f8f9fc</div>
-                    </div>
-                  </div>
-              </div>
-              <div class="col-lg-6 mb-4">
-                <div class="card bg-dark text-white shadow">
-                  <div class="card-body">
-                      Dark
-                      <div class="text-white-50 small">#5a5c69</div>
-                  </div>
+            <!-- End of Main Content -->
+            {% endblock content %}
+            <!-- Footer -->
+            <footer class="sticky-footer bg-black">
+              <div class="container my-auto">
+                <div class="copyright text-center my-auto">
+                  <span style="color:white;">Copyright &copy; Your Website 2020</span>
                 </div>
               </div>
+            </footer>
+            <!-- End of Footer -->
+
+          </div>
+          <!-- End of Content Wrapper -->
+
+        </div>
+        <!-- End of Page Wrapper -->
+
+        <!-- Scroll to Top Button-->
+        <a class="scroll-to-top rounded" href="#page-top">
+          <i class="fas fa-angle-up"></i>
+        </a>
+
+        <!-- Logout Modal-->
+        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+          aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">×</span>
+                </button>
+              </div>
+              <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+              <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                <a class="btn btn-primary" href="{% static 'login.html' %}">Logout</a>
+              </div>
             </div>
-
-            </div>
-
-            <div class="col-lg-6 mb-4">
-
-
-              
-        <!-- /.container-fluid -->
-
-      </div>
-      <!-- End of Main Content -->
-      {% endblock content %}
-      <!-- Footer -->
-      <footer class="sticky-footer bg-black">
-        <div class="container my-auto">
-          <div class="copyright text-center my-auto">
-            <span style="color:white;">Copyright &copy; Your Website 2020</span>
           </div>
         </div>
-      </footer>
-      <!-- End of Footer -->
 
-    </div>
-    <!-- End of Content Wrapper -->
+        <!-- Bootstrap core JavaScript-->
+        <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+        <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 
-  </div>
-  <!-- End of Page Wrapper -->
+        <!-- Core plugin JavaScript-->
+        <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
 
-  <!-- Scroll to Top Button-->
-  <a class="scroll-to-top rounded" href="#page-top">
-    <i class="fas fa-angle-up"></i>
-  </a>
+        <!-- Custom scripts for all pages-->
+        <script src="{% static 'js/sb-admin-2.min.js' %}"></script>
 
-  <!-- Logout Modal-->
-  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
-        </div>
-        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="% static 'login.html' %">Logout</a>
-        </div>
-      </div>
-    </div>
-  </div>
+        <!-- Page level plugins -->
+        <script src="{% static 'vendor/chart.js/Chart.min.js' %}"></script>
 
-  <!-- Bootstrap core JavaScript-->
-  <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
-  <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+        <!-- Page level custom scripts -->
+        <script src="{% static 'js/demo/chart-area-demo.js' %}"></script>
+        <script src="{% static 'js/demo/chart-pie-demo.js' %}"></script>
 
-  <!-- Core plugin JavaScript-->
-  <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
-
-  <!-- Custom scripts for all pages-->
-  <script src="{% static 'js/sb-admin-2.min.js' %}"></script>
-
-  <!-- Page level plugins -->
-  <script src="{% static 'vendor/chart.js/Chart.min.js' %}"></script>
-
-  <!-- Page level custom scripts -->
-  <script src="{% static 'js/demo/chart-area-demo.js' %}"></script>
-  <script src="{% static 'js/demo/chart-pie-demo.js' %}"></script>
-
-<!-- Datatable -->
-  <script src="{% static 'js/demo/datatables-demo.js' %}"></script>
-  <script src="{% static 'vendor/datatables/jquery.dataTables.min.js' %}"></script>
-  <script src="{% static 'vendor/datatables/dataTables.bootstrap4.min.js' %}"></script>
-
-<!-- Select2 script -->  
-<script>
-$(document).ready(function() {
-  $('.js-example-basic-single').select2();
-});
-</script>
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
-
-<!-- Datepiker -->
-<script src="{% static 'libs/js/bootstrap-datepicker.min.js' %}"></script>
-<script src="{% static 'libs/locales/bootstrap-datepicker.ar.min.js' %}"></script>
-
-<script>
-  $('.datepicker').datepicker();
-</script>
+        <!-- Datatable -->
+        <script src="{% static 'js/demo/datatables-demo.js' %}"></script>
+        <script src="{% static 'vendor/datatables/jquery.dataTables.min.js' %}"></script>
+        <script src="{% static 'vendor/datatables/dataTables.bootstrap4.min.js' %}"></script>
 
 
+        <!-- DataTable JS -->
+        <script src="{% static 'js/datatables.min.js' %}"></script>
+        <script src="{% static 'js/buttons.html5.min.js' %}"></script>
+        <script src="{% static 'js/dataTables.buttons.min.js' %}"></script>
+        <script src="{% static 'js/jszip.min.js' %}"></script>
+        <script src="{% static 'js/pdfmake.min.js' %}"></script>
+        <script src="{% static 'js/vfs_fonts.js' %}"></script>
+
+        <!-- Codigo JS Propio -->
+        <script src="{% static 'js/custom.js' %}"></script>
+
+        <!-- Select2 script -->
+        <script>
+          $(document).ready(function () {
+            $('.js-example-basic-single').select2();
+          });
+        </script>
+        <script>
+          $(document).ready(function () {
+            $('.js-example-basic-multiple').select2({
+              width: '100%'
+            });
+          });
+        </script>
+
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+
+        <!-- Datepiker -->
+        <script src="{% static 'libs/js/bootstrap-datepicker.min.js' %}"></script>
+        <script src="{% static 'libs/locales/bootstrap-datepicker.ar.min.js' %}"></script>
+
+        <script>
+          $('.datepicker').datepicker();
+        </script>
+
+        {% block extrajs %}
+        {% endblock extrajs %}
 </body>
 {% endblock body %}
 

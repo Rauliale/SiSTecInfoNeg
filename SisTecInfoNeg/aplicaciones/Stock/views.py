@@ -4,6 +4,22 @@ from .models import *
 
 from django.contrib import messages
 
+
+################################################################################################################
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import JsonResponse
+from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
+from django.views.decorators.csrf import csrf_exempt
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.utils.decorators import method_decorator
+
+from aplicaciones.Stock.forms import ArticuloForm
+from aplicaciones.Stock.models import Articulo
+#from apps.mixins import ValidatePermissionRequiredMixin
+
+################################################################################################################
+
 # Create your views here.
 
 ##################################################### Categoria ###########################################################
@@ -128,6 +144,7 @@ def regisrarSalida(request,id,baja):
     movimiento = Movimiento.objects.get(id = id) #aca tengo que cambiar mi variable tipo_Equipo con otro nombre
     articulo = Articulo.objects.get(id = id)
     articulo.cantidad = articulo.cantidad - baja
+    #articulo.precioDolar = 
     if request.method == 'GET':
         movimiento_form = MovimientoForm(instance = movimiento)       #ver de que es este instance = ??????????????????????????
         articulo_form = ArticuloForm(instance = articulo)
@@ -308,3 +325,167 @@ def listarArticulos(request):
     articulos = Articulo.objects.all()
     return render(request,'Stock/listar_articulos.html',{'articulos':articulos})
 ################################################################################################################
+
+
+############################################### vistas basadas en clases ##############################
+
+def articulos_list(request):
+    data = {
+        'title': 'Listado de Articulos',
+        'articulos': Articulo.objects.all()
+    }
+    return render(request, 'Stock/list.html', data)
+
+
+class ArticulosListView(ListView):
+    model = Articulo
+    template_name = 'Stock/list.html'
+    permission_required = 'carreras.view_articulos'
+
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        data = {}
+        try:
+            action = request.POST['action']
+            if action == 'searchdata':
+                data = []
+                for i in Articulo.objects.all():
+                    data.append(i.toJSON())
+            else:
+                data['error'] = 'Ha ocurrido un error'
+        except Exception as e:
+            data['error'] = str(e)
+        return JsonResponse(data, safe=False)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Listado de Articulo'
+        context['create_url'] = reverse_lazy('Stock:articulo_create')
+        context['list_url'] = reverse_lazy('Stock:articulo_list')
+        context['entity'] = 'Articulo'
+        return context
+
+
+class ArticuloCreateView(CreateView):
+    model = Articulo
+    form_class = ArticuloForm
+    template_name = 'Stock/create_articulo.html'
+    success_url = reverse_lazy('Stock:articulo_list')
+    #permission_required = 'carreras.add_materias'
+    url_redirect = success_url
+
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+    #MODO NORMAL
+    #def post(self, request, *args, **kwargs):
+    #    data = {}
+    #    try:
+    #        action = request.POST['action']
+    #        if action == 'add':
+    #            form = MateriasForm(request.POST)
+    #            form = self.get_form()
+    #            data = form.save()
+    #        else:
+    #            data['error'] = 'No ha ingresado ninguna opción'
+    #    except Exception as e:
+    #        data['error'] = str(e)
+    #    return JsonResponse(data)
+
+    #Modo con AJAX para controlar los años en el combobox
+    def post(self, request, *args, **kwargs):
+        data = {}
+        try:
+            action = request.POST['action']
+            if action == 'search_anios_id':
+                carrera = Carreras.objects.get(pk=request.POST['id'])
+                #print(carrera.duracion)
+                anios = carrera.duracion
+                print(anios)
+                data = [{'id': '', 'text': '---------'}]
+                #for i in AnioCursado.objects.filter(nombre=request.POST['id']):
+                for i in AnioCursado.objects.filter(nombre__gte=1, nombre__lte=anios):
+                    data.append({'id': i.id, 'text': i.nombre})
+            elif action == 'add':
+                form = ArticuloForm(request.POST)
+                if form.is_valid():
+                    form = self.get_form()
+                    data = form.save()
+                return redirect('Stock:articulo_list')
+            else:
+                data['error'] = 'Ha ocurrido un error'
+        except Exception as e:
+            data['error'] = str(e)
+        return JsonResponse(data, safe=False)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Crear un Articulo'
+        context['entity'] = 'Articulo'
+        context['list_url'] = reverse_lazy('Stock:articulo_list')
+        context['action'] = 'add'
+        return context
+
+
+class ArticuloUpdateView(UpdateView):
+    model = Articulo
+    form_class = ArticuloForm
+    template_name = 'Stock/create_articulo.html'
+    success_url = reverse_lazy('Stock:articulo_list')
+    #permission_required = 'carreras.change_materias'
+    url_redirect = success_url
+
+    def dispatch(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        return super().dispatch(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        data = {}
+        try:
+            action = request.POST['action']
+            if action == 'edit':
+                form = self.get_form()
+                data = form.save()
+            else:
+                data['error'] = 'No ha ingresado ninguna opción'
+        except Exception as e:
+            data['error'] = str(e)
+        return JsonResponse(data)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Editar Materia'
+        context['entity'] = 'Articulo'
+        context['list_url'] = reverse_lazy('Stock:articulo_list')
+        context['action'] = 'edit'
+        return context
+
+class ArticuloDeleteView(DeleteView):
+    model = Articulo
+    template_name = 'Stock/delete.html'
+    success_url = reverse_lazy('Stock:articulo_list')
+    #permission_required = 'carreras.delete_materias'
+    url_redirect = success_url
+
+    def dispatch(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        return super().dispatch(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        data = {}
+        try:
+            self.object.delete()
+        except Exception as e:
+            data['error'] = str(e)
+        return JsonResponse(data)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Eliminar Materia'
+        context['entity'] = 'Articulo'
+        context['list_url'] = reverse_lazy('Stock:articulo_list')
+        return context

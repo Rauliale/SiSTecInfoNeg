@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<script>
+    fetch('https://www.dolarsi.com/api/api.php?type=valoresprincipales')
+    .then((respuesta)=>{
+        return respuesta.json();
+    }).then((respuesta)=>{
+        document.getElementById("compra").value = respuesta.b.casa.compra;
+        document.getElementById("venta").value = respuesta.venta;
+    })
+</script>
+<body>
+    <div id="informacion">
+        <input type="text" id="compra" value="cargando...">
+        <input type="text" id="venta" value="cargando...">
+    </div>
+    
+</body>
+</html>

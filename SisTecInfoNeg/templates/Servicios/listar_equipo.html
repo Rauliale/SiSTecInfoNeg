@@ -11,41 +11,45 @@
 <!-- List -->
 {% if equipo%}
 <div class="card shadow">
-        <div class="card-header py-3">
-          <h6 class="m-0 font-weight-bold text-secondary">Listado de equipos</h6>
-        </div>
-        <div class="card-body">
-           <div class="table-responsive">
-            <table class="table table-bordered dataTable" id="dataTable">
-                <thead>
-                  <tr>
-                    <th>Marca</th>
-                    
-                  </tr>
-                </thead>
-                <tbody>
-                {%for equi in equipo%}
-                  <tr>
-                    <td style="text-align: left;">{{equi.tipoEquipo}}</td>
-                    <td style="text-align: left;">{{equi.marca}}</td>
-                    <td style="text-align: left;">{{equi.modelo}}</td>
-                    <td style="text-align: left;">{{equi.cliente}}</td>
-                    <td width="10%" align="center">
-                          <div class="table-data-feature">
-                            <button type="button" class="btn btn-info" onclick="location.href='/Servicios/editar_equipo/{{equi.pk}}'">Ver mas</button>
-                          </div>
-                      </td>
-                  </tr>
-                  {% endfor %}
-                  
-                </tbody>
-              </table>
-        </div>
+  <div class="card-header py-3">
+    <h6 class="m-0 font-weight-bold text-secondary">Listado de equipos</h6>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-bordered dataTable" id="dataTable">
+        <thead>
+          <tr>
+            <th>Tipo de equipo</th>
+            <th>Marca</th>
+            <th>Modelo</th>
+            <th>Cliente</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {%for equi in equipo%}
+          <tr>
+            <td style="text-align: left;">{{equi.tipoEquipo}}</td>
+            <td style="text-align: left;">{{equi.marca}}</td>
+            <td style="text-align: left;">{{equi.modelo}}</td>
+            <td style="text-align: left;">{{equi.cliente}}</td>
+            <td width="10%" align="center">
+              <div class="table-data-feature">
+                <button type="button" class="btn btn-info"
+                  onclick="location.href='/Servicios/editar_equipo/{{equi.pk}}'">Ver mas</button>
+              </div>
+            </td>
+          </tr>
+          {% endfor %}
+
+        </tbody>
+      </table>
+    </div>
   </div>
 
 </div>
 {% else %}
-    <p>Aún no hay datos cargados</p>
+<p>Aún no hay datos cargados</p>
 {% endif %}
 <!-- end List -->
 

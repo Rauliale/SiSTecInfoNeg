@@ -151,7 +151,9 @@ class Articulo(models.Model):
     estado = models.BooleanField('Articulo activo/inactivo', default = False)
     impuesto = models.ForeignKey(TipoImpuesto, on_delete = models.DO_NOTHING,  null = True, blank = True)
     ganancia = models.ForeignKey(Ganancias, on_delete = models.DO_NOTHING,  null = True, blank = True)
+    precioDolar = models.CharField('Nombre del Articulo', max_length = 100, null = True, blank = True)
     
+
     class Meta:
         verbose_name = 'Articulo'
         verbose_name_plural = 'Articulos'
@@ -159,6 +161,13 @@ class Articulo(models.Model):
 
     def __str__(self):
             return str(self.nombreArticulo)
+
+    def toJSON(self):
+        item = model_to_dict(self)
+        item['categoria'] = self.categoria.toJSON()
+        item['nombreArticulo'] = self.nombreArticulo.toJSON()
+        item['grupo'] = self.grupo.toJSON()
+        return item
 
     def save(self, *args, **kwargs):
         self.nombreArticulo = (self.nombreArticulo).upper()      

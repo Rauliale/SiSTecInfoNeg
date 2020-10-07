@@ -1,11 +1,18 @@
 from django.db import models
-
 from django.core.validators import MinValueValidator
-
 from django.contrib.auth.models import User
 from datetime import datetime, date, time, timedelta
 import calendar
 
+
+
+class Turno(models.Model):
+    id_turno=models.AutoField(primary_key=True)
+    turno=models.CharField('Turno', max_length=50,blank=False,null=False)
+    borrado = models.BooleanField('borrado',default=False)
+
+    def __str__(self):
+        return self.turno
 
 class Provincia(models.Model):
     id_provincia=models.AutoField(primary_key=True)
@@ -150,7 +157,7 @@ class Tecnico(models.Model):
     telefono=models.ForeignKey(Telefono, on_delete=models.PROTECT,null=True)
     correoElectronico = models.EmailField('Correo electronico del usuario', null =  False, blank = False)
     estado = models.BooleanField('Usuario activo/inactivo', default = False)
-    turno = models.CharField('Turno de trabajo del tecnico', max_length = 100, null = True, blank = True)
+    turno = models.ManyToManyField(Turno, blank = True)
     especialidades = models.ManyToManyField(Especialidad, blank = True)
 
     class Meta:
@@ -161,13 +168,6 @@ class Tecnico(models.Model):
     def __str__(self):
         return str(self.dni) + ' - ' + self.apellido + ' ' + self.nombre
         #return self.apellido
-
-    def save(self, *args, **kwargs):
-        self.nombre = (self.nombre).upper()
-        self.apellido = (self.apellido).upper()
-        self.domicilio = (self.domicilio)        
-        return super(Tecnico, self).save(*args, **kwargs)
-
 class Empleado(models.Model):
     dni = models.PositiveIntegerField('DNI', primary_key = True, null = False, blank = False)
     rol = models.ForeignKey(Rol, on_delete = models.DO_NOTHING,  null = True, blank = True)
@@ -179,7 +179,7 @@ class Empleado(models.Model):
     telefono=models.ForeignKey(Telefono, on_delete=models.PROTECT,null=True)
     correoElectronico = models.EmailField('Correo electronico del usuario', null =  False, blank = False)
     estado = models.BooleanField('Usuario activo/inactivo', default = False)
-    turno = models.CharField('Turno de trabajo del Empleado', max_length = 100, null = False, blank = False)
+    turno = models.ManyToManyField(Turno, blank = True)
     puesto = models.CharField('Puesto de trabajo del Empleado', max_length = 100, null = False, blank = False)
 
     class Meta:

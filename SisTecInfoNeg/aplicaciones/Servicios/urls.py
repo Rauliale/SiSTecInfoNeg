@@ -23,6 +23,10 @@ urlpatterns = [
     path('crear_servicio/',crearServicio, name= 'crear_servicio'), #Crear servicio
     path('editar_servicio/<int:codServicio>',editarServicio, name= 'editar_servicio'),
     path('eliminar_servicio/<int:codServicio>',eliminarServicio, name= 'eliminar_servicio'),
+    path ('mostrar_equipos/',mostrarEquipos,name='mostrar_equipos'),
+    path ('mostrar_marca/',mostrarMarca,name='mostrar_marca'),
+    path ('mostrar_modelo/',mostrarModelo,name='mostrar_modelo'),
+    
     
     ############################# ABM Tipo de Memoria #####################################
     path('crear_tipo_memoria/',crearTipoMemoria, name= 'crear_tipo_memoria'),
@@ -45,6 +49,7 @@ urlpatterns = [
 
     ############################ ABM Equipo #############################################
     path('crear_equipo/',crearEquipo, name= 'crear_equipo'),
+    path('crear_equipo_modal/',crearEquipoModal, name= 'crear_equipo_modal'),
     path('listar_equipo/',listarEquipo, name= 'listar_equipo'),
     path('editar_equipo/<int:id>',editarEquipo, name= 'editar_equipo'),
     path ('eliminar_equipo/<int:id>',eliminarEquipo,name='eliminar_equipo'),
@@ -53,6 +58,7 @@ urlpatterns = [
     ############################ ABM MARCA #############################################
     path('listar_marcas/',listarMarcas, name= 'listar_marcas'),
     path('crear_marca/',crearMarca, name= 'crear_marca'),
+    path('crear_marca_modal/',crearMarcaModal, name= 'crear_marca_modal'),
     path('editar_marca/<int:id>',editarMarca, name= 'editar_marca'),
     path ('eliminar_marca/<int:id>',eliminarMarca,name='eliminar_marca'),
 

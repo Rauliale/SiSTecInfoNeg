@@ -2,6 +2,7 @@ from django.contrib import admin
 from .models import *
 from import_export import resources
 from import_export.admin import ImportExportModelAdmin
+from aplicaciones.Personas.models import Cliente
 
 class Servicio_TecnicoResource(resources.ModelResource):
     class Meta:
@@ -23,8 +24,7 @@ admin.site.register(Equipo)
 admin.site.register(Categoria)
 admin.site.register(Autor)
 admin.site.register(Blog)
-admin.site.register(TipoMemoria)
-admin.site.register(CapacidadMemoria)
-admin.site.register(TipoDisco)
-admin.site.register(CapacidadDisco)
-admin.site.register(TipoSO)
+admin.site.register(TipoComponente)
+admin.site.register(Componente)
+admin.site.register(UnidadMedida)
+admin.site.register(Prioridad)

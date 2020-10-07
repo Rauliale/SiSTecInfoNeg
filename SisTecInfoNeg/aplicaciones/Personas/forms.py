@@ -1,6 +1,13 @@
 from django import forms
 from .models import *
 
+class ProvinciaForm(forms.ModelForm):
+    class Meta:
+        model = Provincia
+        fields = ['provincia']
+        widgets = {
+        'provincia' : forms.TextInput(attrs={'type' : 'text', 'class' : 'form-control form-control-user', 'placeholder' : 'Provincia', 'style' : 'margin-bottom:2px;'}),
+        }
 
 class LocalidadForm(forms.ModelForm):
     class Meta:
