@@ -54,7 +54,7 @@ class MovimientoForm(forms.ModelForm):
 class ArticuloForm(forms.ModelForm):
     class Meta:
         model = Articulo
-        fields = ['categoria','nombreArticulo','grupo','stockMinimo','unidadMedida','estado','precioCompra','precioVenta','cantidad','estado','impuesto','ganancia']
+        fields = ['categoria','nombreArticulo','grupo','stockMinimo','unidadMedida','estado','precioCompra','precioVenta','precioDolar','cantidad','estado','impuesto','ganancia']
         widgets = {
         'categoria': forms.Select(attrs={'class' : 'js-example-basic-single form-control form-control-sm', 'style':'width: 100%'}),
         'nombreArticulo' : forms.TextInput(attrs={'type' : 'text', 'class' : 'form-control form-control-user', 'placeholder' : 'Nombre del Articulo', 'style' : 'margin-bottom:2px;'}),
@@ -63,6 +63,7 @@ class ArticuloForm(forms.ModelForm):
         'unidadMedida': forms.Select(attrs={'class' : 'js-example-basic-single form-control form-control-sm', 'style':'width: 100%'}),
         'precioCompra': forms.TextInput(attrs={'type' : 'text', 'class' : 'form-control form-control-sm', 'placeholder' : 'Precio de Compra', 'style':'width: 100%'}),
         'precioVenta': forms.TextInput(attrs={'type' : 'text', 'class' : 'form-control form-control-sm', 'placeholder' : 'Precio de Venta', 'style':'width: 100%'}),
+        'precioDolar': forms.TextInput(attrs={'type' : 'text', 'class' : 'form-control form-control-sm', 'placeholder' : 'Precio de Venta', 'style':'width: 100%'}),
         'cantidad':forms.TextInput(attrs={'type' : 'text', 'class' : 'form-control form-control-sm', 'placeholder' : 'Stock', 'style':'width: 100%'}),
         'impuesto': forms.Select(attrs={'class' : 'js-example-basic-single form-control form-control-sm', 'style':'width: 100%'}),
         'ganancia': forms.Select(attrs={'class' : 'js-example-basic-single form-control form-control-sm', 'style':'width: 100%'}),

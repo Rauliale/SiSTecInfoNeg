@@ -1,0 +1,118 @@
+{% extends 'index.html' %}
+
+<!DOCTYPE html>
+
+{%block titulo%}Crear un Articulo{%endblock titulo%}
+{% block section %}Crear un Articulo{% endblock section %}
+
+{% block content%}
+<div class="card-header py-4 bg-info">
+  <h4 class="m-0 font-weight-bold text-white ">Articulos</h4>
+</div>
+<div class="card text-primary bg-ligth">
+    <div class="col-12">
+      <!-- Form -->
+      <form method="POST" action=".">
+        {%csrf_token%}
+        <input type="hidden" name="action" value="{{ action }}">
+        <div class="row text-dark">
+            <div class="col-4">    
+              <p style="margin-bottom: 0px; font-size: 3vh; font-size: 3vh;">Categoria:   <button type="button" class="fas fa-plus-circle fa-md" onclick="location.href='/Stock/crear_categoria'"></button></p>
+              {{articulo_form.categoria}}
+            </div>
+
+            <div class="col-4">
+              <p style="margin-bottom: 0px; font-size: 3vh; font-size: 3vh;;">Nombre del Articulo:</p>
+              {{articulo_form.nombreArticulo}}            <!-- Ver como hacer para cargar solo los equipos de ese cliente-->
+                <p>Esta entrando por aca</p>
+            </div>
+            
+            <div class="col-4">
+              <p style="margin-bottom: 0px;font-size: 3vh; font-size: 3vh;">Grupo</p>
+              {{articulo_form.grupo}}
+            </div>
+            
+        </div>
+        
+
+        <div class="row text-dark">
+          <div class="col-4">
+            <p style="margin-bottom: 0px; font-size: 3vh; font-size: 3vh;">Stock Minimo:</p>
+            {{articulo_form.stockMinimo}}
+          </div>
+          
+          <div class="col-4">
+            <p style="margin-bottom: 0px; font-size: 3vh; font-size: 3vh;">Unidad: </p>
+            {{articulo_form.unidadMedida}}
+          </div>
+
+          <div class="col-4">
+            <p style="margin-bottom: 0px; font-size: 3vh; font-size: 3vh;">Activo: {{articulo_form.estado}}</p>
+          </div>
+          
+      </div>
+             
+  
+    <hr>
+    <button type="submit" class="btn btn-success" style="float: right; margin: 1%;">
+      <i class="fa fa-plus"></i> Crear
+    </button>
+  
+        <button type="button" class="btn btn-secondary" onclick="window.history.back()" style="float: right;margin: 1%;">
+          <i class="fa fa-reply"></i> Volver
+        </button>
+  
+      </form>
+      <!--end Form -->
+    </div>
+</div>
+
+<hr>
+
+<!-- List -->
+{% if articulos%}
+<div class="card shadow text-primary">
+  <div class="card-header py-4 bg-info">
+    <h4 class="m-0 font-weight-bold text-white">Listado de Articulos</h4>
+  </div>
+  <div class="card-body text-dark">
+    <div class="table-responsive">
+      <table class="table table-bordered dataTable text-dark" id="dataTable">
+                <thead>
+                  <tr>
+                    <th>Categoria</th>
+                    <th>Nombre del Articulo</th>
+                    <th>Grupo</th>
+                    <th>Stock Minimo</th>
+                    <th>Unidad</th>
+                    <th>Estado</th>
+                    <th>acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {%for articulo in object_list%}
+                  <tr>
+                    <td style="text-align: left;">{{articulo.categoria}}</td>
+                    <td style="text-align: left;">{{articulo.nombreArticulo}}</td>
+                    <td style="text-align: left;">{{articulo.grupo}}</td>
+                    <td style="text-align: left;">{{articulo.stockMinimo}}</td>
+                    <td style="text-align: left;">{{articulo.unidadMedida}}</td>
+                    <td style="text-align: left;">{{articulo.estado}}</td>
+                    <td width="2%" align="center">
+                          <div class="table-data-feature">
+                            <button type="button" class="btn btn-info" onclick="location.href='/Stock/editar_articulo/{{articulo.pk}}'">Ver mas</button>
+                          </div>
+                      </td>
+                  </tr>
+                  {% endfor %}
+                  
+                </tbody>
+              </table>
+        </div>
+  </div>
+
+</div>
+{% endif %}
+<!-- end List -->
+
+{% endblock content%}

@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import MinValueValidator
+from django.forms import model_to_dict
 
 # Create your models here.
 class Categoria(models.Model):
@@ -151,7 +152,7 @@ class Articulo(models.Model):
     estado = models.BooleanField('Articulo activo/inactivo', default = False)
     impuesto = models.ForeignKey(TipoImpuesto, on_delete = models.DO_NOTHING,  null = True, blank = True)
     ganancia = models.ForeignKey(Ganancias, on_delete = models.DO_NOTHING,  null = True, blank = True)
-    precioDolar = models.CharField('Nombre del Articulo', max_length = 100, null = True, blank = True)
+    precioDolar = models.CharField('Precio en Dolar', max_length = 100, null = True, blank = True)
     
 
     class Meta:
@@ -163,10 +164,10 @@ class Articulo(models.Model):
             return str(self.nombreArticulo)
 
     def toJSON(self):
-        item = model_to_dict(self)
-        item['categoria'] = self.categoria.toJSON()
-        item['nombreArticulo'] = self.nombreArticulo.toJSON()
-        item['grupo'] = self.grupo.toJSON()
+        item = model_to_dict(self)                      #model to dic transforma todo el modelo a un diccionario
+        #item['categoria'] = self.categoria.toJSON()
+        #item['nombreArticulo'] = self.nombreArticulo.toJSON()
+        #item['grupo'] = self.grupo.toJSON()
         return item
 
     def save(self, *args, **kwargs):

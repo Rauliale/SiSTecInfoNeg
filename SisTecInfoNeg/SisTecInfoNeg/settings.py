@@ -42,10 +42,12 @@ INSTALLED_APPS = [
     'aplicaciones.Stock',
     'aplicaciones.Auditoria',
     'aplicaciones.configuracion',
+    'aplicaciones.login',
     'import_export',    #sirve para hacer importaciones y exportaciones del sitio de administracion de django crack el tipo
     'ckeditor',         #sirve para darle formatos a un campo de texto tipo word
     'simple_history',   #Para la auditoria
     'rest_framework',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [
@@ -139,8 +141,16 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
+
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+LOGIN_REDIRECT_URL = 'index'
+LOGOUT_REDIRECT_URL = '/login/'
+LOGIN_URL = '/login/'
 
 STATICFILES_DIRS = (os.path.join(BASE_DIR,'static'),)
 

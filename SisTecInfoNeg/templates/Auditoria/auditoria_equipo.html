@@ -1,7 +1,7 @@
 {% extends "index.html" %}
 {% load static %}
 {% block titulo %}Auditoria{% endblock titulo %}
-{% block section %}Auditoria Equipos{% endblock section %}
+{% block section %}{% endblock section %}
 
 {% block content %}
 
@@ -11,7 +11,7 @@
 <input type="hidden" name="telefono" class="telefono_reporte" id="telefono" value="{{reporte.telefono}}">
 <input type="hidden" name="usuario" class="usuario_reporte" id="usuario" value="{{user.username}}">
 
-
+<!--
 <div class="col-12 alineado-derecha">
     <div class="fa-hover">
         <a href="JavaScript:Void(0);">
@@ -19,22 +19,22 @@
         </a>
     </div>
 </div>
-
+-->
 
 <hr>
 
-<div class="card shadow text-primary">
-    <div class="card-header py-4 bg-info">
+<div class="card shadow text-dark">
+    <div class="card-header py-4 bg-dark">
         <h4 class="m-0 font-weight-bold text-white">Auditoria de Equipos</h4>
     </div>
     <div class="card-body text-dark">
         <!-- start accordion -->
         <div class="accordion" id="accordion" role="tablist" aria-multiselectable="true">
             <div class="panel">
-                <a class="panel-heading collapsed" role="tab" id="headingTwo" data-toggle="collapse"
+                <a class="panel-heading collapsed text-black" role="tab" id="headingTwo" data-toggle="collapse"
                     data-parent="#accordion" href="#collapseTwoFiltro" aria-expanded="false"
                     aria-controls="collapseTwoFiltro">
-                    <h4 class="panel-title"><i class="fa fa-filter" aria-hidden="true"></i>Filtros</h4>
+                    <h4 class="m-0 font-weight-bold text-black" ><i class="fa fa-filter" aria-hidden="true"></i>Filtros</h4>
                 </a>
                 <div id="collapseTwoFiltro" class="panel-collapse collapse" role="tabpanel"
                     aria-labelledby="headingTwo">

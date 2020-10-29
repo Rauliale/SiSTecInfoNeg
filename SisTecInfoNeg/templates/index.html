@@ -10,14 +10,14 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
-  <meta name="author" content="">
+  <meta name="author" content="Raul Añais">
 
   <title>{% block titulo %}SiSTecInfoNeg{% endblock titulo %}</title>
 
   <!-- JQuery -->
   <script src="{% static 'libs/jquery.js' %}"></script>
 
-
+  
   <!-- Custom fonts for this template-->
 
   <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
@@ -26,17 +26,19 @@
     rel="stylesheet">
 
   <!-- Custom styles for this template-->
-  <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
   
+  <link href="{% static 'css/sb-admin-2.css' %}" rel="stylesheet">
+  <!--<link rel="stylesheet" href="{% static 'css/estilos.css' %}" >-->
+
   <!-- DataTables -->
   <link href="{% static 'css/jquery.dataTables.min.css' %}" rel="stylesheet" media="all">
   <link href="{% static 'css/datatables.min.css' %}" rel="stylesheet" media="all">
 
   <!-- Datatable -->
   <link href="{% static 'vendor/datatables/dataTables.bootstrap4.min.css' %}" rel="stylesheet">
-  <link href="{% static 'DataTables/DataTables-1.10.22/css/dataTables.bootstrap4.min.css' %}" rel="stylesheet">
+  <!--<link href="{% static 'DataTables/DataTables-1.10.22/css/dataTables.bootstrap4.min.css' %}" rel="stylesheet">-->
 
-  
+
 
   <!-- Fuentes Asombrosas -->
   <script src="https://kit.fontawesome.com/c71b7c952e.js" crossorigin="anonymous"></script>
@@ -47,8 +49,20 @@
   <!-- CSS datepiker 1.9 -->
   <link rel="stylesheet" href="{% static 'libs/css/bootstrap-datepicker.standalone.css' %}">
 
+  <!-- Jquery Confirm 3.3.4 -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+  <script src="{% static 'js/function.js' %}"></script>
+  <!--<link rel="stylesheet" href="{% static 'lib/jquery-confirm-v3.3.4/css/jquery-confirm.css' %}">
+  <script src="{% static 'lib/jquery-confirm-v3.3.4/js/jquery-confirm.js' %}"></script>-->
+
+
 </head>
 {%endblock head%}
+
+{% block head_list %}
+{% endblock head_list %}
 
 {% block body %}
 
@@ -89,7 +103,7 @@
 
       <!-- Titulo -->
       <!-- Heading -->
-      <div class="sidebar-heading">
+      <div class="sidebar-heading" >
         Servicios Tecnicos
       </div>
 
@@ -102,7 +116,7 @@
           <span> <strong>Servicios</strong> </span>
         </a>
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-primary py-2 collapse-inner rounded">
+          <div class="bg-dark py-2 collapse-gray collapse-inner rounded">
             <h6 class="collapse-header">Gestionar</h6>
             <a class="collapse-item" href="/Servicios/crear_servicio/">Crear Servicio</a>
             <a class="collapse-item" href="/Servicios/listar_servicio/">Ver Servicio</a>
@@ -134,12 +148,13 @@
           <span> <strong>Stock</strong> </span>
         </a>
         <div id="collapseStock" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-primary py-2 collapse-inner rounded">
+          <div class="bg-dark py-2 collapse-inner rounded">
             <h6 class="collapse-header">Gestionar Stock</h6>
-            <a class="collapse-item" href="/Stock/crear_articulo">Almacen</a>
+            <a class="collapse-item" href="/Stock/articulo_create">Cargar Articulos</a>
+            <a class="collapse-item" href="/Stock/articulo_list">Listar Articulos</a>
             <a class="collapse-item" href="/Stock/listar_movimientos">Movimientos</a>
             <a class="collapse-item" href="/Stock/registrar_ingreso">Registrar Ingreso</a>
-            <a class="collapse-item" href="/Stock/crear_empleado">Registrar Salida</a>
+            <a class="collapse-item" href="/Stock/registrar_ingreso">Registrar Salida</a>
           </div>
         </div>
       </li>
@@ -161,7 +176,7 @@
           <span> <strong>Usuarios</strong> </span>
         </a>
         <div id="collapseUsuario" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-primary py-2 collapse-inner rounded">
+          <div class="bg-dark py-2 collapse-inner rounded">
             <h6 class="collapse-header">Gestionar Usuario</h6>
             <a class="collapse-item" href="/Personas/crear_cliente">Cliente</a>
             <a class="collapse-item" href="/Personas/crear_tecnico">Tecnico</a>
@@ -188,7 +203,7 @@
         </a>
         <div id="collapseGestionarParametros" class="collapse" aria-labelledby="headingTwo"
           data-parent="#accordionSidebar">
-          <div class="bg-primary py-2 collapse-inner rounded">
+          <div class="bg-dark py-2 collapse-inner rounded">
             <h6 class="collapse-header">Gestionar Parametros</h6>
             <a class="collapse-item" href="{% url 'Servicios:crear_tipo_equipo' %}">Crear Tipo de Equipo</a>
             <a class="collapse-item" href="{% url 'Servicios:listar_tipo_equipo' %}">Ver Tipos de Equipo</a>
@@ -249,7 +264,7 @@
           <span> <strong>Promociones</strong> </span>
         </a>
         <div id="collapsePromociones" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-primary py-2 collapse-inner rounded">
+          <div class="bg-dark py-2 collapse-inner rounded">
             <h6 class="collapse-header">Gestionar Promociones</h6>
             <a class="collapse-item" href="">Promociones por Equipos</a>
             <a class="collapse-item" href="">Promociones por Articulo</a>
@@ -275,7 +290,7 @@
           <span> <strong>Estadisticas</strong> </span>
         </a>
         <div id="collapseEstadisticas" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-primary py-2 collapse-inner rounded">
+          <div class="bg-dark py-2 collapse-inner rounded">
             <h6 class="collapse-header">Gestionar Estadisticas</h6>
             <a class="collapse-item" href="">Tecnicos</a>
             <a class="collapse-item" href="">Servicios</a>
@@ -300,7 +315,7 @@
           <span> <strong>Auditoria</strong> </span>
         </a>
         <div id="collapseAuditoria" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-primary py-2 collapse-inner rounded">
+          <div class="bg-dark collapse-inner rounded">
             <h6 class="collapse-header">Gestionar Auditoria</h6>
             <a class="collapse-item" href="/Auditoria/audit_serv">Servicios</a>
             <a class="collapse-item" href="/Auditoria/audit_equi">Equipo</a>
@@ -325,10 +340,10 @@
 
       <!-- Main Content -->
       <!-- Color oscuro de fondo -->
-      <div id="content" style="background: #4e73df">
+      <div id="content" style="background: #000000c4">
 
         <!-- Topbar -->
-        <nav class="navbar navbar-expand navbar-gray bg-secondary topbar mb-5 static-top shadow">
+        <nav class="navbar navbar-expand navbar-gray bg-dark topbar static-top shadow">
 
           <!-- Sidebar Toggle (Topbar) -->
           <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
@@ -341,7 +356,7 @@
               <input type="text" class="form-control bg-light border-0 small" placeholder="Buscar..."
                 aria-label="Search" aria-describedby="basic-addon2">
               <div class="input-group-append">
-                <button class="btn btn-primary" type="button">
+                <button class="btn btn-secondary" type="button">
                   <i class="fas fa-search fa-sm"></i>
                 </button>
               </div>
@@ -395,7 +410,7 @@
                     </div>
                   </div>
                   <div>
-                    <div class="small text-gray-500">December 12, 2019</div>
+                    <div class="small text-gray-500">December 12, 2020</div>
                     <span class="font-weight-bold">A new monthly report is ready to download!</span>
                   </div>
                 </a>
@@ -406,7 +421,7 @@
                     </div>
                   </div>
                   <div>
-                    <div class="small text-gray-500">December 7, 2019</div>
+                    <div class="small text-gray-500">December 7, 2020</div>
                     $290.29 has been deposited into your account!
                   </div>
                 </a>
@@ -417,7 +432,7 @@
                     </div>
                   </div>
                   <div>
-                    <div class="small text-gray-500">December 2, 2019</div>
+                    <div class="small text-gray-500">December 2, 2020</div>
                     Spending Alert: We've noticed unusually high spending for your account.
                   </div>
                 </a>
@@ -494,7 +509,7 @@
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-white-50 small">Rauli</span>
+                <span class="mr-2 d-none d-lg-inline text-ligth-50 small">Rauli</span>
                 <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
               </a>
               <!-- Dropdown - User Information -->
@@ -512,9 +527,9 @@
                   Activity Log
                 </a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                <a class="dropdown-item" href=" /login/logout/" data-toggle="modal" data-target="#logoutModal">
                   <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Logout
+                  Salir
                 </a>
               </div>
             </li>
@@ -540,7 +555,7 @@
             </div>
 
           </div>
-          
+
           <!-- Content Row -->
 
           <div class="row">
@@ -549,8 +564,8 @@
             <div class="col-xl-8 col-lg-7">
               <div class="card shadow mb-2">
                 <!-- Card Header - Dropdown -->
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">Resumen de ganancias</h6>
+                <div class="card-header bg-dark py-3 d-flex flex-row align-items-center justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-white">Resumen de ganancias</h6>
                   <div class="dropdown no-arrow">
                     <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
                       aria-haspopup="true" aria-expanded="false">
@@ -579,8 +594,8 @@
             <div class="col-xl-4 col-lg-5">
               <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">Fuentes de ingresos</h6>
+                <div class="card-header bg-dark py-3 d-flex flex-row align-items-center justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-white">Fuentes de ingresos</h6>
                   <div class="dropdown no-arrow">
                     <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
                       aria-haspopup="true" aria-expanded="false">
@@ -617,110 +632,112 @@
             </div>
           </div>
 
-            <!-- End of Main Content -->
-            {% endblock content %}
-            <!-- Footer -->
-            <footer class="sticky-footer bg-black">
-              <div class="container my-auto">
-                <div class="copyright text-center my-auto">
-                  <span style="color:white;">Copyright &copy; Your Website 2020</span>
-                </div>
+          <!-- End of Main Content -->
+          {% endblock content %}
+          <!-- Footer -->
+          <footer class="sticky-footer bg-black">
+            <div class="container my-auto">
+              <div class="copyright text-center my-auto">
+                <span style="color:white;">Copyright &copy; Your Website 2020</span>
               </div>
-            </footer>
-            <!-- End of Footer -->
-
-          </div>
-          <!-- End of Content Wrapper -->
+            </div>
+          </footer>
+          <!-- End of Footer -->
 
         </div>
-        <!-- End of Page Wrapper -->
+        <!-- End of Content Wrapper -->
 
-        <!-- Scroll to Top Button-->
-        <a class="scroll-to-top rounded" href="#page-top">
-          <i class="fas fa-angle-up"></i>
-        </a>
+      </div>
+      <!-- End of Page Wrapper -->
 
-        <!-- Logout Modal-->
-        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-          aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">×</span>
-                </button>
-              </div>
-              <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-              <div class="modal-footer">
-                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                <a class="btn btn-primary" href="{% static 'login.html' %}">Logout</a>
-              </div>
+      <!-- Scroll to Top Button-->
+      <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+      </a>
+
+      <!-- Logout Modal-->
+      <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">¿Listo para salir?</h5>
+              <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div class="modal-body">Seleccione "Cerrar sesión" a continuación si está listo para finalizar su sesión actual</div>
+            <div class="modal-footer">
+              <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+              <a class="btn btn-primary" href="/login/logout/">Salir</a>
             </div>
           </div>
         </div>
+      </div>
 
-        <!-- Bootstrap core JavaScript-->
-        <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
-        <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+      <!-- Bootstrap core JavaScript-->
+      <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+      <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 
-        <!-- Core plugin JavaScript-->
-        <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+      <!-- Core plugin JavaScript-->
+      <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
 
-        <!-- Custom scripts for all pages-->
-        <script src="{% static 'js/sb-admin-2.min.js' %}"></script>
+      <!-- Custom scripts for all pages-->
+      <script src="{% static 'js/sb-admin-2.min.js' %}"></script>
 
-        <!-- Page level plugins -->
-        <script src="{% static 'vendor/chart.js/Chart.min.js' %}"></script>
+      <!-- Page level plugins -->
+      <script src="{% static 'vendor/chart.js/Chart.min.js' %}"></script>
 
-        <!-- Page level custom scripts -->
-        <script src="{% static 'js/demo/chart-area-demo.js' %}"></script>
-        <script src="{% static 'js/demo/chart-pie-demo.js' %}"></script>
+      <!-- Page level custom scripts -->
+      <script src="{% static 'js/demo/chart-area-demo.js' %}"></script>
+      <script src="{% static 'js/demo/chart-pie-demo.js' %}"></script>
 
-        <!-- Datatable -->
-        <script src="{% static 'js/demo/datatables-demo.js' %}"></script>
-        <script src="{% static 'vendor/datatables/jquery.dataTables.min.js' %}"></script>
-        <script src="{% static 'vendor/datatables/dataTables.bootstrap4.min.js' %}"></script>
+      <!-- Datatable -->
+      <script src="{% static 'js/demo/datatables-demo.js' %}"></script>
+      <script src="{% static 'vendor/datatables/jquery.dataTables.min.js' %}"></script>
+      <script src="{% static 'vendor/datatables/dataTables.bootstrap4.min.js' %}"></script>
 
 
-        <!-- DataTable JS -->
-        <script src="{% static 'js/datatables.min.js' %}"></script>
-        <script src="{% static 'js/buttons.html5.min.js' %}"></script>
-        <script src="{% static 'js/dataTables.buttons.min.js' %}"></script>
-        <script src="{% static 'js/jszip.min.js' %}"></script>
-        <script src="{% static 'js/pdfmake.min.js' %}"></script>
-        <script src="{% static 'js/vfs_fonts.js' %}"></script>
+      <!-- DataTable JS -->
+      <script src="{% static 'js/datatables.min.js' %}"></script>
+      <script src="{% static 'js/buttons.html5.min.js' %}"></script>
+      <script src="{% static 'js/dataTables.buttons.min.js' %}"></script>
+      <script src="{% static 'js/jszip.min.js' %}"></script>
+      <script src="{% static 'js/pdfmake.min.js' %}"></script>
+      <script src="{% static 'js/vfs_fonts.js' %}"></script>
 
-        <!-- Codigo JS Propio -->
-        <script src="{% static 'js/custom.js' %}"></script>
+      <!-- Codigo JS Propio -->
+      <script src="{% static 'js/custom.js' %}"></script>
 
-        <!-- Select2 script -->
-        <script>
-          $(document).ready(function () {
-            $('.js-example-basic-single').select2();
+      <!-- Select2 script -->
+      <script>
+        $(document).ready(function () {
+          $('.js-example-basic-single').select2();
+        });
+      </script>
+      <script>
+        $(document).ready(function () {
+          $('.js-example-basic-multiple').select2({
+            width: '100%'
           });
-        </script>
-        <script>
-          $(document).ready(function () {
-            $('.js-example-basic-multiple').select2({
-              width: '100%'
-            });
-          });
-        </script>
+        });
+      </script>
 
-        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
 
-        <!-- Datepiker -->
-        <script src="{% static 'libs/js/bootstrap-datepicker.min.js' %}"></script>
-        <script src="{% static 'libs/locales/bootstrap-datepicker.ar.min.js' %}"></script>
+      <!-- Datepiker -->
+      <script src="{% static 'libs/js/bootstrap-datepicker.min.js' %}"></script>
+      <script src="{% static 'libs/locales/bootstrap-datepicker.ar.min.js' %}"></script>
 
-        <script>
-          $('.datepicker').datepicker();
-        </script>
+      <script>
+        $('.datepicker').datepicker();
+      </script>
 
-        {% block extrajs %}
-        {% endblock extrajs %}
+      {% block extrajs %}
+      {% endblock extrajs %}
 </body>
+
+
 {% endblock body %}
 
 

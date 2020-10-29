@@ -1,0 +1,55 @@
+{% extends 'index.html' %}
+
+<!DOCTYPE html>
+
+{%block titulo%}Listado de Articulos{%endblock titulo%}
+{% block section %}Listado de Articulo{% endblock section %}
+
+{% block content%}
+<!-- List -->
+{% if object_list%}
+<div class="card shadow text-primary">
+  <div class="card-header py-4 bg-info">
+    <h4 class="m-0 font-weight-bold text-white">Listado de Articulos</h4>
+  </div>
+  <div class="card-body text-dark">
+    <div class="table-responsive">
+      <table class="table table-bordered dataTable text-dark" id="midatatable">
+                <thead>
+                  <tr>
+                    <th>Categoria</th>
+                    <th>Nombre del Articulo</th>
+                    <th>Grupo</th>
+                    <th>Stock Minimo</th>
+                    <th>Unidad</th>
+                    <th>Estado</th>
+                    <th>acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {%for articulo in object_list%}
+                  <tr>
+                    <td style="text-align: left;">{{articulo.categoria}}</td>
+                    <td style="text-align: left;">{{articulo.nombreArticulo}}</td>
+                    <td style="text-align: left;">{{articulo.grupo}}</td>
+                    <td style="text-align: left;">{{articulo.stockMinimo}}</td>
+                    <td style="text-align: left;">{{articulo.unidadMedida}}</td>
+                    <td style="text-align: left;">{{articulo.estado}}</td>
+                    <td width="2%" align="center">
+                          <div class="table-data-feature">
+                            <button type="button" class="btn btn-info" onclick="location.href='/Stock/editar_articulo/{{articulo.pk}}'">Ver mas</button>
+                          </div>
+                      </td>
+                  </tr>
+                  {% endfor %}
+                  
+                </tbody>
+              </table>
+        </div>
+  </div>
+
+</div>
+{% endif %}
+<!-- end List -->
+
+{% endblock content%}

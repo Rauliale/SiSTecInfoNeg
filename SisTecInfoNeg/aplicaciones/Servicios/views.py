@@ -5,6 +5,7 @@ from django.contrib import messages
 from aplicaciones.configuracion.models import Configuracion
 from aplicaciones.Personas.models import Cliente
 from aplicaciones.Personas.forms import ClienteForm
+from django.utils.decorators import method_decorator
 
 from django.core import serializers
 from django.views.decorators.csrf import csrf_exempt
@@ -32,6 +33,7 @@ class JSONResponse(HttpResponse):
 
 #Home
 def Home(request):
+
     return render(request, 'index.html')
 
 def Wiki(request):

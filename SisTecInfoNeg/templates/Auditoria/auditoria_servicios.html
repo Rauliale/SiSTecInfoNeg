@@ -1,7 +1,7 @@
 {% extends "index.html" %}
 {% load static %}
 {% block titulo %}Auditoria{% endblock titulo %}
-{% block section %}Auditoria Servicios Tecnicos{% endblock section %}
+{% block section %}{% endblock section %}
 
 {% block content %}
 
@@ -11,7 +11,7 @@
 <input type="hidden" name="telefono" class="telefono_reporte" id="telefono" value="{{reporte.telefono}}">
 <input type="hidden" name="usuario" class="usuario_reporte" id="usuario" value="{{user.username}}">
 
-
+<!--
 <div class="col-12 alineado-derecha">
     <div class="fa-hover">
         <a href="JavaScript:Void(0);">
@@ -19,13 +19,13 @@
         </a>
     </div>
 </div>
-
+-->
 
 <hr>
 
 <div class="card shadow text-primary">
-    <div class="card-header py-4 bg-info">
-        <h4 class="m-0 font-weight-bold text-white">Auditoria de Servicios Tecnicos</h4>
+    <div class="card-header py-3 bg-dark">
+      <h6 class="m-0 font-weight-bold text-white">Auditoria de Servicios Tecnicos</h6>
     </div>
     <div class="card-body text-dark">
         <!-- start accordion -->
@@ -48,7 +48,8 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="table-data__tool-left" data-step="3" data-intro='Por acción realizada'>
-                                    <div class="rs-select2--light"><span id="date-label-accion" class="date-label">Acción: </span>
+                                    <div class="rs-select2--light"><span id="date-label-accion"
+                                            class="date-label">Acción: </span>
                                         <select class="form-control" name="" id="select-accion">
                                             <option value=""></option>
                                             <option value="">Alta</option>
@@ -76,7 +77,7 @@
             <div class="col-md-2"><button type="button" class="btn btn-danger" id="cleanfilters">Limpiar</button></div>
         </div> {% endcomment %}
         <!-- end of accordion -->
-<hr>
+        <hr>
         <div class="table-responsive table-responsive-data2">
             <table class="table table-data2" id="midatatable" data-step="5" data-intro='Tabla de auditoría'>
                 <thead>
@@ -108,7 +109,8 @@
                         </td>
                         <td data-step="7" data-intro='Codigo de servicio' style="text-align: center;">
                             {{audi.codServicio}}</td>
-                        <td data-step="8" data-intro='El problema del servicio' style="text-align: center;">{{audi.problema}}</td>
+                        <td data-step="8" data-intro='El problema del servicio' style="text-align: center;">
+                            {{audi.problema}}</td>
                         <td data-step="9" data-intro='Cuando se realizó la acción' style="text-align: center;">
                             {{audi.history_date |date:'d-m-Y h:i:s'}}</td>
                         <td data-step="10" data-intro='Y el usuario que la realizó' style="text-align: center;">
@@ -122,12 +124,13 @@
                                 data-intro='Si selecciona la opción "Ver Cambios" se mostrará una ventana donde se observarán los cambios al elemento'>
                                 <i class="fas fa-eye"></i>
                             </button>
-                            <div class="modal fade ver_auditoria_servicios" id="ver_auditoria_servicios{{audi.pk}}" tabindex="-1"
-                                role="dialog" aria-hidden="true">
+                            <div class="modal fade ver_auditoria_servicios" id="ver_auditoria_servicios{{audi.pk}}"
+                                tabindex="-1" role="dialog" aria-hidden="true">
                                 <div class="modal-dialog modal-lg">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h4 class="modal-title" id="ver_auditoria_servicios{{audi.pk}}">Ver Cambios</h4>
+                                            <h4 class="modal-title" id="ver_auditoria_servicios{{audi.pk}}">Ver Cambios
+                                            </h4>
                                             <button type="button" class="close" data-dismiss="modal"><span
                                                     aria-hidden="true">×</span></button>
                                         </div>
@@ -181,6 +184,10 @@
 </div>
 <!-- END DATA TABLE -->
 
+
+{% endblock content %}
+
+{% block extrajs %}
 <script type="text/javascript">
     function f1(pk, id_history) {
         $.ajax({
@@ -268,4 +275,4 @@
         }
     });
 </script>
-{% endblock content %}
+{% endblock extrajs %}

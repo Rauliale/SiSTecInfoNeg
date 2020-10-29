@@ -1,0 +1,216 @@
+{% extends 'index.html' %}
+{% load widget_tweaks %}
+{% load static %}
+
+
+
+{% block section %}Stock{% endblock section %}
+
+
+{% block content %}
+<form method="post" action=".">
+    <div class="card card-default">
+        <div class="card-header">
+            <h3 class="card-title">
+                {% if action == 'add' %}
+                <i class="fas fa-plus"></i>
+                {% else %}
+                <i class="fas fa-edit"></i>
+                {% endif %}
+                {{ title }}
+            </h3>
+        </div>
+        <div class="card-body">
+            {% csrf_token %}
+            <input type="hidden" name="action" value="{{ action }}">
+            {% if form.errors %}
+            <div class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <h5><i class="icon fas fa-ban"></i> Ha ocurrido un error al intentar guardar el registro</h5>
+                <ul>
+                    {% for field in form %}
+                    {% for error in field.errors %}
+                    <li>{{ error }}</li>
+                    {% endfor %}
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+
+            <div class="row text-dark">
+                <div class="col-4">
+                    <p style="margin-bottom: 0px; font-size: 3vh; font-size: 3vh;">Categoria: <button type="button"
+                            class="fas fa-plus-circle fa-md" onclick="location.href='/Stock/crear_categoria'"></button>
+                    </p>
+                    {{form.categoria}}
+                </div>
+
+                <div class="col-4">
+                    <p style="margin-bottom: 0px; font-size: 3vh; font-size: 3vh;;">Nombre del Articulo:</p>
+                    {{form.nombreArticulo}}
+                    <!-- Ver como hacer para cargar solo los equipos de ese cliente-->
+                </div>
+
+                <div class="col-4">
+                    <p style="margin-bottom: 0px;font-size: 3vh; font-size: 3vh;">Grupo</p>
+                    {{form.grupo}}
+                </div>
+
+            </div>
+
+            <div class="row text-dark">
+                <div class="col-4">
+                    <p style="margin-bottom: 0px; font-size: 3vh; font-size: 3vh;">Precio de Compra:</p>
+                    {{form.precioCompra}}
+                </div>
+
+                <div class="col-4">
+                    <p style="margin-bottom: 0px; font-size: 3vh; font-size: 3vh;">Precio de Venta: </p>
+                    {{form.precioVenta}}
+                </div>
+
+                <div class="col-4">
+                    <p style="margin-bottom: 0px; font-size: 3vh; font-size: 3vh;">Precio en Dolar: </p>
+                    {{form.precioDolar}}
+                </div>
+
+            </div>
+
+            <div class="row text-dark">
+                <div class="col-4">
+                    <p style="margin-bottom: 0px; font-size: 3vh; font-size: 3vh;">Stock Minimo:</p>
+                    {{form.stockMinimo}}
+                </div>
+
+                <div class="col-4">
+                    <p style="margin-bottom: 0px; font-size: 3vh; font-size: 3vh;">Cantidad: </p>
+                    {{form.cantidad}}
+                </div>
+
+                <div class="col-4">
+                    <p style="margin-bottom: 0px; font-size: 3vh; font-size: 3vh;">Unidad: </p>
+                    {{form.unidadMedida}}
+                </div>
+
+            </div>
+
+            <div class="row text-dark">
+                <div class="col-4">
+                    <p style="margin-bottom: 0px; font-size: 3vh; font-size: 3vh;">% Impuesto:</p>
+                    {{form.impuesto}}
+                </div>
+
+                <div class="col-4">
+                    <p style="margin-bottom: 0px; font-size: 3vh; font-size: 3vh;">% Ganancia: </p>
+                    {{form.ganancia}}
+                </div>
+
+            </div>
+            <div class="row text-dark">
+                <div class="col-1">
+                    <p style="margin-bottom: 0px; font-size: 3vh; font-size: 3vh;">Activo: {{form.estado}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <button type="submit" class="btn btn-primary btn-flat">
+                <i class="fa fa-plus"></i>Guardar y Continuar
+            </button>
+            <!--
+            <button type="submit" class="btn btn-success">
+                <i class="fas fa-save"></i> Guardar
+            </button>-->
+
+            <a href="{{ list_url }}" class="btn btn-danger btn-flat">
+                <i class="fas fa-times"></i> Cancelar
+            </a>
+        </div>
+    </div>
+</form>
+
+
+
+<!--
+<script>
+    function submit_without_ajax(url, title, content, parameters, callback) {
+        $.confirm({
+            theme: 'material',
+            title: title,
+            icon: 'fa fa-info',
+            content: content,
+            columnClass: 'small',
+            typeAnimated: true,
+            cancelButtonClass: 'btn-primary',
+            draggable: true,
+            dragWindowBorder: false,
+            buttons: {
+                info: {
+                    text: "Si",
+                    btnClass: 'btn-primary',
+                    action: function () {
+                        $.ajax({
+                            url: url, //window.location.pathname
+                            type: 'POST',
+                            data: parameters,
+                            dataType: 'json',
+                            //processData: false,
+                            //contentType: false,
+                        }).done(function (data) {
+                            console.log(data);
+                            if (!data.hasOwnProperty('error')) {
+                                callback();
+                                return false;
+                            }
+                            message_error(data.error);
+                        }).fail(function (jqXHR, textStatus, errorThrown) {
+                            //alert(textStatus + ': ' + errorThrown);
+                            callback();
+                            return false;
+                        }).always(function (data) {
+
+                        });
+                    }
+                },
+                danger: {
+                    text: "No",
+                    btnClass: 'btn-red',
+                    action: function () {
+
+                    }
+                },
+            }
+        })
+    }
+</script>
+-->
+
+<!--
+{% if form.errors %}
+var errors = '';
+{% for field in form %}
+{% for error in field.errors %}
+errors += '{{ error }}\n';
+{% endfor %}
+{% endfor %}
+Swal.fire({
+title: 'Error!',
+text: errors,
+icon: 'error'
+});
+{% endif %}
+
+
+
+<script>
+    $('form').on('submit', function (e) {
+        e.preventDefault();
+        var parameters = $(this).serializeArray();
+        //var parameters = new FormData(this);
+        //para el select anidado hasta que encuentre como resolver eso
+        submit_with_ajax(window.location.pathname, 'Confirmación', '¿Estás seguro de realizar la siguiente acción?', parameters, function () {
+            location.href = '{{ list_url }}';
+        });
+    });
+</script>
+-->
+{% endblock content %}

@@ -3,6 +3,7 @@ from django.core.validators import MinValueValidator
 from ckeditor.fields import RichTextField
 from simple_history.models import HistoricalRecords
 
+
 from aplicaciones.Personas.models import Cliente
 
 

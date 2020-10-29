@@ -13,112 +13,123 @@
 <input type="hidden" name="telefono" class="telefono_reporte" id="telefono" value="{{reporte.telefono}}">
 <input type="hidden" name="usuario" class="usuario_reporte" id="usuario" value="{{user.username}}">
 
-<div class="card-header py-4 bg-info">
-  <h4 class="m-0 font-weight-bold text-white ">Servicios Tecnicos</h4>
-</div>
-<div class="card text-primary bg-ligth">
-  <div class="col-12">
-    <!-- Form -->
-    <form method="POST">
-      {%csrf_token%}
-      <div class="row text-dark">
-
-        <div class="col-4">
-          <p style="margin-bottom: 0px; font-size: 3vh; font-size: 3vh;">Cliente: <button type="button"
-              class="fas fa-plus-circle fa-md" onclick="location.href='/Personas/crear_cliente'"></button></p>
-          {{equipo_form.cliente}}
-        </div>
-
-        <div class="col-4">
-          <p style="margin-bottom: 0px; font-size: 3vh; font-size: 3vh;;">Equipo: <button type="button"
-              class="fas fa-plus-circle fa-md"
-              onclick="abrir_modal_creacion('{% url 'Servicios:crear_equipo_modal' %}')"> </button></p>
-          <select id="comboEquipo" name='equipo' class="form-control">
-
-          </select>
-          <!-- Ver como hacer para cargar solo los equipos de ese cliente-->
-        </div>
-
-        <div class="col-4">
-          <p style="margin-top: 0%; margin-bottom: 0px;font-size: 3vh; font-size: 3vh;">Fecha de Ingreso</p>
-          {{servicio_form.fechaIngreso}}
-        </div>
-
-      </div>
-
-
-      <div class="row text-dark">
-        <div class="col-4">
-          <p style="margin-bottom: 0px; font-size: 3vh; font-size: 3vh;">Estado:</p>
-          {{servicio_form.estado}}
-        </div>
-
-        <div class="col-4">
-          <p style="margin-bottom: 0px; font-size: 3vh; font-size: 3vh;">Tipo de Equipo: </p>
-          {{equipo_form.tipoEquipo}}
-        </div>
-
-        <div class="col-4">
-          <p style="margin-bottom: 0px; font-size: 3vh; font-size: 3vh;">Contraseña:</p>
-          {{servicio_form.contraseña}}
-        </div>
-
-      </div>
-
-      <div class="row text-dark">
-        <div class="col-4">
-          <p style="margin-bottom: 0px; font-size: 3vh; font-size: 3vh;">Marca: <button type="button"
-              class="fas fa-plus-circle fa-md"
-              onclick="abrir_modal_creacion('{% url 'Servicios:crear_marca_modal' %}')"></button></p>
-              {{equipo_form.marca}}
-        </div>
-
-        <div class="col-4">
-          <p style="margin-bottom: 0px; font-size: 3vh; font-size: 3vh;">Modelo:</p>
-          <form name="modelo" id="modelo">
-            <input type="text" name="textModelo" id="textModelo">
-          </form>
-        </div>
-        <div class="col-4" style="margin-left: 0px; font-size: 3vh; font-size: 3vh;">
-          <p style="margin-bottom: 0px; font-size: 3vh; font-size: 3vh;">Ubicacion:</p>
-          {{servicio_form.ubicacion}}
-        </div>
-      </div>
-
-      <div class="row text-dark">
-        <div class="col-8">
-          <p style="margin-bottom: 0px; font-size: 3vh; font-size: 3vh;">Accesorio : <button type="button"
-              class="fas fa-plus-circle fa-md" onclick="location.href='/Servicios/crear_accesorio'"></button></p>
-          {{servicio_form.accesorio}}
-        </div>
-        <div class="col-4">
-          <p style="margin-bottom: 0px; font-size: 3vh; font-size: 3vh;">Prioridad: </button></p>
-          {{servicio_form.prioridad}}
-        </div>
-      </div>
-
-
-      <div class="row text-dark">
-        <div class="col-12">
-          <p style="margin-bottom: 0px; font-size: 3vh; font-size: 3vh;">Descripcion del Problema:</p>
-          {{servicio_form.problema}}
-        </div>
-      </div>
-
-
-      <hr>
-      <button type="submit" class="btn btn-success" style="float: right; margin: 1%;">
-        <i class="fa fa-plus"></i> Crear
-      </button>
-
-      <button type="button" class="btn btn-secondary" onclick="window.history.back()" style="float: right;margin: 1%;">
-        <i class="fa fa-reply"></i> Volver
-      </button>
-
-    </form>
-    <!--end Form -->
+<div class="card shadow text-primary">
+  <div class="card-header py-4 bg-dark">
+    <h4 class="m-0 font-weight-bold text-white ">Servicios Tecnicos</h4>
   </div>
+  <div class="card text-primary bg-ligth">
+    <div class="col-12">
+      <!-- Form -->
+      <form method="POST">
+        {%csrf_token%}
+        <div class="row text-dark">
+
+          <div class="col-4">
+            <p style="margin-bottom: 0px; font-size: 3vh; font-size: 3vh;">Cliente: <button type="button"
+                class="btn btn-primary btn-sm btn-circle" class="fas fa-plus-circle fa-md"
+                onclick="location.href='/Personas/crear_cliente'"><i class="fas fa-plus"></i></button></p>
+            {{equipo_form.cliente}}
+          </div>
+
+          <div class="col-4">
+            <p style="margin-bottom: 0px; font-size: 3vh; font-size: 3vh;;">Equipo: <button type="button"
+                class="btn btn-primary btn-sm btn-circle" class="fas fa-plus-circle fa-md"
+                onclick="abrir_modal_creacion('{% url 'Servicios:crear_equipo_modal' %}')"><i class="fas fa-plus"></i>
+              </button></p>
+            <select id="comboEquipo" name='equipo' class="form-control">
+
+            </select>
+            <!-- Ver como hacer para cargar solo los equipos de ese cliente-->
+          </div>
+
+          <div class="col-4">
+            <p style="margin-top: 0%; margin-bottom: 0px;font-size: 3vh; font-size: 3vh;">Fecha de Ingreso</p>
+            {{servicio_form.fechaIngreso}}
+          </div>
+
+        </div>
+
+
+        <div class="row text-dark">
+          <div class="col-4">
+            <p style="margin-bottom: 0px; font-size: 3vh; font-size: 3vh;">Estado:</p>
+            {{servicio_form.estado}}
+          </div>
+
+          <div class="col-4">
+            <p style="margin-bottom: 0px; font-size: 3vh; font-size: 3vh;">Tipo de Equipo: </p>
+            {{equipo_form.tipoEquipo}}
+          </div>
+
+          <div class="col-4">
+            <p style="margin-bottom: 0px; font-size: 3vh; font-size: 3vh;">Contraseña:</p>
+            {{servicio_form.contraseña}}
+          </div>
+
+        </div>
+
+        <div class="row text-dark">
+          <div class="col-4">
+            <p style="margin-bottom: 0px; font-size: 3vh; font-size: 3vh;">Marca: <button type="button"
+                class="btn btn-primary btn-sm btn-circle"
+                onclick="abrir_modal_creacion('{% url 'Servicios:crear_marca_modal' %}')"><i
+                  class="fas fa-plus"></i></button></p>
+            {{equipo_form.marca}}
+          </div>
+
+          <div class="col-4">
+            <p style="margin-bottom: 0px; font-size: 3vh; font-size: 3vh;">Modelo:</p>
+            <!--<form name="modelo" id="modelo">
+              <input type="text" name="textModelo" id="textModelo">
+            </form>-->
+            {{equipo_form.modelo}}
+          </div>
+          <div class="col-4" style="margin-left: 0px; font-size: 3vh; font-size: 3vh;">
+            <p style="margin-bottom: 0px; font-size: 3vh; font-size: 3vh;">Ubicacion:</p>
+            {{servicio_form.ubicacion}}
+          </div>
+        </div>
+
+        <div class="row text-dark">
+          <div class="col-8">
+            <p style="margin-bottom: 0px; font-size: 3vh; font-size: 3vh;">Accesorio : <button type="button"
+                class="btn btn-primary btn-sm btn-circle" class="fas fa-plus-circle fa-md"
+                onclick="location.href='/Servicios/crear_accesorio'"><i class="fas fa-plus"></i></button></p>
+            {{servicio_form.accesorio}}
+          </div>
+          <div class="col-4">
+            <p style="margin-bottom: 0px; font-size: 3vh; font-size: 3vh;">Prioridad: </button></p>
+            {{servicio_form.prioridad}}
+          </div>
+        </div>
+
+
+        <div class="row text-dark">
+          <div class="col-12">
+            <p style="margin-bottom: 0px; font-size: 3vh; font-size: 3vh;">Descripcion del Problema:</p>
+            {{servicio_form.problema}}
+          </div>
+        </div>
+
+
+        <hr>
+        <button type="submit" class="btn btn-success" style="float: right; margin: 1%;">
+          <i class="fa fa-plus"></i> Crear
+        </button>
+
+        <button type="button" class="btn btn-secondary" onclick="window.history.back()"
+          style="float: right;margin: 1%;">
+          <i class="fa fa-reply"></i> Volver
+        </button>
+
+      </form>
+      <!--end Form -->
+    </div>
+  </div>
+
+
 </div>
+
 
 <hr>
 
@@ -127,7 +138,7 @@
 <!-- List -->
 {% if servicios%}
 <div class="card shadow text-primary">
-  <div class="card-header py-4 bg-info">
+  <div class="card-header py-4 bg-dark">
     <h4 class="m-0 font-weight-bold text-white">Listado de Servicios Tecnicos</h4>
   </div>
   <div class="card-body text-dark">
@@ -191,6 +202,7 @@
 {% endblock content%}
 
 {% block extrajs %}
+<script src=" {% static 'js/servicios/index.js' %} "></script>
 <script type="text/javascript">
   function abrir_modal_creacion(url) {
     $('#creacion').load(url, function () {
@@ -198,5 +210,20 @@
     });
   }
 </script>
-<script src=" {% static 'js/servicios/index.js' %} "></script>
+<script type="application/javascript">
+  $('BotonActualizar').on('click', function () {
+    $.ajax({
+      url: '% url 'Servicios: listar_servicio' %',
+      type: 'POST',
+      data: { pk = 1 },
+      dataType: 'json'
+    }).done(function (data) {
+
+    }).fail(function (jqXHR, textStatus, errorThorown) {
+      alert(textStatus + ': ' + errorThorown);
+    }).always(function (data) {
+
+    })
+  })
+</script>
 {% endblock extrajs %}

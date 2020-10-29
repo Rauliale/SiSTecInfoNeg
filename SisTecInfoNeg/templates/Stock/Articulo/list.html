@@ -1,0 +1,30 @@
+{% extends 'list.html' %}
+{% load static %}
+{% block head_list %}
+<script src="{% static 'materias/js/list.js' %}"></script>
+{% endblock %}
+
+{% block columns %}
+<tr>
+    <td style="text-align: left;">{{articulo.categoria}}</td>
+    <td style="text-align: left;">{{articulo.nombreArticulo}}</td>
+    <td style="text-align: left;">{{articulo.grupo}}</td>
+    <td style="text-align: left;">{{articulo.stockMinimo}}</td>
+    <td style="text-align: left;">{{articulo.unidadMedida}}</td>
+    <td style="text-align: left;">{{articulo.estado}}</td>
+    <td width="2%" align="center">
+        <div class="table-data-feature">
+            <button type="button" class="btn btn-info"
+                onclick="location.href='/Stock/editar_articulo/{{articulo.pk}}'">Ver mas</button>
+        </div>
+    </td>
+</tr>
+{% endblock %}
+
+{% block rows %}
+
+{% endblock %}
+
+{% block javascript %}
+
+{% endblock %}
