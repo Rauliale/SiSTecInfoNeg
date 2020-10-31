@@ -58,7 +58,8 @@
 
           <div class="col-4">
             <p style="margin-bottom: 0px; font-size: 3vh; font-size: 3vh;">Tipo de Equipo: </p>
-            {{equipo_form.tipoEquipo}}
+            <input class="form-control" type="text" id="idTipoEquipo" disabled>
+            
           </div>
 
           <div class="col-4">
@@ -74,7 +75,8 @@
                 class="btn btn-primary btn-sm btn-circle"
                 onclick="abrir_modal_creacion('{% url 'Servicios:crear_marca_modal' %}')"><i
                   class="fas fa-plus"></i></button></p>
-            {{equipo_form.marca}}
+              <input class="form-control" type="text" id="idMarca" disabled>
+              
           </div>
 
           <div class="col-4">
@@ -82,7 +84,8 @@
             <!--<form name="modelo" id="modelo">
               <input type="text" name="textModelo" id="textModelo">
             </form>-->
-            {{equipo_form.modelo}}
+            <input class="form-control" type="text" id="idModelo" disabled>
+            
           </div>
           <div class="col-4" style="margin-left: 0px; font-size: 3vh; font-size: 3vh;">
             <p style="margin-bottom: 0px; font-size: 3vh; font-size: 3vh;">Ubicacion:</p>
@@ -197,12 +200,65 @@
 
 </div>
 
+{% if actualizar == 1%}
+  <script>
+    console.log('{{varid}}');
+    
+    var num = '{{clie}}';
+    var id = num;
+  $.ajax({
+    url: '/Servicios/mostrar_equipos',
+    data: {
+      'cliente': id
+    },
+    dataType: 'json',
+    success: function (data) {
+      var html = "";
 
+      for (var i = 0; i < data.length; i++) {
+        html += "<option value='" + data[i].id + "'>" + "Codigo de equipo: " + data[i].id + " - " + "Modelo: " + data[i].modelo + "</option>";
+      }
+      $('#comboEquipo').html(html);
+      
+      var id = $("#comboEquipo").val();
+      console.log(id);
+      $.ajax({
+        url: '/Servicios/mostrar_marca',
+        data: {
+          'equipo': id
+        },
+        dataType: 'json',
+        success: function (data) {
+          var html = "";
+          html += "<option value='" + data.id + "'>" + data.nombre + "</option>";
+          //$('#comboMarca').html(html);
+          console.log(data.id);
+          console.log(data.modelo);
+          console.log(data.marca);
+          console.log(data.tipoEquipo);
+          console.log('aca toy');
+
+          $('#idTipoEquipo').val(data.tipoEquipo);
+          $('#idModelo').val(data.modelo);
+          $('#idMarca').val(data.marca);
+
+        }
+      })
+
+    }
+  });
+
+
+  </script>
+{% endif %}
 
 {% endblock content%}
 
 {% block extrajs %}
+
+
 <script src=" {% static 'js/servicios/index.js' %} "></script>
+
 <script type="text/javascript">
   function abrir_modal_creacion(url) {
     $('#creacion').load(url, function () {

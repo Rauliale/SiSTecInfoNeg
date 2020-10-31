@@ -510,6 +510,10 @@ $('#combito').change(function () {
   })
 });
 
+
+
+
+
 // combito
 $('#comboCliente').change(function () {
   var id = $(this).val();
@@ -526,12 +530,38 @@ $('#comboCliente').change(function () {
         html += "<option value='" + data[i].id + "'>" + "Codigo de equipo: " + data[i].id + " - " + "Modelo: " + data[i].modelo + "</option>";
       }
       $('#comboEquipo').html(html);
+      var id = $("#comboEquipo").val();
+      console.log(id);
+      $.ajax({
+        url: '/Servicios/mostrar_marca',
+        data: {
+          'equipo': id
+        },
+        dataType: 'json',
+        success: function (data) {
+          var html = "";
+          html += "<option value='" + data.id + "'>" + data.nombre + "</option>";
+          //$('#comboMarca').html(html);
+          console.log(data.id);
+          console.log(data.modelo);
+          console.log(data.marca);
+          console.log(data.tipoEquipo);
+          console.log('aca toy');
+
+          $('#idTipoEquipo').val(data.tipoEquipo);
+          $('#idModelo').val(data.modelo);
+          $('#idMarca').val(data.marca);
+
+        }
+      })
+
     }
   })
 });
 
 $('#comboEquipo').change(function () {
-  var id = $(this).val();
+  var id = $("#comboEquipo").val();
+  console.log(id);
   $.ajax({
     url: '/Servicios/mostrar_marca',
     data: {
@@ -540,8 +570,18 @@ $('#comboEquipo').change(function () {
     dataType: 'json',
     success: function (data) {
       var html = "";
-      html += "<option value='" + data[0].id + "'>" + data[0].nombre + "</option>";
-      $('#comboMarca').html(html);
+      html += "<option value='" + data.id + "'>" + data.nombre + "</option>";
+      //$('#comboMarca').html(html);
+      console.log(data.id);
+      console.log(data.modelo);
+      console.log(data.marca);
+      console.log(data.tipoEquipo);
+      console.log('aca toy');
+
+      $('#idTipoEquipo').val(data.tipoEquipo);
+      $('#idModelo').val(data.modelo);
+      $('#idMarca').val(data.marca);
+
     }
   })
 });

@@ -16,18 +16,24 @@
       {%csrf_token%}
       <div class="row">
         <div class="col-3">    
-          <p style="margin-bottom: 0px;">Cliente:   <button type="button" class="btn btn-info" onclick="location.href='/Personas/crear_cliente'">+</button></p>
-          {{equipo_form.cliente}}
+          <p style="margin-bottom: 0px;">Cliente: </p>
+          <input class="form-control" type="text" id="txtCliente" disabled>
         </div>
 
         <div class="col-3">
-          <p style="margin-bottom: 0px;">Equipo:   <button type="button" class="btn btn-info" onclick="location.href='/Servicios/crear_equipo'">+</button></p>
-          {{servicio_form.equipo}}            <!-- Ver como hacer para cargar solo los equipos de ese cliente-->
+          <p style="margin-bottom: 0px;">Equipo: </p>
+          
+          <input class="form-control" type="text" id="txtEquipo" disabled>
         </div>
         
         <div class="col-3">
           <p style="margin-bottom: 0px;">Fecha de Ingreso</p>
-          {{servicio_form.fechaIngreso}}
+          <input class="form-control" type="text" id="txtFechaIngreso" disabled>
+        </div>
+
+        <div class="col-3">
+          <p style="margin-bottom: 0px;">Fecha de Entrega</p>
+          <input class="form-control" type="text" id="txtFechaIngreso" disabled>
         </div>
 
     </div>
@@ -41,7 +47,7 @@
       
       <div class="col-3">
         <p style="margin-bottom: 0px;">Tipo de Equipo:</p>
-        {{equipo_form.tipoEquipo}}
+        <input class="form-control" type="text" id="txtTipoEquipo" disabled>
       </div>
 
       <div class="col-3">
@@ -58,18 +64,14 @@
   <div class="row">
     <div class="col-3">
       <p style="margin-bottom: 0px;">Marca:</p>
-      {{equipo_form.marca}}
+      <input class="form-control" type="text" id="txtMarca" disabled>
     </div>
     
     <div class="col-3">
       <p style="margin-bottom: 0px;">Modelo:</p>
-      {{equipo_form.modelo}}
+      <input class="form-control" type="text" id="txtModelo" disabled>
     </div>
 
-    <div class="col-2">
-      <p style="margin-bottom: 0px;">Cargador:</p>
-      {{servicio_form.cargador}}
-    </div>
 </div>
 
 
@@ -143,5 +145,53 @@
 
 <!-- end Messages -->
 
+{% if actualizar == 1%}
+  <script>
+    console.log('{{varid}}');
+    
+    var num = '{{clie}}';
+    var id = num;
+  $.ajax({
+    url: '/Servicios/mostrar_equipos',
+    data: {
+      'cliente': id
+    },
+    dataType: 'json',
+    success: function (data) {
+      var html = "";
+
+      for (var i = 0; i < data.length; i++) {
+        html += "<option value='" + data[i].id + "'>" + "Codigo de equipo: " + data[i].id + " - " + "Modelo: " + data[i].modelo + "</option>";
+      }
+      $('#txtEquipo').html(html);
+      var id = $("#comboEquipo").val();
+      console.log(id);
+      $.ajax({
+        url: '/Servicios/mostrar_servicio',
+        data: {
+          'equipo': id
+        },
+        dataType: 'json',
+        success: function (data) {
+          var html = "";
+          html += "<option value='" + data.id + "'>" + data.nombre + "</option>";
+          //$('#comboMarca').html(html);
+          console.log(data.id);
+          console.log(data.modelo);
+          console.log(data.marca);
+          console.log(data.tipoEquipo);
+          console.log('aca toy');
+
+          $('#idTipoEquipo').val(data.tipoEquipo);
+          $('#idModelo').val(data.modelo);
+          $('#idMarca').val(data.marca);
+
+        }
+      })
+
+    }
+  });
+  </script>
+{% endif %}
 
 {% endblock content%}

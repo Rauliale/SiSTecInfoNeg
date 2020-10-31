@@ -165,9 +165,6 @@ class Articulo(models.Model):
 
     def toJSON(self):
         item = model_to_dict(self)                      #model to dic transforma todo el modelo a un diccionario
-        #item['categoria'] = self.categoria.toJSON()
-        #item['nombreArticulo'] = self.nombreArticulo.toJSON()
-        #item['grupo'] = self.grupo.toJSON()
         return item
 
     def save(self, *args, **kwargs):
@@ -189,6 +186,10 @@ class Movimiento(models.Model):
     class Meta:
         verbose_name = 'Movimiento'
         verbose_name_plural = 'Movimientos'
+
+    def toJSON(self):
+        item = model_to_dict(self)                      #model to dic transforma todo el modelo a un diccionario
+        return item
 
     def __str__(self):
             return str(self.id) + ' - '+ str(self.tipoMovimiento)+' - '+ str(self.fechaMovimiento)

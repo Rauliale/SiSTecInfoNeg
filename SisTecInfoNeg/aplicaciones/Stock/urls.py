@@ -1,5 +1,6 @@
 from django.urls import path,re_path
 from aplicaciones.Stock.view.articulo.views import *
+from aplicaciones.Stock.view.movimiento.views import *
 from aplicaciones.Stock.views import *
 urlpatterns = [ 
 
@@ -43,6 +44,12 @@ urlpatterns = [
     path('articulo_list/', ArticuloListView.as_view(), name='articulo_list'),
     path('articulo_create/', ArticuloCreateView.as_view(), name='articulo_create'),
     path('articulo_update/<int:pk>/', ArticuloUpdateView.as_view(), name='articulo_update'),
+    #path('Stock/delete/<int:pk>/', ArticuloDeleteView.as_view(), name='articulo_delete'),
+
+############################### ABM Movimiento Vistas en Clases ###########################
+    path('movimiento_list/', MovimientoListView.as_view(), name='movimiento_list'),
+    path('movimiento_create/', MovimientoCreateView.as_view(), name='movimiento_create'),
+    path('movimiento_update/<int:pk>/', MovimientoUpdateView.as_view(), name='movimiento_update'),
     #path('Stock/delete/<int:pk>/', ArticuloDeleteView.as_view(), name='articulo_delete'),
 
 

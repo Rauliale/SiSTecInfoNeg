@@ -5,7 +5,10 @@ from django.contrib import messages
 from aplicaciones.configuracion.models import Configuracion
 from aplicaciones.Personas.models import Cliente
 from aplicaciones.Personas.forms import ClienteForm
+
 from django.utils.decorators import method_decorator
+
+from django.contrib.auth.decorators import login_required
 
 from django.core import serializers
 from django.views.decorators.csrf import csrf_exempt
@@ -94,21 +97,22 @@ def listarBlogCategoria(request,id):
 ############################################################## Servicio Tecnico ###################################################
 #Crear Servicio Tecnico
 def crearServicio(request):
+    
     servicios = Servicio_Tecnico.objects.all()
     clientes = Cliente.objects.all()
     equipos = Equipo.objects.all() #aca ver deobtener equipos de una persona particular
     if request.method == 'POST':
-        if 'crear_equipo_modal' in request.POST:
-                equipo_form = EquipoForm(request.POST) #recibe todos los datos del formulario
-                if equipo_form.is_valid():
-                    equipo = equipo_form.save(commit = False)
+        #if 'crear_equipo_modal' in request.POST:
+        #        equipo_form = EquipoForm(request.POST) #recibe todos los datos del formulario
+        #        if equipo_form.is_valid():
+        #            equipo = equipo_form.save(commit = False)
         servicio_form = Servicio_TecnicoForm(request.POST) #recibe todos los datos del formulario
-        cliente_forms = ClienteForm(request.POST)
+        #cliente_forms = ClienteForm(request.POST)
         
         print(servicio_form.errors)
         if servicio_form.is_valid():    #is_valid es una funcion de django que valida todos los campos
             servicio_form.save()        #guardar o registrar en la base de datos lo que esta en el formullario
-            cliente_forms.save()
+            #cliente_forms.save()
             print("me redireccione")
             return redirect('/Servicios/crear_servicio')    #redireccionar para volver a cargar otro servicio
     else:
@@ -137,9 +141,16 @@ def editarServicio(request,codServicio):
         servicio_form = Servicio_TecnicoForm(request.POST, instance = servicio)
         equipo_form = EquipoForm(request.POST, instance = equi)
         if servicio_form.is_valid():    #is_valid es una funcion de django que valida todos los campos
-            servicio_form.save()        #guardar o registrar en la base de datos lo que esta en el formullario
-            messages.success(request, 'Se editó correctamente')
-            return redirect('/Servicios/listar_servicio',{'servicio_form':servicio_form,'equipo_form':equipo_form,'servicios':servicios,'equipo':equipo})    #redireccionar al index
+            servicio = servicio_form.save()        #guardar o registrar en la base de datos lo que esta en el formullario
+            equipo = equipo_form
+            #messages.success(request, 'Se editó correctamente')
+            #return redirect('/Servicios/listar_servicio',{'servicio_form':servicio_form,'equipo_form':equipo_form,'servicios':servicios,'equipo':equipo})    #redireccionar al index
+            
+            actualizar = 1
+            clie = equipo.cliente.dni
+            varid = equipo.id
+            print(varid)
+            return render(request,'Servicios/crear_servicio.html',{'servicio_form':servicio_form,'equipo_form':equipo_form,'equipo':equipo,'servicios':servicios,'marcas':marcas,'actualizar':actualizar,'varid':varid,'clie':clie})
         else:       
              messages.error(request, 'Ocurrió un error')    
     return render(request,'Servicios/editar_servicio.html',{'servicio_form':servicio_form,'equipo_form':equipo_form,'servicios':servicios,'equipo':equipo})
@@ -175,14 +186,31 @@ def mostrarEquipos(request):
     return JsonResponse(result,safe=False)
 
 @csrf_exempt
-#Mostrar equipos de Clientes
+#devuelve los datos del equipo (marca,tipo equipo,modelo) a la pagina crear servicios
 def mostrarMarca(request):
     id = request.GET.get('equipo',None)
     equipo = Equipo.objects.get(id = id)
-    result = dict()   
-    marca = equipo.marca  #aca obtengo una consulta de manera inversa re chevere
-    serializer = MarcaSerializer(marca)
-    result = serializer.data
+    result = dict() 
+    result = {
+        'id':equipo.id,
+        'modelo':equipo.modelo,
+        'marca':equipo.marca.nombre,
+        'tipoEquipo':equipo.tipoEquipo.nombre,
+    }
+    return JsonResponse(result,safe=False)
+
+@csrf_exempt
+#devuelve los datos del equipo (marca,tipoEquipo,modelo,cliente,equipo,fechaIngreso,) a la pagina editar servicios
+def mostrarServicio(request):
+    id = request.GET.get('equipo',None)
+    equipo = Equipo.objects.get(id = id)
+    result = dict() 
+    result = {
+        'id':equipo.id,
+        'modelo':equipo.modelo,
+        'marca':equipo.marca.nombre,
+        'tipoEquipo':equipo.tipoEquipo.nombre,
+    }
     return JsonResponse(result,safe=False)
 
 @csrf_exempt
@@ -223,7 +251,7 @@ def crearPilaServicio(request):
         equipo_form = EquipoForm()
     return render(request,'Servicios/crear_pila_servicio.html',{'servicio_form':servicio_form,'equipo_form':equipo_form,'servicios':servicios,'equipo':equipo})
 
-#Editar un Servicio
+#Editar pila Servicio
 def editarPilaServicio(request,codServicio):
     servicios = Servicio_Tecnico.objects.all()
     equipo = Equipo.objects.all()
@@ -247,6 +275,30 @@ def editarPilaServicio(request,codServicio):
             messages.error(request, 'Ocurrió un errorcito')    
     return render(request,'Servicios/editar_pila_servicio.html',{'servicio_form':servicio_form,'equipo_form':equipo_form,'servicios':servicios,'equipo':equipo,'equi':equi,'servicio':servicio})
 
+#Editar pila Servicio modificado
+def editarPilaServicio2(request,codServicio,id):
+    servicio_form = None
+    equipo_form = None
+    servicio = Servicio_Tecnico.objects.get(codServicio = codServicio) #aca tengo que cambiar mi variable tipo_Equipo con otro nombre
+    equipo = Equipo.objects.get(id = id) #aca tengo que cambiar mi variable tipo_Equipo con otro nombre
+    equi = servicio.equipo
+    if request.method == 'GET':
+        servicio_form = Servicio_TecnicoForm(instance = servicio)       #ver de que es este instance = ??????????????????????????
+        equipo_form = EquipoForm(instance = equi)
+    else:
+        servicio_form = Servicio_TecnicoForm(request.POST, instance = servicio)
+        equipo_form = EquipoForm(request.POST, instance = equi)
+        if servicio_form.is_valid() and equipo_form.is_valid() :    #is_valid es una funcion de django que valida todos los campos
+            servicio_form.save()        #guardar o registrar en la base de datos lo que esta en el formullario
+            equipo_form.save()
+            messages.success(request, 'Se editó correctamente')
+            return redirect('/Servicios/listar_pila_servicio',{'servicio_form':servicio_form,'equipo_form':equipo_form,'servicios':servicios,'equipo':equipo,'equi':equi,'servicio':servicio})    #redireccionar al index
+        else:
+            print("aca entro")       
+            messages.error(request, 'Ocurrió un errorcito')    
+    return render(request,'Servicios/editar_pila_servicio.html',{'servicio_form':servicio_form,'equipo_form':equipo_form,'equipo':equipo,'equi':equi,'servicio':servicio})
+
+
 #Eliminar un Servicio
 def eliminarPilaServicio (request,id):
     servicios = Servicio_Tecnico.objects.all()
@@ -262,7 +314,8 @@ def eliminarPilaServicio (request,id):
 
 #listar Servicio
 def listarPilaServicio(request):
-    servicios = Servicio_Tecnico.objects.all()
+    servicios = Servicio_Tecnico.objects.filter(estado=1)   #estado es 1 xq Recibido siempre va a ser mi primer estado
+    print(servicios)
     return render(request,'Servicios/listar_pila_servicio.html',{'servicios':servicios})
 #################################################################################################################
 
@@ -340,22 +393,32 @@ def crearEquipoModal(request):
     equipo = Equipo.objects.all()
     servicios = Servicio_Tecnico.objects.all()
     marcas = Marca.objects.all()
+    servicio_form = Servicio_TecnicoForm()
     if request.method == 'POST':
         equipo_form = EquipoForm(request.POST) #recibe todos los datos del formulario
         print(equipo_form.errors)
         if equipo_form.is_valid():    #is_valid es una funcion de django que valida todos los campos
             print("entro")
-            equipo_form.save()        #guardar o registrar en la base de datos lo que esta en el formullario
+            equipo = equipo_form.save()        #guardar o registrar en la base de datos lo que esta en el formullario
+            
+            actualizar = 1
+            
+            clie = equipo.cliente.dni
+
+            varid = equipo.id
+            print(varid)
+
+            return render(request,'Servicios/crear_servicio.html',{'servicio_form':servicio_form,'equipo_form':equipo_form,'equipo':equipo,'servicios':servicios,'marcas':marcas,'actualizar':actualizar,'varid':varid,'clie':clie})
         else:
             print('Ocurrió un error al tratar de crear el equipo')
             print(servicios)
             return redirect('crear_servicio',{'servicios':servicios})    #redireccionar al index
     
     else:
+        print('entro por aca')
         equipo_form = EquipoForm()
         servicio_form = Servicio_TecnicoForm()
-    servicio_form = Servicio_TecnicoForm()
-    return render(request,'Servicios/crear_equipo_modal.html',{'servicio_form':servicio_form,'equipo_form':equipo_form,'equipo':equipo,'servicios':servicios,'marcas':marcas})    
+        return render(request,'Servicios/crear_equipo_modal.html',{'servicio_form':servicio_form,'equipo_form':equipo_form,'equipo':equipo,'servicios':servicios,'marcas':marcas})    
 
 #Editar equipo
 def editarEquipo(request,id):

@@ -7,22 +7,22 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.utils.decorators import method_decorator
 
-from aplicaciones.Stock.forms import ArticuloForm
-from aplicaciones.Stock.models import Articulo
+from aplicaciones.Stock.forms import MovimientoForm
+from aplicaciones.Stock.models import Movimiento
 #from aplicaciones.mixins import ValidatePermissionRequiredMixin
 
 
-def articulos_list(request):
+def movimientos_list(request):
     data = {
-        'title': 'Listado de Articulos',
-        'articulos': Articulo.objects.all()
+        'title': 'Listado de Movimientos',
+        'movimientos': Movimiento.objects.all()
     }
-    return render(request, 'articulo/list.html', data)
+    return render(request, 'movimiento/list.html', data)
 
 
-class ArticuloListView(ListView):       #LoginRequiredMixin, ValidatePermissionRequiredMixin, 
-    model = Articulo
-    template_name = 'articulo/list.html'
+class MovimientoListView(ListView):       #LoginRequiredMixin, ValidatePermissionRequiredMixin, 
+    model = Movimiento
+    template_name = 'movimiento/list.html'
     #permission_required = 'carreras.view_materias'
     @method_decorator(login_required)
     @method_decorator(csrf_exempt)
@@ -35,7 +35,7 @@ class ArticuloListView(ListView):       #LoginRequiredMixin, ValidatePermissionR
             action = request.POST['action']
             if action == 'searchdata':
                 data = []
-                for i in Articulo.objects.all():
+                for i in Movimiento.objects.all():
                     data.append(i.toJSON())
             else:
                 data['error'] = 'Ha ocurrido un error'
@@ -45,19 +45,19 @@ class ArticuloListView(ListView):       #LoginRequiredMixin, ValidatePermissionR
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Listado de Articulos'
-        context['create_url'] = reverse_lazy('Stock:articulo_create')
-        context['list_url'] = reverse_lazy('Stock:articulo_list')
-        context['entity'] = 'Articulo'
+        context['title'] = 'Listado de Movimientos'
+        context['create_url'] = reverse_lazy('Stock:movimiento_create')
+        context['list_url'] = reverse_lazy('Stock:movimiento_list')
+        context['entity'] = 'Movimiento'
         return context
 
 
 
-class ArticuloCreateView(CreateView): #LoginRequiredMixin, ValidatePermissionRequiredMixin, 
-    model = Articulo
-    form_class = ArticuloForm
-    template_name = 'articulo/create.html'
-    success_url = reverse_lazy('Stock:articulo_list')
+class MovimientoCreateView(CreateView): #LoginRequiredMixin, ValidatePermissionRequiredMixin, 
+    model = Movimiento
+    form_class = MovimientoForm
+    template_name = 'movimiento/create.html'
+    success_url = reverse_lazy('Stock:movimiento_list')
     #permission_required = 'carreras.add_materias'
     url_redirect = success_url
 
@@ -85,19 +85,19 @@ class ArticuloCreateView(CreateView): #LoginRequiredMixin, ValidatePermissionReq
         data = {}
         try:
             action = request.POST['action']
-            if action == 'search_articulo_id':
-                articulo = Articulo.objects.get(pk=request.POST['id'])
+            if action == 'search_movimiento_id':
+                movimiento = Movimiento.objects.get(pk=request.POST['id'])
                 data = [{'id': '', 'text': '---------'}]
                 #for i in AnioCursado.objects.filter(nombre=request.POST['id']):
                 #for i in AnioCursado.objects.filter(nombre__gte=1, nombre__lte=anios):
                 #    data.append({'id': i.id, 'text': i.nombre})
             elif action == 'add':
-                form = ArticuloForm(request.POST)
+                form = MovimientoForm(request.POST)
                 if form.is_valid():
                     print("entro al formulario para guardarlo")
                     form = self.get_form()
                     data = form.save()
-                return redirect('Stock:articulo_list')
+                return redirect('Stock:movimiento_list')
             else:
                 data['error'] = 'Ha ocurrido un error'
         except Exception as e:
@@ -106,18 +106,18 @@ class ArticuloCreateView(CreateView): #LoginRequiredMixin, ValidatePermissionReq
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Crear un Articulo'
-        context['entity'] = 'Articulo'
-        context['list_url'] = reverse_lazy('Stock:articulo_list')
+        context['title'] = 'Crear un Movimiento'
+        context['entity'] = 'Movimiento'
+        context['list_url'] = reverse_lazy('Stock:movimiento_list')
         context['action'] = 'add'
         return context
 
 
-class ArticuloUpdateView(UpdateView):           #LoginRequiredMixin, ValidatePermissionRequiredMixin, 
-    model = Articulo
-    form_class = ArticuloForm
-    template_name = 'articulo/create.html'
-    success_url = reverse_lazy('Stock:articulo_list')
+class MovimientoUpdateView(UpdateView):           #LoginRequiredMixin, ValidatePermissionRequiredMixin, 
+    model = Movimiento
+    form_class = MovimientoForm
+    template_name = 'movimiento/create.html'
+    success_url = reverse_lazy('Stock:movimiento_list')
     #permission_required = 'carreras.change_materias'
     url_redirect = success_url
 
@@ -132,7 +132,7 @@ class ArticuloUpdateView(UpdateView):           #LoginRequiredMixin, ValidatePer
             if action == 'edit':
                 form = self.get_form()
                 data = form.save()
-                return redirect('Stock:articulo_list')
+                return redirect('Stock:movimiento_list')
             else:
                 data['error'] = 'No ha ingresado ninguna opción'
         except Exception as e:
@@ -141,16 +141,16 @@ class ArticuloUpdateView(UpdateView):           #LoginRequiredMixin, ValidatePer
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Editar Articulo'
-        context['entity'] = 'Articulo'
-        context['list_url'] = reverse_lazy('Stock:articulo_list')
+        context['title'] = 'Editar Movimiento'
+        context['entity'] = 'Movimiento'
+        context['list_url'] = reverse_lazy('Stock:movimiento_list')
         context['action'] = 'edit'
         return context
 
-class ArticuloDeleteView( DeleteView):      #LoginRequiredMixin, ValidatePermissionRequiredMixin,
-    model = Articulo
-    template_name = 'articulo/delete.html'
-    success_url = reverse_lazy('articulo:articulo_list')
+class MovimientoDeleteView( DeleteView):      #LoginRequiredMixin, ValidatePermissionRequiredMixin,
+    model = Movimiento
+    template_name = 'movimiento/delete.html'
+    success_url = reverse_lazy('movimiento:movimiento_list')
     #permission_required = 'carreras.delete_materias'
     url_redirect = success_url
 
@@ -168,7 +168,7 @@ class ArticuloDeleteView( DeleteView):      #LoginRequiredMixin, ValidatePermiss
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Eliminar Articulo'
-        context['entity'] = 'Articulo'
-        context['list_url'] = reverse_lazy('articulo:articulo_list')
+        context['title'] = 'Eliminar Movimiento'
+        context['entity'] = 'Movimiento'
+        context['list_url'] = reverse_lazy('movimiento:movimiento_list')
         return context

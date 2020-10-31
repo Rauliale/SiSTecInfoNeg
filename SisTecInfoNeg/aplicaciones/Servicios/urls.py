@@ -1,5 +1,6 @@
 from django.urls import path,re_path
 from aplicaciones.Servicios.views import *
+from aplicaciones.Servicios.view.pila_de_trabajo.views import ServiciosListView,ServiciosCreateView
 #Home,crearServicio,editarServicio,crearTipoEquipo,editarTipoEquipo,eliminarTipoEquipo,listarTipoEquipo,crearEquipo,listarServicio,listarMarcas,crearMarca,crearEstadoEquipo,listarEstadoEquipo
 
 urlpatterns = [ 
@@ -14,18 +15,20 @@ urlpatterns = [
     ############################ Pila de Servicios ###########################################
     path('listar_pila_servicio/',listarPilaServicio, name= 'listar_pila_servicio'),
     path('crear_pila_servicio/',crearPilaServicio, name= 'crear_pila_servicio'), #Crear servicio
-    path('editar_pila_servicio/<int:codServicio>',editarPilaServicio, name= 'editar_pila_servicio'),
+    path('editar_pila_servicio/<int:codServicio>/<int:id>',editarPilaServicio2, name= 'editar_pila_servicio'),
     path('eliminar_pila_servicio/<int:codServicio>',eliminarPilaServicio, name= 'eliminar_pila_servicio'),
-
+    path('pila_de_trabajo_list/', ServiciosListView.as_view(), name='pila_de_trabajo_list'),
+    path('pila_de_trabajo_create/', ServiciosCreateView.as_view(), name='pila_de_trabajo_create'),
     
     ############################ ABM Servicios ###########################################
-    path('listar_servicio/',listarServicio, name= 'listar_servicio'),
-    path('crear_servicio/',crearServicio, name= 'crear_servicio'), #Crear servicio
-    path('editar_servicio/<int:codServicio>',editarServicio, name= 'editar_servicio'),
-    path('eliminar_servicio/<int:codServicio>',eliminarServicio, name= 'eliminar_servicio'),
-    path ('mostrar_equipos/',mostrarEquipos,name='mostrar_equipos'),
-    path ('mostrar_marca/',mostrarMarca,name='mostrar_marca'),
-    path ('mostrar_modelo/',mostrarModelo,name='mostrar_modelo'),
+    path('listar_servicio/',login_required(listarServicio), name= 'listar_servicio'),
+    path('crear_servicio/',login_required(crearServicio), name= 'crear_servicio'), #Crear servicio
+    path('editar_servicio/<int:codServicio>',login_required(editarServicio), name= 'editar_servicio'),
+    path('eliminar_servicio/<int:codServicio>',login_required(eliminarServicio), name= 'eliminar_servicio'),
+    ##todas estas de abajo son para cargar los input
+    path ('mostrar_equipos/',login_required(mostrarEquipos),name='mostrar_equipos'),
+    path ('mostrar_marca/',login_required(mostrarMarca),name='mostrar_marca'),
+    path ('mostrar_servicio/',login_required(mostrarServicio),name='mostrar_servicio'),
     
     
     ############################# ABM Tipo de Memoria #####################################

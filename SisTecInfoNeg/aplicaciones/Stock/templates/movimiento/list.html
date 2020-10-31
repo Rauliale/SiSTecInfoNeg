@@ -1,0 +1,152 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block head_list %}
+<script src="{% static 'movimiento/js/list.js' %}"></script>
+{% endblock head_list %}
+
+{% block section %}Stock{% endblock section %}
+
+{% block content %}
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">
+            <i class="fas fa-search"></i>
+            {{ title }}
+        </h3>
+    </div>
+    <div class="card-body">
+        <table class="table" id="data">
+            <thead>
+                <tr>
+                    <th>Tipo de Movimiento</th>
+                    <th>Tipo de Comprobante</th>
+                    <th>Numero de Comprobante</th>
+                    <th>Deposito</th>
+                    <th>Fecha de Movimiento</th>
+                    <th>Observaciones</th>
+                    <th>Articulo</th>
+                    <th>Total</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                {%for c in object_list%}
+                <tr>
+                    <td style="text-align: left;">{{c.tipoMovimiento.nombre}}</td>
+                    <td style="text-align: left;">{{c.tipoComprobante}}</td>
+                    <td style="text-align: left;">{{c.numeroComprobante}}</td>
+                    <td style="text-align: left;">{{c.lugar}}</td>
+                    <td style="text-align: left;">{{c.fechaMovimiento}}</td>
+                    <td style="text-align: left;">{{c.observaciones}}</td>
+                    <td style="text-align: left;">{{c.articulo}}</td>
+                    <td style="text-align: left;">{{c.total}}</td>
+                    
+                    
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="card-footer">
+        <a href="{{ create_url }}" class="btn btn-primary btn-flat btnTest">
+            <i class="fas fa-plus"></i> Nuevo Movimiento
+        </a>
+        <a href="{{ list_url }}" class="btn btn-success btn-flat">
+            <i class="fas fa-sync"></i> Actualizar
+        </a>
+    </div>
+</div>
+
+<script type="application/javascript">
+    $(document).ready(function () {
+        $('#data').DataTable({
+            language: {
+                sProcessing: "Procesando...",
+                sLengthMenu: "Mostrar _MENU_ registros",
+                sZeroRecords: "No se encontraron resultados",
+                sEmptyTable: "Ningún dato disponible en esta tabla",
+                sInfo: "Mostrando _START_ al _END_ de un total de _TOTAL_ registros",
+                sInfoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+                sInfoFiltered: "(filtrado de un total de _MAX_ registros)",
+                sInfoPostFix: "",
+                sSearch: "Buscar:",
+                sUrl: "",
+                sInfoThousands: ",",
+                sLoadingRecords: "Cargando...",
+                oPaginate: {
+                    sFirst: "Primero",
+                    sLast: "Último",
+                    sNext: "Siguiente",
+                    sPrevious: "Anterior"
+                },
+                oAria: {
+                    "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                    "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                },
+                buttons: {
+                    "copy": "Copiar",
+                    "colvis": "Visibilidad"
+                }
+            },
+            responsive: true,
+            autoWidth: false,
+            destroy: true,
+            deferRender: true,
+            ajax: {
+                url: window.location.pathname,
+                type: 'POST',
+                data: {
+                    'action': 'searchdata'
+                },
+                dataSrc: ""
+            },
+            columns: [
+                //{"data": "id"},
+                { "data": "tipoMovimiento" },  //atributos del modelo
+                { "data": "tipoComprobante" },
+                { "data": "numeroComprobante" },
+                { "data": "lugar" },
+                { "data": "fechaMovimiento" },
+                { "data": "observaciones" },
+                { "data": "articulo" },
+                { "data": "total" },
+                {},
+                
+            ],
+
+            columnDefs: [
+                {
+                    targets: [-1],
+                    class: 'text-center',
+                    orderable: false,
+                    render: function (data, type, row) {
+                        var buttons = '<a href="/Stock/movimiento_update/' + row.id + '/" class="btn btn-primary btn-xs btn-flat"><i class="fas fa-edit"></i></a> ';
+                        return buttons;
+                    }
+                },
+            ],
+            initComplete: function (settings, json) {
+
+            }
+        });
+
+
+        $('.btnTest').on('click', function () {
+            $.ajax({
+                url: window.location.pathname,
+                type: 'POST',
+                data: {},
+                dataType: 'json'
+            }).done(function (data) {
+                console.log(data);
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                alert(textStatus + ': ' + errorThrown);
+            }).always(function (data) {
+                alert('completado');
+            });
+        });
+    });
+</script>
+{% endblock content %}
